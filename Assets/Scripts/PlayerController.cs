@@ -30,18 +30,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         moveVelocity = moveInput.normalized * speed;
-        if (moveInput.x > 0)
+        if (moveInput.x > 0 || mousePos.x > transform.position.x)
         {
             transform.localScale = new Vector3(-1, 1, 1);
             flipGunValue = -1;
         }
-        else if (moveInput.x < 0)
+        else if (moveInput.x < 0 || mousePos.x < transform.position.x)
         {
             transform.localScale = new Vector3(1, 1, 1);
             flipGunValue = 1;
         }
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        
+        
     }
 
     private void FixedUpdate()

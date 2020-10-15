@@ -14,6 +14,7 @@ public class Room : MonoBehaviour
     public GameObject down;
     public GameObject up;
 
+    public Sprite[] backgroundSprites;
     public Sprite[] doorSprites;
 
     void Awake()
@@ -22,8 +23,11 @@ public class Room : MonoBehaviour
         posibleDirections[1] = 1;
         posibleDirections[2] = 1;
         posibleDirections[3] = 1;
+    }
 
-        
+    private void Start()
+    {
+        GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(0, backgroundSprites.Length)];
     }
 
     public void setDoorSprites(int cols, int rows)
