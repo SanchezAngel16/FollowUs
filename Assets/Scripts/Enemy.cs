@@ -5,10 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;
-    private float minX;
-    private float maxX;
-    private float minY;
-    private float maxY;
     private Vector2[] randomSpots;
     private int currentDestination;
 
@@ -19,20 +15,19 @@ public class Enemy : MonoBehaviour
 
     public BulletPool enemyBulletsPool;
 
+    private Rigidbody2D rb;
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitTime = startWaitTime;
-
-        minX = transform.parent.position.x - 4;
-        maxX = transform.parent.position.x + 4;
-        minY = transform.parent.position.y - 4;
-        maxY = transform.parent.position.y + 4;
 
         randomSpots = new Vector2[10];
         for (int i = 0; i < randomSpots.Length; i++)
         {
-            randomSpots[i] = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            //randomSpots[i] = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            randomSpots[i] = Util.getRandomPosition(transform.parent);
         }
         transform.position = randomSpots[0];
         currentDestination = Random.Range(0, randomSpots.Length);
@@ -40,9 +35,9 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, randomSpots[currentDestination], speed * Time.deltaTime);
-        
-        if(Vector2.Distance(transform.position, randomSpots[currentDestination]) < 0.2f)
+        //transform.position = ;
+        rb.MovePosition(Vector2.MoveTowards(transform.position, randomSpots[currentDestination], speed * Time.deltaTime));
+        if (Vector2.Distance(transform.position, randomSpots[currentDestination]) < 0.2f)
         {
             if(waitTime <= 0)
             {

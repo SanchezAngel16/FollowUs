@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
         string colliderTag = collision.gameObject.tag;
         if(bulletType == 0)
         {
-            if (!(colliderTag.Equals("Player") || colliderTag.Equals("Room") || colliderTag.Equals("Bullet")))
+            if (!(colliderTag.Equals("Player") || colliderTag.Equals("Room") || colliderTag.Equals("Bullet") || colliderTag.Equals("PlayerHitBox")))
             {
                 if (colliderTag.Equals("Enemy"))
                 {
@@ -23,10 +23,9 @@ public class Bullet : MonoBehaviour
         {
             if(!(colliderTag.Equals("Enemy") || colliderTag.Equals("Room") || colliderTag.Equals("Bullet")))
             {
-                Debug.Log("Hit: " + colliderTag);
-                if (colliderTag.Equals("Player"))
+                if (colliderTag.Equals("PlayerHitBox"))
                 {
-                    collision.gameObject.GetComponent<PlayerController>().removeLifePoints(1);
+                    collision.transform.parent.gameObject.GetComponent<PlayerController>().removeLifePoints(1);
                 }
                 setActive(false);
             }

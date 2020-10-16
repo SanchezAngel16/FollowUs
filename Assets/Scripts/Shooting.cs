@@ -10,6 +10,8 @@ public class Shooting : MonoBehaviour
 
     public float bulletForce = 15f;
 
+    public CameraShake camShake;
+
     // Update is called once per frame
     void Update()
     {
@@ -29,6 +31,6 @@ public class Shooting : MonoBehaviour
         bullet.SetActive(true);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
-
+        //camShake.shakeIt();
     }
 }

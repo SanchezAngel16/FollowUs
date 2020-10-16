@@ -88,11 +88,19 @@ public class Main : MonoBehaviour
                 roomScript.mapLocation = new Vector2Int(col, row);
                 newRoom.GetComponent<SpriteRenderer>().color = rColor;
 
-                if (col == 0 && row == 0) roomScript.enemiesCount = 0;
-                else roomScript.enemiesCount = Random.Range(1, 5);
+                if (col == 0 && row == 0)
+                {
+                    roomScript.enemiesCount = 0;
+                    roomScript.generateStaticElements(1);
+                }
+                else
+                {
+                    roomScript.enemiesCount = Random.Range(1, 5);
+                    roomScript.generateStaticElements(Random.Range(2, 5));
+                }
 
                 roomScript.generateEnemies();
-
+                
                 newRoom.SetActive(false);
 
                 roomScript.isRoomActive = false;

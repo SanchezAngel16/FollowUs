@@ -20,6 +20,8 @@ public class Room : MonoBehaviour
     public Sprite[] backgroundSprites;
     public Sprite[] doorSprites;
 
+    public GameObject staticElementsGroup;
+    public GameObject[] staticElements;
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -57,5 +59,21 @@ public class Room : MonoBehaviour
         posibleDirections[1] = left;
         posibleDirections[2] = up;
         posibleDirections[3] = down;
+    }
+
+    public void generateStaticElements(int numElements)
+    {
+        if (numElements == 1)
+        {
+            Instantiate(staticElements[0], staticElementsGroup.transform).transform.position = staticElementsGroup.transform.position;
+        }
+        else
+        {
+            for(int i = 0; i < numElements; i++)
+            {
+                GameObject newStaticElement = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
+                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform);
+            }
+        }
     }
 }

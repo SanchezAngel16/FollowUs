@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;
 
     public GameObject gun;
-    private int flipGunValue;
 
     public int lifePoints;
     public Image[] lifesImages = new Image[3];
@@ -30,7 +29,6 @@ public class PlayerController : MonoBehaviour
     {
         lifePoints = 3;
         rb = GetComponent<Rigidbody2D>();
-        flipGunValue = 1;
     }
 
     
@@ -52,8 +50,16 @@ public class PlayerController : MonoBehaviour
 
     private void flipPlayer(int flip)
     {
-        transform.localScale = new Vector3(flip, 1, 1);
-        flipGunValue = flip;
+        if (flip < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            gun.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            gun.GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 
     private void FixedUpdate()
@@ -62,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg -90f;
-        gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle * flipGunValue));
+        gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,7 +76,6 @@ public class PlayerController : MonoBehaviour
         if (collision.tag.Equals("Room"))
         {
             mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
-
             Room currentRoom = collision.gameObject.GetComponent<Room>();
             currentLocation = currentRoom.mapLocation;
 
