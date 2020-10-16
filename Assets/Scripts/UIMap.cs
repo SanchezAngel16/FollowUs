@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class UIMap : MonoBehaviour
 {
@@ -49,6 +50,10 @@ public class UIMap : MonoBehaviour
                 mapTiles[col, row] = newMapTile;
                 newMapTile.GetComponent<Image>().color = getBgMapTileColor(col, row);
                 newMapTile.transform.SetParent(this.transform);
+                string enemiesCount;
+                if (col == 0 && row == 0) enemiesCount = "";
+                else enemiesCount = mapController.map[col, row].GetComponent<Room>().enemiesCount.ToString();
+                newMapTile.GetComponentInChildren<TextMeshProUGUI>().text = enemiesCount;
             }
         }
         firstTime = false;

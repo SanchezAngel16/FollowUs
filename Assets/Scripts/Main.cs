@@ -29,7 +29,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         roomSize = new Vector2(roomPrefab.GetComponent<Renderer>().bounds.size.x, roomPrefab.GetComponent<Renderer>().bounds.size.y);
-        //init map
+        
         
         mapController = gameObjectMap.GetComponent<Map>();
         mapController.initMapArray();
@@ -39,7 +39,6 @@ public class Main : MonoBehaviour
         mapController.updatePosibleDirections();
 
         initUI();
-        //cameraFollow.setup(() => player.transform.position);
         
     }
 
@@ -74,6 +73,7 @@ public class Main : MonoBehaviour
             for (int col = 0; col < mapController.cols; col++)
             {
                 GameObject newRoom = (GameObject)Instantiate(roomPrefab);
+                Room roomScript = newRoom.GetComponent<Room>();
                 newRoom.transform.parent = gameObjectMap.transform;
 
                 float posX = col * wRoom;
@@ -85,12 +85,20 @@ public class Main : MonoBehaviour
                 else if (col == mapController.badRoom.x && row == mapController.badRoom.y) rColor = Color.red;
                 else rColor = Color.white;
 
-                newRoom.GetComponent<Room>().mapLocation = new Vector2Int(col, row);
+                roomScript.mapLocation = new Vector2Int(col, row);
                 newRoom.GetComponent<SpriteRenderer>().color = rColor;
+
+                if (col == 0 && row == 0) roomScript.enemiesCount = 0;
+                else roomScript.enemiesCount = Random.Range(1, 5);
+
+                roomScript.generateEnemies();
+
                 newRoom.SetActive(false);
 
-                newRoom.GetComponent<Room>().isRoomActive = false;
-                newRoom.GetComponent<Room>().setDoorSprites(mapController.cols, mapController.rows);
+                roomScript.isRoomActive = false;
+                roomScript.setDoorSprites(mapController.cols, mapController.rows);
+
+
 
                 mapController.map[col, row] = newRoom;
             }

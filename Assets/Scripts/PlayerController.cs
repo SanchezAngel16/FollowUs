@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
 
     public Main gameController;
     public Vector2Int currentLocation;
+
+    public Animator animator;
 
     public float speed;
 
@@ -19,9 +22,13 @@ public class PlayerController : MonoBehaviour
     public GameObject gun;
     private int flipGunValue;
 
+    public int lifePoints;
+    public Image[] lifesImages = new Image[3];
+
 
     void Start()
     {
+        lifePoints = 3;
         rb = GetComponent<Rigidbody2D>();
         flipGunValue = 1;
     }
@@ -32,18 +39,21 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         moveVelocity = moveInput.normalized * speed;
-        if (moveInput.x > 0 || mousePos.x > transform.position.x)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-            flipGunValue = -1;
-        }
-        else if (moveInput.x < 0 || mousePos.x < transform.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-            flipGunValue = 1;
-        }
-        
-        
+
+        if (moveInput.x > 0) flipPlayer(-1);
+        if (moveInput.x < 0) flipPlayer(1);
+        if (mousePos.x > transform.position.x) flipPlayer(-1);
+        if (mousePos.x < transform.position.x) flipPlayer(1);
+
+        if (moveInput.x != 0 || moveInput.y != 0) animator.SetFloat("speed", 1);
+        else animator.SetFloat("speed", 0);
+
+    }
+
+    private void flipPlayer(int flip)
+    {
+        transform.localScale = new Vector3(flip, 1, 1);
+        flipGunValue = flip;
     }
 
     private void FixedUpdate()
@@ -59,7 +69,6 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag.Equals("Room"))
         {
-            Debug.Log("Bla");
             mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
 
             Room currentRoom = collision.gameObject.GetComponent<Room>();
@@ -74,9 +83,28 @@ public class PlayerController : MonoBehaviour
             {
                 gameController.setActiveAllUIArrows(false);
             }
-
-            
+        }else if (collision.tag.Equals("Enemy"))
+        {
+            removeLifePoints(1);
         }
     }
 
+    public void removeLifePoints(int points)
+    {
+        this.lifePoints -= points;
+        updateHealthUI();
+        if(lifePoints == 0)
+        {
+            //Kill player
+        }
+    }
+
+    private void updateHealthUI()
+    {
+        for (int i = 0; i < lifesImages.Length; i++)
+        {
+            if (i >= lifePoints) lifesImages[i].enabled = false;
+            else lifesImages[i].enabled = true;
+        }
+    }
 }

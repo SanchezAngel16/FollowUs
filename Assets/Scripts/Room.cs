@@ -7,7 +7,10 @@ public class Room : MonoBehaviour
     public Vector2Int mapLocation;
     public bool isRoomActive;
     public int[] posibleDirections = new int[4];
-    int roomType;
+
+    public int enemiesCount;
+    public Transform enemiesGenerationPoint;
+    public GameObject enemyPrefab;
 
     public GameObject right;
     public GameObject left;
@@ -28,6 +31,14 @@ public class Room : MonoBehaviour
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(0, backgroundSprites.Length)];
+    }
+
+    public void generateEnemies()
+    {
+        for (int i = 0; i < enemiesCount; i++)
+        {
+            Instantiate(enemyPrefab, enemiesGenerationPoint);
+        }
     }
 
     public void setDoorSprites(int cols, int rows)
