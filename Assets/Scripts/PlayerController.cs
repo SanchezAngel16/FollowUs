@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
     public Main gameController;
     public Vector2Int currentLocation;
 
@@ -24,14 +23,12 @@ public class PlayerController : MonoBehaviour
     public int lifePoints;
     public Image[] lifesImages = new Image[3];
 
-
     void Start()
     {
         lifePoints = 3;
         rb = GetComponent<Rigidbody2D>();
     }
 
-    
     void Update()
     {
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -45,9 +42,16 @@ public class PlayerController : MonoBehaviour
 
         if (moveInput.x != 0 || moveInput.y != 0) animator.SetFloat("speed", 1);
         else animator.SetFloat("speed", 0);
-
     }
 
+    private void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+
+        Vector2 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
     private void flipPlayer(int flip)
     {
         if (flip < 0)
@@ -59,38 +63,6 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().flipX = false;
             gun.GetComponent<SpriteRenderer>().flipX = false;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-
-        Vector2 lookDir = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg -90f;
-        gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("Room"))
-        {
-            mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
-            Room currentRoom = collision.gameObject.GetComponent<Room>();
-            currentLocation = currentRoom.mapLocation;
-
-            if(Vector2Int.Equals(currentLocation, gameController.currentActiveRoom))
-            {
-                gameController.setActiveAllUIArrows(true);
-                gameController.updateUIArrows();
-            }
-            else
-            {
-                gameController.setActiveAllUIArrows(false);
-            }
-        }else if (collision.tag.Equals("Enemy"))
-        {
-            removeLifePoints(1);
         }
     }
 
@@ -112,4 +84,5 @@ public class PlayerController : MonoBehaviour
             else lifesImages[i].enabled = true;
         }
     }
+
 }

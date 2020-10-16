@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < randomSpots.Length; i++)
         {
             //randomSpots[i] = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-            randomSpots[i] = Util.getRandomPosition(transform.parent);
+            randomSpots[i] = Util.getRandomPosition(transform.parent, 0);
         }
         transform.position = randomSpots[0];
         currentDestination = Random.Range(0, randomSpots.Length);
@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         rb.MovePosition(Vector2.MoveTowards(transform.position, randomSpots[currentDestination], speed * Time.deltaTime));
         if (Vector2.Distance(transform.position, randomSpots[currentDestination]) < 0.2f)
         {
-            if(waitTime <= 0)
+            if(waitTime < 0)
             {
                 //Shoot
                 GameObject[] bullets = new GameObject[4];
@@ -52,7 +52,6 @@ public class Enemy : MonoBehaviour
                     bullets[i].transform.rotation = Quaternion.Euler(0,0,angle);
                     bullets[i].SetActive(true);
                     Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-                    Debug.Log(bullets[i].transform.up);
                     rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
                     angle += 90;
                 }
@@ -65,6 +64,16 @@ public class Enemy : MonoBehaviour
             {
                 waitTime -= Time.deltaTime;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("PlayerBullet"))
+        {
+            removeLifePoints(15);
+            collision.gameObject.SetActive(false);
         }
     }
 

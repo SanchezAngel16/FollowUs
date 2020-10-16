@@ -8,6 +8,10 @@ TagManager:
   - Enemy
   - Bullet
   - PlayerHitBox
+  - EnemyBullet
+  - PlayerBullet
+  - StaticObject
+  - Pickable_Area
   layers:
   - Default
   - TransparentFX

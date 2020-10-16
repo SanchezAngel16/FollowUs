@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1082041976438778088}
   m_Layer: 0
   m_Name: barrel
-  m_TagString: Untagged
+  m_TagString: StaticObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

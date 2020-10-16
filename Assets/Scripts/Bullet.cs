@@ -8,7 +8,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string colliderTag = collision.gameObject.tag;
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("StaticObject")) setActive(false);
+        /*string colliderTag = collision.gameObject.tag;
         if(bulletType == 0)
         {
             if (!(colliderTag.Equals("Player") || colliderTag.Equals("Room") || colliderTag.Equals("Bullet") || colliderTag.Equals("PlayerHitBox")))
@@ -29,7 +31,7 @@ public class Bullet : MonoBehaviour
                 }
                 setActive(false);
             }
-        }
+        }*/
     }
 
     private void setActive(bool active)

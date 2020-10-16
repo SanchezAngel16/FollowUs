@@ -72,7 +72,7 @@ public class Room : MonoBehaviour
             for(int i = 0; i < numElements; i++)
             {
                 GameObject newStaticElement = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
-                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform);
+                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform, 0.5f);
             }
         }
     }

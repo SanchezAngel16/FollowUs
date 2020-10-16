@@ -6,15 +6,14 @@ public static class Util
 {
     public static int playableArea = 4;
 
-    public static Vector2 getRandomPosition(Transform parent)
+    public static Vector2 getRandomPosition(Transform parent, float substractOffset)
     {
-        float minX = parent.position.x - playableArea;
-        float maxX = parent.position.x + playableArea;
-        float minY = parent.position.y - playableArea;
-        float maxY = parent.position.y + playableArea;
+        float minX = parent.position.x - playableArea - substractOffset;
+        float maxX = parent.position.x + playableArea - substractOffset;
+        float minY = parent.position.y - playableArea - substractOffset;
+        float maxY = parent.position.y + playableArea - substractOffset;
 
         return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }
-
 
 }

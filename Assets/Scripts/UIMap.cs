@@ -14,7 +14,6 @@ public class UIMap : MonoBehaviour
     private bool firstTime = true;
     void Start()
     {
-        
         gl = GetComponent<GridLayoutGroup>();
         gl.cellSize = new Vector2(GetComponent<RectTransform>().rect.width / mapController.cols, GetComponent<RectTransform>().rect.height / mapController.rows);
         mapTiles = new GameObject[mapController.cols, mapController.rows];
@@ -29,7 +28,6 @@ public class UIMap : MonoBehaviour
 
     private void updateUIMap()
     {
-        // Make map
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -41,7 +39,6 @@ public class UIMap : MonoBehaviour
 
     private void makeUIMap()
     {
-        // Make map
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
