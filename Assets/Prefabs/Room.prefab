@@ -826,7 +826,7 @@ MonoBehaviour:
   posibleDirections: 00000000000000000000000000000000
   enemiesCount: 0
   enemiesGenerationPoint: {fileID: 7369282471791831732}
-  enemyPrefab: {fileID: 6757204696547637691, guid: 6949f08db71cb1c4aad5ea28e6d2d48a, type: 3}
+  enemyPrefab: {fileID: 214763078662300438, guid: c2eb48db8b4119341a6d824d08dea0d2, type: 3}
   right: {fileID: 7924694426184753540}
   left: {fileID: 3731175477188773392}
   down: {fileID: 2370134508226414164}

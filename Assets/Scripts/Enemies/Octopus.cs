@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Octopus : MonoBehaviour
 {
     public float speed;
     private Vector2[] randomSpots;
@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     public BulletPool enemyBulletsPool;
 
     private Rigidbody2D rb;
+
+    private bool collidingStaticObject;
 
     private void Start()
     {
@@ -37,7 +39,7 @@ public class Enemy : MonoBehaviour
     {
         //transform.position = ;
         rb.MovePosition(Vector2.MoveTowards(transform.position, randomSpots[currentDestination], speed * Time.deltaTime));
-        if (Vector2.Distance(transform.position, randomSpots[currentDestination]) < 0.2f)
+        if (Vector2.Distance(transform.position, randomSpots[currentDestination]) < 0.2f || collidingStaticObject)
         {
             if(waitTime < 0)
             {
@@ -65,6 +67,18 @@ public class Enemy : MonoBehaviour
                 waitTime -= Time.deltaTime;
             }
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("StaticObject")) collidingStaticObject = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("StaticObject")) collidingStaticObject = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

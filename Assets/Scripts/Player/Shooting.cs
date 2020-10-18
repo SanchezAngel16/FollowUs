@@ -11,8 +11,6 @@ public class Shooting : MonoBehaviour
 
     public float bulletForce = 15f;
 
-    public CameraShake camShake;
-
     private int maxBulletsCount;
     private int bulletsCount;
     public TextMeshProUGUI bulletsCountText;
