@@ -5,38 +5,44 @@ using UnityEngine;
 public class Monster : Enemy
 {
     private int direction;
-    private Vector2 targetPosition;
+    private Vector2[] targetsPositions;
+    private int nextTargetIndex;
     private Transform parent;
     private bool horizontal;
-
-    private float waitShootTime;
-    public float startWaitShootTime;
-
 
     public override void initEnemy()
     {
         rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitTime = startWaitTime;
-        startWaitShootTime = Random.Range(2, 4);
-        waitShootTime = startWaitShootTime;
-
         parent = transform.parent;
-        transform.position = Util.getRandomPosition(parent, 0);
-        
-        direction = 1;
+        transform.position = parent.position;
 
-        int randomDirection = Random.Range(0, 10);
-        if (randomDirection >= 5) horizontal = true;
-        else horizontal = false;
+        targetsPositions = new Vector2[16];
 
-        if(horizontal) targetPosition = new Vector2(parent.position.x + Util.playableArea, transform.position.y);
-        else targetPosition = new Vector2(transform.position.x, parent.position.y + Util.playableArea);
+        targetsPositions[0] = new Vector2(transform.position.x + Util.playableArea-.5f, transform.position.y);
+        targetsPositions[1] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[2] = new Vector2(transform.position.x + Util.playableArea-.5f, transform.position.y + Util.playableArea-.5f);
+        targetsPositions[3] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[4] = new Vector2(transform.position.x, transform.position.y + Util.playableArea-.5f);
+        targetsPositions[5] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[6] = new Vector2(transform.position.x - Util.playableArea+.5f, transform.position.y + Util.playableArea-.5f);
+        targetsPositions[7] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[8] = new Vector2(transform.position.x - Util.playableArea+.5f, transform.position.y);
+        targetsPositions[9] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[10] = new Vector2(transform.position.x - Util.playableArea+.5f, transform.position.y - Util.playableArea+.5f);
+        targetsPositions[11] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[12] = new Vector2(transform.position.x, transform.position.y - Util.playableArea+.5f);
+        targetsPositions[13] = new Vector2(parent.position.x, parent.position.y);
+        targetsPositions[14] = new Vector2(transform.position.x + Util.playableArea-.5f, transform.position.y - Util.playableArea+.5f);
+        targetsPositions[15] = new Vector2(parent.position.x, parent.position.y);
+
+        nextTargetIndex = 0;
     }
 
     private void shoot()
     {
-        GameObject[] bullets = new GameObject[4];
+        GameObject[] bullets = new GameObject[24];
         float angle = 0;
         for (int i = 0; i < bullets.Length; i++)
         {
@@ -46,42 +52,31 @@ public class Monster : Enemy
             bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-            rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
-            angle += 90;
+            rb.AddForce(bullets[i].transform.up * 2f, ForceMode2D.Impulse);
+            angle += 15f;
         }
     }
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime));
-        if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], speed * Time.deltaTime));
+        if (Vector2.Distance(transform.position, targetsPositions[nextTargetIndex]) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)
             {
                 //Change destination target
-                direction *= -1;
-                if (horizontal) targetPosition = new Vector2(parent.position.x + (Util.playableArea * direction), targetPosition.y);
-                else targetPosition = new Vector2(targetPosition.x, parent.position.y + (Util.playableArea * direction));
-
-                
-                if (currentDestination == 1) currentDestination = 0;
-                else currentDestination = 1;
+                if(!(nextTargetIndex % 2 == 0))
+                {
+                    shoot();
+                }
+                nextTargetIndex++;
+                if (nextTargetIndex >= targetsPositions.Length) nextTargetIndex = 0;
                 waitTime = startWaitTime;
             }
             else
             {
                 waitTime -= Time.deltaTime;
             }
-        }
-
-        if(waitShootTime < 0)
-        {
-            shoot();
-            waitShootTime = startWaitShootTime;
-        }
-        else
-        {
-            waitShootTime -= Time.deltaTime;
         }
     }
 }

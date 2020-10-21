@@ -41,10 +41,13 @@ public class PlayerCollider : MonoBehaviour
             if (hitted) return;
             // Take damage animation and deactivate collider layer.
             hitted = true;
-            InvokeRepeating("startHitAnimation", 0f, 0.05f);
-            Invoke("stopTakingDamageAnimation", 3.5f);
-            playerController.removeLifePoints(1);
-            if (tag.Equals("EnemyBullet")) collision.gameObject.SetActive(false);
+            if (playerController.living)
+            {
+                InvokeRepeating("startHitAnimation", 0f, 0.05f);
+                Invoke("stopTakingDamageAnimation", 3.5f);
+                playerController.removeLifePoints(1);
+                if (tag.Equals("EnemyBullet")) collision.gameObject.SetActive(false);
+            }
         }else if (tag.Equals("Pickable_Area"))
         {
             reloadButton.gameObject.SetActive(true);

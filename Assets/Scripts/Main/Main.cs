@@ -26,8 +26,11 @@ public class Main : MonoBehaviour
 
     public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
+    public static List<Transform> enemies = new List<Transform>();
+
     void Start()
     {
+        enemies.Clear();
         roomSize = new Vector2(roomPrefab.GetComponent<Renderer>().bounds.size.x, roomPrefab.GetComponent<Renderer>().bounds.size.y);
         
         
@@ -81,23 +84,31 @@ public class Main : MonoBehaviour
 
                 newRoom.transform.position = new Vector2(posX, posY);
 
-                if (col == mapController.goodRoom.x && row == mapController.goodRoom.y) rColor = Color.blue;
+                
+                if (col == 0 && row == 0)
+                {
+                    //roomScript.enemiesCount = 0;
+                    roomScript.generateStaticElements(1);
+                }
+                else
+                {
+                    //roomScript.enemiesCount = Random.Range(1, 1);
+                    roomScript.threatType = Random.Range(1,5);
+                    //roomScript.generateStaticElements(Random.Range(2, 3));
+                }
+
+                if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
+                {
+                    rColor = Color.blue;
+                    roomScript.threatType = 0;
+                }
                 else if (col == mapController.badRoom.x && row == mapController.badRoom.y) rColor = Color.red;
                 else rColor = Color.white;
 
                 roomScript.mapLocation = new Vector2Int(col, row);
                 newRoom.GetComponent<SpriteRenderer>().color = rColor;
 
-                if (col == 0 && row == 0)
-                {
-                    roomScript.enemiesCount = 0;
-                    roomScript.generateStaticElements(1);
-                }
-                else
-                {
-                    roomScript.enemiesCount = Random.Range(1, 8);
-                    roomScript.generateStaticElements(Random.Range(2, 3));
-                }
+
 
                 roomScript.generateEnemies();
                 

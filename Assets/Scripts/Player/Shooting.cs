@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
+    public PlayerController playerController;
     public Transform firePoint;
     public GameObject bulletPrefab;
     public BulletPool bulletPool;
@@ -15,10 +16,13 @@ public class Shooting : MonoBehaviour
     private int bulletsCount;
     public TextMeshProUGUI bulletsCountText;
 
+    public GameObject gun;
+    public Camera mainCamera;
+
     private void Start()
     {
-        maxBulletsCount = 20;
-        bulletsCount = 20;
+        maxBulletsCount = 100;
+        bulletsCount = 100;
         updateBulletsCountText();
     }
 
@@ -26,14 +30,31 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            //Shoot();
         }
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         if(!(bulletsCount <= 0))
         {
+            Transform target = getNearestTarget(Main.enemies);
+            
+            
+            if(target != null)
+            {
+                Vector2 lookAtDir = target.position - gun.transform.position;
+                float angle = Mathf.Atan2(lookAtDir.y, lookAtDir.x) * Mathf.Rad2Deg - 90f;
+                if(target.position.x > playerController.transform.position.x) playerController.flipPlayer(-1);
+                else playerController.flipPlayer(1);
+                gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            }
+            else
+            {
+                Debug.Log("ninguno");
+                playerController.targeting = false;
+            }
+
             GameObject bullet = bulletPool.getBullet();
             bullet.GetComponent<Bullet>().bulletType = 0;
             bullet.transform.position = firePoint.position;
@@ -46,6 +67,26 @@ public class Shooting : MonoBehaviour
             updateBulletsCountText();
         }
         
+    }
+
+    private Transform getNearestTarget(List<Transform> elements) 
+    {
+        Transform nearestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform potentialTarget in elements)
+        {
+            if (!potentialTarget.gameObject.activeInHierarchy) break;
+            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                nearestTarget = potentialTarget;
+            }
+        }
+
+        return nearestTarget;
     }
 
     private void updateBulletsCountText()

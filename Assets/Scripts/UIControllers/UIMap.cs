@@ -43,13 +43,13 @@ public class UIMap : MonoBehaviour
         {
             for (int col = 0; col < mapController.cols; col++)
             {
-                GameObject newMapTile = (GameObject)Instantiate(mapTile);
+                GameObject newMapTile = (GameObject)Instantiate(mapTile, this.transform);
                 mapTiles[col, row] = newMapTile;
                 newMapTile.GetComponent<Image>().color = getBgMapTileColor(col, row);
-                newMapTile.transform.SetParent(this.transform);
+                int threatType = mapController.map[col, row].GetComponent<Room>().threatType;
                 string enemiesCount;
-                if (col == 0 && row == 0) enemiesCount = "";
-                else enemiesCount = mapController.map[col, row].GetComponent<Room>().enemiesCount.ToString();
+                if (threatType == 0) enemiesCount = "";
+                else enemiesCount = threatType.ToString();
                 newMapTile.GetComponentInChildren<TextMeshProUGUI>().text = enemiesCount;
             }
         }

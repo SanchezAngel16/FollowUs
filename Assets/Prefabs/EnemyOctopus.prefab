@@ -44,6 +44,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledBullet: {fileID: 1477452154314531463, guid: 7a61ed0498d66aa449f655155fb84bbd, type: 3}
+--- !u!1 &5519124593280763410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5806249745985991320}
+  - component: {fileID: 2439088254014993506}
+  m_Layer: 12
+  m_Name: HitBox
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5806249745985991320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519124593280763410}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9162586512810444659}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2439088254014993506
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519124593280763410}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.36
 --- !u!1 &6757204696547637691
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,9 +136,9 @@ GameObject:
   - component: {fileID: 4129015349740365669}
   - component: {fileID: 7785354988869323835}
   - component: {fileID: 8080623636181263768}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Octopus
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +153,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5806249745985991320}
   m_Father: {fileID: 6757204696547637692}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -190,9 +238,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  startWaitTime: 0.7
+  startWaitTime: 0.8
   lifePoints: 100
-  enemyBulletsPool: {fileID: 9099488109133007161}
+  bulletsPool: {fileID: 9099488109133007161}
+  startWaitShootTime: 5
 --- !u!50 &8080623636181263768
 Rigidbody2D:
   serializedVersion: 4

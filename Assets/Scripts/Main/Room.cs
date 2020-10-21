@@ -7,10 +7,10 @@ public class Room : MonoBehaviour
     public Vector2Int mapLocation;
     public bool isRoomActive;
     public int[] posibleDirections = new int[4];
+    public int threatType;
 
-    public int enemiesCount;
     public Transform enemiesGenerationPoint;
-    public GameObject enemyPrefab;
+    public GameObject[] enemiesPrefab;
 
     public GameObject right;
     public GameObject left;
@@ -37,9 +37,32 @@ public class Room : MonoBehaviour
 
     public void generateEnemies()
     {
-        for (int i = 0; i < enemiesCount; i++)
+        int enemiesCount = 0;
+        int enemyType = -1;
+        switch (threatType)
         {
-            Instantiate(enemyPrefab, enemiesGenerationPoint);
+            case 1:
+                enemyType = 0;
+                enemiesCount = Random.Range(1, 3);
+                break;
+            case 2:
+                enemyType = 0;
+                enemiesCount = Random.Range(3, 5);
+                break;
+            case 3:
+                enemyType = 0;
+                enemiesCount = Random.Range(5, 7);
+                break;
+            case 4:
+                enemyType = 1;
+                enemiesCount = 1;
+                break;
+        }
+
+        for (int i = 0; i < enemiesCount; i++)  
+        {
+            GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
+            Main.enemies.Add(newEnemy.transform.GetChild(1).transform);
         }
     }
 

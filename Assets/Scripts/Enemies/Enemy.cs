@@ -35,12 +35,6 @@ public abstract class Enemy : MonoBehaviour
         if (tag.Equals("StaticObject")) collidingStaticObject = true;
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        string tag = collision.gameObject.tag;
-        if (tag.Equals("StaticObject")) collidingStaticObject = false;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
@@ -57,6 +51,7 @@ public abstract class Enemy : MonoBehaviour
         if (this.lifePoints <= 0)
         {
             Destroy(gameObject);
+            Main.enemies.Remove(this.transform);
         }
     }
 
