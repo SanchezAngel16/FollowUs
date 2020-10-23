@@ -19,25 +19,60 @@ public class Shooting : MonoBehaviour
     public GameObject gun;
     public Camera mainCamera;
 
+    public Joystick shootingJoystick;
+    private bool shoot = false;
+
+
     private void Start()
     {
         maxBulletsCount = 100;
         bulletsCount = 100;
         updateBulletsCountText();
+
+        if (Main.runningOnPC) shootingJoystick.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Main.runningOnPC)
         {
-            //Shoot();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
         }
+        else
+        {
+            Vector2 lookAt = new Vector2(shootingJoystick.Horizontal, shootingJoystick.Vertical);
+            if(Mathf.Abs(lookAt.x) > .2f || Mathf.Abs(lookAt.y) > .2f)
+            {
+                if (lookAt.x < .2f) flipGun(false);
+                else flipGun(true);
+
+                float angle = Mathf.Atan2(lookAt.y, lookAt.x) * Mathf.Rad2Deg - 90f;
+                gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+                shoot = true;
+            }else if(shoot && !shootingJoystick.moving)
+            {
+                Shoot();
+                shoot = false;
+            }
+        }
+        
+    }
+
+    private void flipGun(bool flip)
+    {
+        playerController.GetComponent<SpriteRenderer>().flipX = flip;
+        gun.GetComponent<SpriteRenderer>().flipX = flip;
     }
 
     public void Shoot()
     {
         if(!(bulletsCount <= 0))
         {
+            /*   SHOOT AT NEAREST TARGET 
             Transform target = getNearestTarget(Main.enemies);
             
             
@@ -53,7 +88,7 @@ public class Shooting : MonoBehaviour
             {
                 Debug.Log("ninguno");
                 playerController.targeting = false;
-            }
+            }*/
 
             GameObject bullet = bulletPool.getBullet();
             bullet.GetComponent<Bullet>().bulletType = 0;

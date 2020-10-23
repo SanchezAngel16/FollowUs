@@ -27,12 +27,17 @@ public class Main : MonoBehaviour
     public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
     public static List<Transform> enemies = new List<Transform>();
+    public static bool runningOnPC;
+
+    private void Awake()
+    {
+        checkRunningPlatform();
+    }
 
     void Start()
     {
         enemies.Clear();
         roomSize = new Vector2(roomPrefab.GetComponent<Renderer>().bounds.size.x, roomPrefab.GetComponent<Renderer>().bounds.size.y);
-        
         
         mapController = gameObjectMap.GetComponent<Map>();
         mapController.initMapArray();
@@ -42,12 +47,17 @@ public class Main : MonoBehaviour
         mapController.updatePosibleDirections();
 
         initUI();
-        
     }
 
-    void Update()
+    private void checkRunningPlatform()
     {
-        
+        #if UNITY_EDITOR || UNITY_STANDALONE
+            runningOnPC = true;
+            Debug.Log("PC");
+        #elif UNITY_IOS || UNITY_ANDROID
+            runningOnPC = false;
+            Debug.Log("Mobile");
+        #endif
     }
 
     private void initUI()
@@ -93,7 +103,7 @@ public class Main : MonoBehaviour
                 else
                 {
                     //roomScript.enemiesCount = Random.Range(1, 1);
-                    roomScript.threatType = Random.Range(1,5);
+                    roomScript.threatType = Random.Range(1,6);
                     //roomScript.generateStaticElements(Random.Range(2, 3));
                 }
 

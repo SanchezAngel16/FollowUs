@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 214763077634721895}
   - component: {fileID: 214763077634721897}
   - component: {fileID: 6887107810879112482}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2887110558056626195}
   - component: {fileID: 517037823519177395}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Hitbox
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     private Vector2 moveVelocity;
     private Vector2 mousePos;
-
     private Vector2 moveInput;
 
     public Camera mainCamera;
@@ -30,7 +29,6 @@ public class PlayerController : MonoBehaviour
 
     public bool living;
     public bool targeting;
-    public Transform enemyTarget;
 
     public Button restart;
     void Start()
@@ -38,38 +36,64 @@ public class PlayerController : MonoBehaviour
         living = true;
         lifePoints = 3;
         rb = GetComponent<Rigidbody2D>();
+
+        moveInput = new Vector2(0, 0);
+        mousePos = new Vector2(0, 0);
+
+        if (Main.runningOnPC)
+        {
+            Debug.Log("Desactivate");
+            joystick.gameObject.SetActive(false);
+        }
     }
 
     void Update()
     {
         if (living)
         {
-            //Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
-            
-            mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            if(joystick.Horizontal >= .2f || joystick.Horizontal <= -.2f) moveInput.x = joystick.Horizontal;
-            else moveInput.x = 0;
+            moveInput.x = moveInput.y = 0;
+            mousePos.x = mousePos.y = 0;
+            if (Main.runningOnPC)
+            {
+                moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 lookDir = mousePos - rb.position;
+                float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+                gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+                if (moveInput.x > 0) flipPlayer(-1);
+                if (moveInput.x < 0) flipPlayer(1);
+                if (mousePos.x > transform.position.x) flipPlayer(-1);
+                if (mousePos.x < transform.position.x) flipPlayer(1);
+            }
+            else
+            {
+                moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+                if(Mathf.Abs(joystick.Horizontal) > .2f) moveInput.x = joystick.Horizontal;
+                else moveInput.x = 0;
 
-            if(joystick.Vertical >= .2f || joystick.Vertical <= -.2f) moveInput.y = joystick.Vertical;
-            else moveInput.y = 0;
+                if(Mathf.Abs(joystick.Vertical) > .2f) moveInput.y = joystick.Vertical;
+                else moveInput.y = 0;
+
+                if (moveInput.x > 0) flipPlayer(-1);
+                if (moveInput.x < 0) flipPlayer(1);
+            }
 
             moveVelocity = moveInput.normalized * speed;
-            if (moveInput.x > 0) flipPlayer(-1);
+            /*if (moveInput.x > 0) flipPlayer(-1);
             if (moveInput.x < 0) flipPlayer(1);
-            //if (mousePos.x > transform.position.x) flipPlayer(-1);
-            //if (mousePos.x < transform.position.x) flipPlayer(1);
+            if (mousePos.x > transform.position.x) flipPlayer(-1);
+            if (mousePos.x < transform.position.x) flipPlayer(1);*/
+            
 
-
-            //Vector2 lookDir = mousePos - rb.position;
-            //float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-            if((moveInput.x != 0 || moveInput.y != 0) && !targeting)
+            
+            // ROTATE GUN FROM JOYSTICK COORDINATES
+            /*if((moveInput.x != 0 || moveInput.y != 0) && !targeting)
             {
                 Vector2 lookDir = mousePos - rb.position;
                 float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg - 90f;
                 gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            }
-            
+            }*/
+
 
 
             if (moveInput.x != 0 || moveInput.y != 0) animator.SetFloat("speed", 1);
@@ -85,6 +109,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+
     public void flipPlayer(int flip)
     {
         if (flip < 0)

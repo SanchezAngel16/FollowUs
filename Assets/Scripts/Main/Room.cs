@@ -22,6 +22,8 @@ public class Room : MonoBehaviour
 
     public GameObject staticElementsGroup;
     public GameObject[] staticElements;
+
+    public Transform[] corners;
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -55,6 +57,10 @@ public class Room : MonoBehaviour
                 break;
             case 4:
                 enemyType = 1;
+                enemiesCount = 1;
+                break;
+            case 5:
+                enemyType = 2;
                 enemiesCount = 1;
                 break;
         }
