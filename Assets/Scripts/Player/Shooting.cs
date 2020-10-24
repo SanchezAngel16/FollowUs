@@ -25,8 +25,8 @@ public class Shooting : MonoBehaviour
 
     private void Start()
     {
-        maxBulletsCount = 100;
-        bulletsCount = 100;
+        maxBulletsCount = 300;
+        bulletsCount = maxBulletsCount;
         updateBulletsCountText();
 
         if (Main.runningOnPC) shootingJoystick.gameObject.SetActive(false);
@@ -129,9 +129,9 @@ public class Shooting : MonoBehaviour
         bulletsCountText.text = (bulletsCount + "/" + maxBulletsCount).ToString();
     }
 
-    public void reloadBullets()
+    public void reloadBullets(int bullets)
     {
-        bulletsCount += 10;
+        bulletsCount += bullets;
         if (bulletsCount >= maxBulletsCount) bulletsCount = maxBulletsCount;
         updateBulletsCountText();
     }

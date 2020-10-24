@@ -6,7 +6,7 @@ public class Golem : Enemy
 {
     public Vector2[] targetsPositions;
     private int currentTargetPositionIndex;
-    private int direction;
+    public int direction;
 
     private float waitShootTime;
     public float startWaitShootTime;
@@ -16,7 +16,7 @@ public class Golem : Enemy
         rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitShootTime = startWaitShootTime;
-        if (Random.Range(0, 10) >= 50) direction = 1;
+        if (Random.Range(0, 10) >= 10) direction = 1;
         else direction = -1;
         targetsPositions = getCornersPositions();
         currentTargetPositionIndex = Random.Range(0, targetsPositions.Length);

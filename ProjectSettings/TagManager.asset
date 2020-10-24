@@ -12,6 +12,8 @@ TagManager:
   - PlayerBullet
   - StaticObject
   - Pickable_Area
+  - Collectable_Ammo
+  - Collectable_Health
   layers:
   - Default
   - TransparentFX

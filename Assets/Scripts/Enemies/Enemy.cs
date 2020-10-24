@@ -19,6 +19,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool collidingStaticObject;
 
+    public GameObject[] collectables;
+
     private void Start()
     {
         initEnemy();
@@ -29,10 +31,16 @@ public abstract class Enemy : MonoBehaviour
         move();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
         if (tag.Equals("StaticObject")) collidingStaticObject = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("StaticObject")) collidingStaticObject = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -50,8 +58,15 @@ public abstract class Enemy : MonoBehaviour
         this.lifePoints -= points;
         if (this.lifePoints <= 0)
         {
+            if (Random.Range(0, 100) >= 10)
+            {
+                //GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                GameObject collectable = Instantiate(collectables[1]);
+                collectable.transform.position = transform.position;
+            }
             Destroy(gameObject);
             Main.enemies.Remove(this.transform);
+            
         }
     }
 

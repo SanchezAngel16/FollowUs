@@ -29,6 +29,10 @@ public class Main : MonoBehaviour
     public static List<Transform> enemies = new List<Transform>();
     public static bool runningOnPC;
 
+    public TextMeshProUGUI timerText;
+
+    //public PlayerController playerController;
+
     private void Awake()
     {
         checkRunningPlatform();
@@ -49,14 +53,13 @@ public class Main : MonoBehaviour
         initUI();
     }
 
+
     private void checkRunningPlatform()
     {
         #if UNITY_EDITOR || UNITY_STANDALONE
             runningOnPC = true;
-            Debug.Log("PC");
         #elif UNITY_IOS || UNITY_ANDROID
             runningOnPC = false;
-            Debug.Log("Mobile");
         #endif
     }
 

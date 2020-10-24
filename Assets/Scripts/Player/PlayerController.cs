@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     public GameObject gun;
 
     public int lifePoints;
-    public Image[] lifesImages = new Image[3];
+    private int maxLifePoints = 100;
+    public Slider slider;
 
     public Joystick joystick;
 
@@ -34,7 +35,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         living = true;
-        lifePoints = 3;
+        lifePoints = maxLifePoints;
+        slider.maxValue = maxLifePoints;
+        slider.value = slider.maxValue;
         rb = GetComponent<Rigidbody2D>();
 
         moveInput = new Vector2(0, 0);
@@ -42,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
         if (Main.runningOnPC)
         {
-            Debug.Log("Desactivate");
             joystick.gameObject.SetActive(false);
         }
     }
@@ -125,9 +127,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void removeLifePoints(int points)
+    public void updateLifePoints(int points)
     {
-        this.lifePoints -= points;
+        this.lifePoints += points;
+        if (lifePoints >= maxLifePoints) lifePoints = maxLifePoints;
         updateHealthUI();
         if(lifePoints == 0)
         {
@@ -147,11 +150,7 @@ public class PlayerController : MonoBehaviour
 
     private void updateHealthUI()
     {
-        for (int i = 0; i < lifesImages.Length; i++)
-        {
-            if (i >= lifePoints) lifesImages[i].enabled = false;
-            else lifesImages[i].enabled = true;
-        }
+        slider.value = this.lifePoints;
     }
 
 }

@@ -24,17 +24,45 @@ public class Room : MonoBehaviour
     public GameObject[] staticElements;
 
     public Transform[] corners;
+
+    public float timer;
+    public float maxTimer;
+
+    public SpriteRenderer crackEffect;
+    public Sprite[] crackSprites;
+    private float crackTime;
     void Awake()
     {
         posibleDirections[0] = 1;
         posibleDirections[1] = 1;
         posibleDirections[2] = 1;
         posibleDirections[3] = 1;
+        timer = maxTimer;
     }
+
+    
 
     private void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(0, backgroundSprites.Length)];
+        GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(1, backgroundSprites.Length)];
+        crackTime = maxTimer / 5;
+    }
+
+    private void Update()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            if (timer > crackTime * 4) crackEffect.sprite = null;
+            else if (timer > crackTime * 3) crackEffect.sprite = crackSprites[0];
+            else if (timer > crackTime * 2) crackEffect.sprite = crackSprites[1];
+            else if (timer > crackTime * 1) crackEffect.sprite = crackSprites[2];
+            else if (timer > 0) crackEffect.sprite = crackSprites[3];
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
+        }
     }
 
     public void generateEnemies()
@@ -61,7 +89,7 @@ public class Room : MonoBehaviour
                 break;
             case 5:
                 enemyType = 2;
-                enemiesCount = 1;
+                enemiesCount = 2;
                 break;
         }
 
