@@ -91,7 +91,6 @@ public class Shooting : MonoBehaviour
             }*/
 
             GameObject bullet = bulletPool.getBullet();
-            bullet.GetComponent<Bullet>().bulletType = 0;
             bullet.transform.position = firePoint.position;
             bullet.transform.rotation = firePoint.rotation;
             bullet.SetActive(true);

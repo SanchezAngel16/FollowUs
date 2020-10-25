@@ -91,6 +91,10 @@ public class Room : MonoBehaviour
                 enemyType = 2;
                 enemiesCount = 2;
                 break;
+            case 6:
+                enemyType = 3;
+                enemiesCount = 3;
+                break;
         }
 
         for (int i = 0; i < enemiesCount; i++)  

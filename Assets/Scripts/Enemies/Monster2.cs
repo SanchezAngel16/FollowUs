@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Octopus : Enemy
+public class Monster2 : Enemy
 {
-    private int direction;
     private Vector2 targetPosition;
-    private Transform parent;
-    private bool horizontal;
 
     private float waitShootTime;
     public float startWaitShootTime;
+
+    private float spinSpeed = 360;
+
 
     public override void initEnemy()
     {
@@ -20,23 +20,13 @@ public class Octopus : Enemy
         startWaitShootTime = Random.Range(2, 4);
         waitShootTime = startWaitShootTime;
 
-        parent = transform.parent;
-        transform.position = Util.getRandomPosition(parent, 0);
-
-        direction = 1;
-
-        int randomDirection = Random.Range(0, 10);
-        if (randomDirection >= 5) horizontal = true;
-        else horizontal = false;
-
-        if (horizontal) targetPosition = new Vector2(parent.position.x + Util.playableArea, transform.position.y);
-        else targetPosition = new Vector2(transform.position.x, parent.position.y + Util.playableArea);
+        targetPosition = Util.getRandomPosition(transform.parent, 0);
     }
 
     private void shoot()
     {
         GameObject[] bullets = new GameObject[4];
-        float angle = 0;
+        float angle = Random.Range(0f, 360f);
         for (int i = 0; i < bullets.Length; i++)
         {
             bullets[i] = bulletsPool.getBullet();
@@ -45,25 +35,20 @@ public class Octopus : Enemy
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
             rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
-            angle += 90;
+            angle += 25;
         }
     }
 
     public override void move()
     {
+        transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
         rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime));
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)
             {
                 //Change destination target
-                direction *= -1;
-                if (horizontal) targetPosition = new Vector2(parent.position.x + (Util.playableArea * direction), targetPosition.y);
-                else targetPosition = new Vector2(targetPosition.x, parent.position.y + (Util.playableArea * direction));
-
-
-                if (currentDestination == 1) currentDestination = 0;
-                else currentDestination = 1;
+                targetPosition = Util.getRandomPosition(transform.parent, 0);
                 waitTime = startWaitTime;
             }
             else
@@ -75,7 +60,7 @@ public class Octopus : Enemy
         if (waitShootTime < 0)
         {
             shoot();
-            waitShootTime = startWaitShootTime;
+            waitShootTime = Random.Range(3f, 6f);
         }
         else
         {

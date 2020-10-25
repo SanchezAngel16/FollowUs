@@ -40,7 +40,6 @@ public class Monster : Enemy
         for (int i = 0; i < bullets.Length; i++)
         {
             bullets[i] = bulletsPool.getBullet();
-            bullets[i].GetComponent<Bullet>().bulletType = 1;
             bullets[i].transform.position = transform.position;
             bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
             bullets[i].SetActive(true);

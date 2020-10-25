@@ -105,8 +105,7 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    //roomScript.enemiesCount = Random.Range(1, 1);
-                    roomScript.threatType = Random.Range(1,6);
+                    roomScript.threatType = Random.Range(1,7);
                     //roomScript.generateStaticElements(Random.Range(2, 3));
                 }
 
