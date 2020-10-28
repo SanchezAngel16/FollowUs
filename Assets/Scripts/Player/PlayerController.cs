@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
     public void restartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(1);
     }
 
     private void updateHealthUI()

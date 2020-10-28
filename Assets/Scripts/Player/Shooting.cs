@@ -56,6 +56,8 @@ public class Shooting : MonoBehaviour
             }else if(shoot && !shootingJoystick.moving)
             {
                 Shoot();
+                InvokeRepeating("Shoot", 0f, 0.15f);
+                Invoke("CancelShoot", 0.45f);
                 shoot = false;
             }
         }
@@ -66,6 +68,11 @@ public class Shooting : MonoBehaviour
     {
         playerController.GetComponent<SpriteRenderer>().flipX = flip;
         gun.GetComponent<SpriteRenderer>().flipX = flip;
+    }
+
+    private void CancelShoot()
+    {
+        CancelInvoke("Shoot");
     }
 
     public void Shoot()

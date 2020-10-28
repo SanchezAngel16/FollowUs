@@ -84,6 +84,8 @@ public class Main : MonoBehaviour
 
         setGoodAndBadRooms();
 
+        int enemyType = 1;
+
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -105,7 +107,9 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    roomScript.threatType = Random.Range(1,7);
+                    //roomScript.threatType = Random.Range(1,8);
+                    roomScript.threatType = enemyType++;
+                    if (enemyType == 8) enemyType = 1;
                     //roomScript.generateStaticElements(Random.Range(2, 3));
                 }
 
@@ -119,18 +123,11 @@ public class Main : MonoBehaviour
 
                 roomScript.mapLocation = new Vector2Int(col, row);
                 newRoom.GetComponent<SpriteRenderer>().color = rColor;
-
-
-
-                roomScript.generateEnemies();
                 
                 newRoom.SetActive(false);
 
                 roomScript.isRoomActive = false;
                 roomScript.setDoorSprites(mapController.cols, mapController.rows);
-
-
-
                 mapController.map[col, row] = newRoom;
             }
         }

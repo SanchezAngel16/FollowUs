@@ -42,16 +42,16 @@ public class PlayerCollider : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
         if (tag.Equals("Room"))
         {
-            playerController.mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
+            //playerController.mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
             Room currentRoom = collision.gameObject.GetComponent<Room>();
             playerController.currentLocation = currentRoom.mapLocation;
             timer = currentRoom.timer;
-            
+
             if (Vector2Int.Equals(playerController.currentLocation, playerController.gameController.currentActiveRoom))
             {
                 playerController.gameController.setActiveAllUIArrows(true);
@@ -62,7 +62,13 @@ public class PlayerCollider : MonoBehaviour
                 playerController.gameController.setActiveAllUIArrows(false);
             }
         }
-        else if (tag.Equals("Enemy") || tag.Equals("EnemyBullet"))
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        
+        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet"))
         {
             if (hitted) return;
             // Take damage animation and deactivate collider layer.
@@ -80,11 +86,10 @@ public class PlayerCollider : MonoBehaviour
         }else if (tag.Equals("Collectable_Ammo"))
         {
             shooting.reloadBullets(30);
-            collision.gameObject.SetActive(false);
-            
+            Destroy(collision.gameObject);
         }else if (tag.Equals("Collectable_Health"))
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             playerController.updateLifePoints(40);
         }
     }

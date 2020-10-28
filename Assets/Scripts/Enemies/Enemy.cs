@@ -21,6 +21,8 @@ public abstract class Enemy : MonoBehaviour
 
     public GameObject[] collectables;
 
+    private int bulletId = -1;
+
     private void Start()
     {
         initEnemy();
@@ -46,27 +48,32 @@ public abstract class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
+        if (collision.gameObject.GetInstanceID() == bulletId) return;
+        bulletId = collision.gameObject.GetInstanceID();
         if (tag.Equals("PlayerBullet"))
         {
-            removeLifePoints(15);
+            Debug.Log("Hitted");
+            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+            removeLifePoints(40);
             collision.gameObject.SetActive(false);
+            
         }
     }
 
-    public void removeLifePoints(int points)
+    private void removeLifePoints(int points)
     {
         this.lifePoints -= points;
         if (this.lifePoints <= 0)
         {
             if (Random.Range(0, 100) >= 10)
             {
-                //GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
-                GameObject collectable = Instantiate(collectables[1]);
+                Debug.Log("Generate loot");
+                GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
                 collectable.transform.position = transform.position;
+                Debug.Log("Finish generating");
             }
             Destroy(gameObject);
             Main.enemies.Remove(this.transform);
-            
         }
     }
 

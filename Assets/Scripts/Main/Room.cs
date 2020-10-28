@@ -31,6 +31,8 @@ public class Room : MonoBehaviour
     public SpriteRenderer crackEffect;
     public Sprite[] crackSprites;
     private float crackTime;
+
+    private bool firstTime = true;
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -40,12 +42,18 @@ public class Room : MonoBehaviour
         timer = maxTimer;
     }
 
-    
+
 
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(1, backgroundSprites.Length)];
         crackTime = maxTimer / 5;
+    }
+
+    private void OnEnable()
+    {
+        if (!firstTime) generateEnemies();
+        else firstTime = false;
     }
 
     private void Update()
@@ -93,16 +101,41 @@ public class Room : MonoBehaviour
                 break;
             case 6:
                 enemyType = 3;
-                enemiesCount = 3;
+                enemiesCount = 1;
+                break;
+            case 7:
+                enemyType = 4;
+                enemiesCount = 6;
                 break;
         }
 
-        for (int i = 0; i < enemiesCount; i++)  
+        if(enemyType == 4)
         {
-            GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-            Main.enemies.Add(newEnemy.transform.GetChild(1).transform);
+            InvokeRepeating("generateZombies", 0, 1.2f);
+            Invoke("CancelGeneration", 15);
         }
+        else
+        {
+            for (int i = 0; i < enemiesCount; i++)
+            {
+                GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
+                Main.enemies.Add(newEnemy.transform);
+            }
+        }
+        
     }
+
+    private void CancelGeneration()
+    {
+        CancelInvoke("generateZombies");
+    }
+
+    private void generateZombies()
+    {
+        GameObject newZombie = Instantiate(enemiesPrefab[4], enemiesGenerationPoint);
+        Main.enemies.Add(newZombie.transform);
+    }
+
 
     public void setDoorSprites(int cols, int rows)
     {
