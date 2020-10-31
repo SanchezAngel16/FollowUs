@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -20,15 +23,16 @@ public abstract class Enemy : MonoBehaviour
     protected bool collidingStaticObject;
 
     public GameObject[] collectables;
+    protected bool lootMaker = true;
 
-    private int bulletId = -1;
+    protected Room currentRoom;
 
     private void Start()
     {
         initEnemy();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         move();
     }
@@ -48,15 +52,19 @@ public abstract class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
-        if (collision.gameObject.GetInstanceID() == bulletId) return;
-        bulletId = collision.gameObject.GetInstanceID();
+        /*if (collision.gameObject.GetInstanceID() == bulletId) return;
+        bulletId = collision.gameObject.GetInstanceID();*/
         if (tag.Equals("PlayerBullet"))
         {
-            Debug.Log("Hitted");
-            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
             removeLifePoints(40);
             collision.gameObject.SetActive(false);
+            /*Bullet b = collision.gameObject.GetComponent<Bullet>();
+            if (b.bulletId == lastBulletId) return;
+            lastBulletId = b.bulletId;
+            //Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
             
+            
+            b.activate(false);*/
         }
     }
 
@@ -65,12 +73,10 @@ public abstract class Enemy : MonoBehaviour
         this.lifePoints -= points;
         if (this.lifePoints <= 0)
         {
-            if (Random.Range(0, 100) >= 10)
+            if (Random.Range(0, 100) >= 10 && lootMaker)
             {
-                Debug.Log("Generate loot");
                 GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
                 collectable.transform.position = transform.position;
-                Debug.Log("Finish generating");
             }
             Destroy(gameObject);
             Main.enemies.Remove(this.transform);
@@ -79,4 +85,9 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract void initEnemy();
     public abstract void move();
+
+    public void setCurrentRoom(Room r)
+    {
+        currentRoom = r;
+    }
 }

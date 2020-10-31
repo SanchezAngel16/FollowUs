@@ -14,6 +14,7 @@ TagManager:
   - Pickable_Area
   - Collectable_Ammo
   - Collectable_Health
+  - EmptyRoom
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - Player
   - Enemy
   - EnemyHitBox
-  - 
-  - 
+  - Bullet
+  - EnemyZombie
   - 
   - 
   - 

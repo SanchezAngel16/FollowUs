@@ -12,7 +12,7 @@ public class Zombie : Enemy
         lifePoints = 150;
         waitTime = startWaitTime;
         speed = Random.Range(1f, 2f);
-        transform.position = Util.getRandomPosition(transform.parent, 0);
+        //transform.position = Util.getRandomPosition(transform.parent, 0);
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 

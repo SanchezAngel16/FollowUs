@@ -42,27 +42,7 @@ public class PlayerCollider : MonoBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        string tag = collision.gameObject.tag;
-        if (tag.Equals("Room"))
-        {
-            //playerController.mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
-            Room currentRoom = collision.gameObject.GetComponent<Room>();
-            playerController.currentLocation = currentRoom.mapLocation;
-            timer = currentRoom.timer;
-
-            if (Vector2Int.Equals(playerController.currentLocation, playerController.gameController.currentActiveRoom))
-            {
-                playerController.gameController.setActiveAllUIArrows(true);
-                playerController.gameController.updateUIArrows();
-            }
-            else
-            {
-                playerController.gameController.setActiveAllUIArrows(false);
-            }
-        }
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -91,6 +71,25 @@ public class PlayerCollider : MonoBehaviour
         {
             Destroy(collision.gameObject);
             playerController.updateLifePoints(40);
+        }else if (tag.Equals("Room"))
+        {
+            //playerController.mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
+            Room currentRoom = collision.gameObject.GetComponent<Room>();
+            playerController.currentLocation = currentRoom.mapLocation;
+            timer = currentRoom.timer;
+            if (currentRoom.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
+            if (Vector2Int.Equals(playerController.currentLocation, playerController.gameController.currentActiveRoom))
+            {
+                playerController.gameController.setActiveAllUIArrows(true);
+                playerController.gameController.updateUIArrows();
+            }
+            else
+            {
+                playerController.gameController.setActiveAllUIArrows(false);
+            }
+        }else if (tag.Equals("EmptyRoom"))
+        {
+            playerController.updateLifePoints(-playerController.lifePoints);
         }
     }
 
@@ -101,6 +100,7 @@ public class PlayerCollider : MonoBehaviour
         {
             reloadButton.gameObject.SetActive(false);
         }
+        
     }
 
     private void startHitAnimation()

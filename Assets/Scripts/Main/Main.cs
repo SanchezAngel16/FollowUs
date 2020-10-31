@@ -33,6 +33,8 @@ public class Main : MonoBehaviour
 
     //public PlayerController playerController;
 
+    private int enemyType;
+
     private void Awake()
     {
         checkRunningPlatform();
@@ -81,11 +83,8 @@ public class Main : MonoBehaviour
     private void createMap(float wRoom, float hRoom)
     {
         Color rColor;
-
         setGoodAndBadRooms();
-
-        int enemyType = 1;
-
+        enemyType = 4;
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -107,10 +106,11 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    //roomScript.threatType = Random.Range(1,8);
+                    //roomScript.threatType = Random.Range(8,9);
+                    //roomScript.threatType = Random.Range(7,8);
                     roomScript.threatType = enemyType++;
-                    if (enemyType == 8) enemyType = 1;
-                    //roomScript.generateStaticElements(Random.Range(2, 3));
+                    if (enemyType == 9) enemyType = 1;
+                    
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
@@ -148,19 +148,19 @@ public class Main : MonoBehaviour
         switch (direction)
         {
             case RIGHT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().right.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().rightDoor.gameObject.SetActive(false);
                 doorToDeactivate = LEFT_DIR;
                 break;
             case LEFT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().left.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().leftDoor.gameObject.SetActive(false);
                 doorToDeactivate = RIGHT_DIR;
                 break;
             case UP_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().up.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().upDoor.gameObject.SetActive(false);
                 doorToDeactivate = DOWN_DIR;
                 break;
             case DOWN_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().down.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().downDoor.gameObject.SetActive(false);
                 doorToDeactivate = UP_DIR;
                 break;
         }
@@ -173,16 +173,16 @@ public class Main : MonoBehaviour
         switch (doorToDeactivate)
         {
             case RIGHT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().right.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().rightDoor.gameObject.SetActive(false);
                 break;
             case LEFT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().left.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().leftDoor.gameObject.SetActive(false);
                 break;
             case UP_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().up.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().upDoor.gameObject.SetActive(false);
                 break;
             case DOWN_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().down.gameObject.SetActive(false);
+                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().downDoor.gameObject.SetActive(false);
                 break;
         }
 

@@ -100,6 +100,8 @@ public class PlayerController : MonoBehaviour
 
             if (moveInput.x != 0 || moveInput.y != 0) animator.SetFloat("speed", 1);
             else animator.SetFloat("speed", 0);
+
+            
         }
     }
 
