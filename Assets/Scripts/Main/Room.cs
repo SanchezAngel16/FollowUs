@@ -43,6 +43,8 @@ public class Room : MonoBehaviour
 
     private bool firstTimeDestroying;
 
+    private int currentCrackSprite = -1;
+
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -74,27 +76,30 @@ public class Room : MonoBehaviour
         {
             timer -= Time.deltaTime;
             if (timer > crackTime * 4) crackEffect.sprite = null;
-            else if (timer > crackTime * 3) crackEffect.sprite = crackSprites[0];
-            else if (timer > crackTime * 2) crackEffect.sprite = crackSprites[1];
-            else if (timer > crackTime * 1) crackEffect.sprite = crackSprites[2];
-            else if (timer > 0) crackEffect.sprite = crackSprites[3];
+            else if (timer > crackTime * 3) setCrackSprite(0);
+            else if (timer > crackTime * 2) setCrackSprite(1);
+            else if (timer > crackTime * 1) setCrackSprite(2);
+            else if (timer > 0) setCrackSprite(3);
         }
         else
         {
             if (firstTimeDestroying)
             {
                 Instantiate(emptyRoom).transform.position = this.transform.position;
-                Invoke("desactivateRoom", 5);
-                GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
+                this.isDestroyed = true;
+                this.gameObject.SetActive(false);
                 firstTimeDestroying = false;
             }
         }
     }
 
-    private void desactivateRoom()
+    private void setCrackSprite(int index)
     {
-        this.isDestroyed = true;
-        this.gameObject.SetActive(false);
+        if(currentCrackSprite != index)
+        {
+            currentCrackSprite = index;
+            crackEffect.sprite = crackSprites[index];
+        }
     }
 
     public void generateEnemies()
@@ -133,6 +138,10 @@ public class Room : MonoBehaviour
                 break;
             case 8:
                 enemyType = 5;
+                break;
+            case 9:
+                enemyType = 6;
+                enemiesCount = 1;
                 break;
         }
 

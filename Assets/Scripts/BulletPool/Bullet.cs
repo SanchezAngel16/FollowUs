@@ -9,12 +9,11 @@ public class Bullet : MonoBehaviour
     {
         string tag = collision.gameObject.tag;
         if (tag.Equals("StaticObject")) activate(false);
+        else if (tag.Equals("StaticObjectEnemy") && this.tag.Equals("PlayerBullet")) activate(false);
     }
 
     public void activate(bool active)
     {
         gameObject.SetActive(active);
     }
-
-    
 }

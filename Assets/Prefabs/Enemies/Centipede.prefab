@@ -286,6 +286,7 @@ MonoBehaviour:
   startWaitTime: 0
   lifePoints: 150
   bulletsPool: {fileID: 7910722168547969195}
+  rb: {fileID: 7910722168767693052}
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
@@ -295,3 +296,4 @@ MonoBehaviour:
   bodySprites:
   - {fileID: 21300000, guid: e4c040ca8f6587740a5d26aec8f03007, type: 3}
   - {fileID: 21300000, guid: 7a947c0092d7bd649893d6bf8e0a3896, type: 3}
+  spriteRenderer: {fileID: 7910722168767693027}

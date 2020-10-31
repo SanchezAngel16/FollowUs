@@ -22,13 +22,14 @@ public class Shooting : MonoBehaviour
     public Joystick shootingJoystick;
     private bool shoot = false;
 
+    private Vector2 lookAt;
 
     private void Start()
     {
         maxBulletsCount = 300;
         bulletsCount = maxBulletsCount;
         updateBulletsCountText();
-
+        lookAt = new Vector2(0, 0);
         if (Main.runningOnPC) shootingJoystick.gameObject.SetActive(false);
     }
 
@@ -43,7 +44,8 @@ public class Shooting : MonoBehaviour
         }
         else
         {
-            Vector2 lookAt = new Vector2(shootingJoystick.Horizontal, shootingJoystick.Vertical);
+            lookAt.x = shootingJoystick.Horizontal;
+            lookAt.y = shootingJoystick.Vertical;
             if(Mathf.Abs(lookAt.x) > .2f || Mathf.Abs(lookAt.y) > .2f)
             {
                 if (lookAt.x < .2f) flipGun(false);
@@ -77,7 +79,7 @@ public class Shooting : MonoBehaviour
 
     public void Shoot()
     {
-        if(!(bulletsCount <= 0))
+        if(!(bulletsCount <= 0) && playerController.living)
         {
             /*   SHOOT AT NEAREST TARGET 
             Transform target = getNearestTarget(Main.enemies);

@@ -111,7 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6877810393134003123}
   m_Layer: 0
-  m_Name: GolemEnemy
+  m_Name: EnemyGolem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   startWaitTime: 0.001
   lifePoints: 150
   bulletsPool: {fileID: 6877810392391143444}
+  rb: {fileID: 6374024173846037970}
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}

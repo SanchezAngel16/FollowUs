@@ -241,6 +241,7 @@ MonoBehaviour:
   startWaitTime: 0.8
   lifePoints: 100
   bulletsPool: {fileID: 9099488109133007161}
+  rb: {fileID: 8080623636181263768}
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}

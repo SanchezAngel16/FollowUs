@@ -9,14 +9,21 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
 
     public float smoothSpeed = 0.125f;
-    public Vector3 offset;
+
+    private Vector3 desiredPosition;
+    private Vector3 smoothedPosition;
+
+    private void Start()
+    {
+        desiredPosition = new Vector3(0, 0, transform.position.z);
+        smoothedPosition = new Vector3(0,0,0);
+    }
 
     void FixedUpdate()
     {
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, new Vector3(desiredPosition.x, desiredPosition.y, transform.position.z), smoothSpeed);
+        desiredPosition.x = target.position.x;
+        desiredPosition.y = target.position.y;
+        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
-
-        //transform.LookAt(target);
     }
 }

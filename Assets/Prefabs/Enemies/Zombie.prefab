@@ -158,7 +158,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.22}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.23
 --- !u!50 &8984142617320297623
 Rigidbody2D:
   serializedVersion: 4
@@ -196,6 +196,7 @@ MonoBehaviour:
   startWaitTime: 0
   lifePoints: 150
   bulletsPool: {fileID: 0}
+  rb: {fileID: 8984142617320297623}
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}

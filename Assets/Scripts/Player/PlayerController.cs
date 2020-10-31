@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveVelocity;
     private Vector2 mousePos;
     private Vector2 moveInput;
+    private Vector2 lookDir;
 
     public Camera mainCamera;
 
@@ -32,16 +33,28 @@ public class PlayerController : MonoBehaviour
     public bool targeting;
 
     public Button restart;
+
+    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer gunSpriteRenderer;
+
+    private bool flipped;
+
+    private Vector3 lookAngle;
     void Start()
     {
         living = true;
         lifePoints = maxLifePoints;
         slider.maxValue = maxLifePoints;
         slider.value = slider.maxValue;
-        rb = GetComponent<Rigidbody2D>();
+
+        gunSpriteRenderer = gun.GetComponent<SpriteRenderer>();
 
         moveInput = new Vector2(0, 0);
         mousePos = new Vector2(0, 0);
+        lookDir = new Vector2(0, 0);
+        lookAngle = new Vector3(0, 0, 0);
+
+        flipped = false;
 
         if (Main.runningOnPC)
         {
@@ -57,51 +70,36 @@ public class PlayerController : MonoBehaviour
             mousePos.x = mousePos.y = 0;
             if (Main.runningOnPC)
             {
-                moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                //moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                moveInput.x = Input.GetAxisRaw("Horizontal");
+                moveInput.y = Input.GetAxisRaw("Vertical");
                 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 lookDir = mousePos - rb.position;
-                float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-                gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-                if (moveInput.x > 0) flipPlayer(-1);
-                if (moveInput.x < 0) flipPlayer(1);
-                if (mousePos.x > transform.position.x) flipPlayer(-1);
-                if (mousePos.x < transform.position.x) flipPlayer(1);
+                lookDir = mousePos - rb.position;
+                lookAngle.z = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+                gun.transform.localRotation = Quaternion.Euler(lookAngle);
+                if (moveInput.x > 0 && !flipped) flipPlayer(-1);
+                if (moveInput.x < 0 && flipped) flipPlayer(1);
+                if (mousePos.x > transform.position.x && !flipped) flipPlayer(-1);
+                if (mousePos.x < transform.position.x && flipped) flipPlayer(1);
             }
             else
             {
-                moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+                /*moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+                moveInput.x = joystick.Horizontal;*/
                 if(Mathf.Abs(joystick.Horizontal) > .2f) moveInput.x = joystick.Horizontal;
                 else moveInput.x = 0;
 
                 if(Mathf.Abs(joystick.Vertical) > .2f) moveInput.y = joystick.Vertical;
                 else moveInput.y = 0;
 
-                if (moveInput.x > 0) flipPlayer(-1);
-                if (moveInput.x < 0) flipPlayer(1);
+                if (moveInput.x > 0 && !spriteRenderer.flipX) spriteRenderer.flipX = true;
+                if (moveInput.x < 0 && spriteRenderer) spriteRenderer.flipX = false;
             }
 
             moveVelocity = moveInput.normalized * speed;
-            /*if (moveInput.x > 0) flipPlayer(-1);
-            if (moveInput.x < 0) flipPlayer(1);
-            if (mousePos.x > transform.position.x) flipPlayer(-1);
-            if (mousePos.x < transform.position.x) flipPlayer(1);*/
-            
-
-            
-            // ROTATE GUN FROM JOYSTICK COORDINATES
-            /*if((moveInput.x != 0 || moveInput.y != 0) && !targeting)
-            {
-                Vector2 lookDir = mousePos - rb.position;
-                float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg - 90f;
-                gun.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            }*/
-
-
 
             if (moveInput.x != 0 || moveInput.y != 0) animator.SetFloat("speed", 1);
             else animator.SetFloat("speed", 0);
-
-            
         }
     }
 
@@ -119,13 +117,15 @@ public class PlayerController : MonoBehaviour
     {
         if (flip < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-            gun.GetComponent<SpriteRenderer>().flipX = true;
+            flipped = true;
+            spriteRenderer.flipX = true;
+            gunSpriteRenderer.flipX = true;
         }
         else
         {
-            GetComponent<SpriteRenderer>().flipX = false;
-            gun.GetComponent<SpriteRenderer>().flipX = false;
+            flipped = false;
+            spriteRenderer.flipX = false;
+            gunSpriteRenderer.flipX = false;
         }
     }
 

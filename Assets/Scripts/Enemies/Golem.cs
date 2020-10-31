@@ -13,7 +13,6 @@ public class Golem : Enemy
 
     public override void initEnemy()
     {
-        rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitShootTime = startWaitShootTime;
         if (Random.Range(0, 10) >= 10) direction = 1;
@@ -26,7 +25,7 @@ public class Golem : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[currentTargetPositionIndex], speed * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[currentTargetPositionIndex], speed * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[currentTargetPositionIndex]) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)

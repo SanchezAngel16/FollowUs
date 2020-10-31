@@ -18,11 +18,11 @@ public class Centipede : Enemy
     private float startMoveTime;
 
     public Sprite[] bodySprites;
+    public SpriteRenderer spriteRenderer;
 
 
     public override void initEnemy()
     {
-        rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         transform.position = new Vector2(transform.position.x + Util.playableArea-.5f, transform.position.y - Util.playableArea+.5f);
         pathPositions = currentRoom.centipedePoints;
@@ -34,7 +34,7 @@ public class Centipede : Enemy
         if(startMoveTime <= 0)
         {
             
-            rb.MovePosition(Vector2.MoveTowards(transform.position, pathPositions[targetIndex].position, speed * Time.deltaTime));
+            rb.MovePosition(Vector2.MoveTowards(transform.position, pathPositions[targetIndex].position, speed * Time.fixedDeltaTime));
             if (Vector2.Distance(transform.position, pathPositions[targetIndex].position) < 0.2f || collidingStaticObject)
             {
                 if (waitTime < 0)
@@ -102,11 +102,11 @@ public class Centipede : Enemy
 
     private void setSprite()
     {
-        if (this.head) GetComponent<SpriteRenderer>().sprite = bodySprites[0];
+        if (this.head) spriteRenderer.sprite = bodySprites[0];
         else
         {
             lootMaker = false;
-            GetComponent<SpriteRenderer>().sprite = bodySprites[1];
+            spriteRenderer.sprite = bodySprites[1];
         }
     }
 }

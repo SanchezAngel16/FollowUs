@@ -11,7 +11,6 @@ public class Monster : Enemy
 
     public override void initEnemy()
     {
-        rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitTime = startWaitTime;
         parent = transform.parent;
@@ -52,7 +51,7 @@ public class Monster : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], speed * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], speed * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[nextTargetIndex]) < 0.2f || collidingStaticObject)
         {
             if (!shooting) shoot();

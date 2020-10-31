@@ -8,7 +8,6 @@ public class Zombie : Enemy
 
     public override void initEnemy()
     {
-        rb = GetComponent<Rigidbody2D>();
         lifePoints = 150;
         waitTime = startWaitTime;
         speed = Random.Range(1f, 2f);
@@ -20,7 +19,7 @@ public class Zombie : Enemy
     {
         if(Vector2.Distance(transform.position, target.position) > 0.2f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
         }
     }
 }

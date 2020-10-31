@@ -84,7 +84,7 @@ public class Main : MonoBehaviour
     {
         Color rColor;
         setGoodAndBadRooms();
-        enemyType = 4;
+        enemyType = 3;
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -101,15 +101,14 @@ public class Main : MonoBehaviour
                 
                 if (col == 0 && row == 0)
                 {
-                    //roomScript.enemiesCount = 0;
                     roomScript.generateStaticElements(1);
                 }
                 else
                 {
                     //roomScript.threatType = Random.Range(8,9);
-                    //roomScript.threatType = Random.Range(7,8);
-                    roomScript.threatType = enemyType++;
-                    if (enemyType == 9) enemyType = 1;
+                    roomScript.threatType = Random.Range(9,10);
+                    //roomScript.threatType = enemyType++;
+                    if (enemyType == 10) enemyType = 1;
                     
                 }
 
@@ -145,22 +144,23 @@ public class Main : MonoBehaviour
     private void desactivateDoor(int x, int y, int direction)
     {
         int doorToDeactivate = 0;
+        Room room = mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>();
         switch (direction)
         {
             case RIGHT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().rightDoor.gameObject.SetActive(false);
+                room.rightDoor.gameObject.SetActive(false);
                 doorToDeactivate = LEFT_DIR;
                 break;
             case LEFT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().leftDoor.gameObject.SetActive(false);
+                room.leftDoor.gameObject.SetActive(false);
                 doorToDeactivate = RIGHT_DIR;
                 break;
             case UP_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().upDoor.gameObject.SetActive(false);
+                room.upDoor.gameObject.SetActive(false);
                 doorToDeactivate = DOWN_DIR;
                 break;
             case DOWN_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().downDoor.gameObject.SetActive(false);
+                room.downDoor.gameObject.SetActive(false);
                 doorToDeactivate = UP_DIR;
                 break;
         }
@@ -168,35 +168,28 @@ public class Main : MonoBehaviour
         currentActiveRoom.x += x;
         currentActiveRoom.y += y;
         mapController.map[currentActiveRoom.x, currentActiveRoom.y].SetActive(true);
-        mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().isRoomActive = true;
+        room = mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>();
+        room.isRoomActive = true;
 
         switch (doorToDeactivate)
         {
             case RIGHT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().rightDoor.gameObject.SetActive(false);
+                room.rightDoor.gameObject.SetActive(false);
                 break;
             case LEFT_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().leftDoor.gameObject.SetActive(false);
+                room.leftDoor.gameObject.SetActive(false);
                 break;
             case UP_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().upDoor.gameObject.SetActive(false);
+                room.upDoor.gameObject.SetActive(false);
                 break;
             case DOWN_DIR:
-                mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>().downDoor.gameObject.SetActive(false);
+                room.downDoor.gameObject.SetActive(false);
                 break;
         }
 
-        if (Vector2Int.Equals(currentActiveRoom, mapController.goodRoom))
-        {
-            setGameOverText(true, "You win!");
-        }else if (Vector2Int.Equals(currentActiveRoom, mapController.badRoom))
-        {
-            setGameOverText(true, "You lose!");
-        }
-        else
-        {
-            setGameOverText(false, "");
-        }
+        if (Vector2Int.Equals(currentActiveRoom, mapController.goodRoom)) setGameOverText(true, "You win!");
+        else if (Vector2Int.Equals(currentActiveRoom, mapController.badRoom))setGameOverText(true, "You lose!");
+        else setGameOverText(false, "");
 
         mapController.updatePosibleDirections();
         setActiveAllUIArrows(false);

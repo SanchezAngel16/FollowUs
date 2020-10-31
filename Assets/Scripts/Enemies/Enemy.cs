@@ -18,7 +18,7 @@ public abstract class Enemy : MonoBehaviour
 
 
     public BulletPool bulletsPool;
-    protected Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     protected bool collidingStaticObject;
 
@@ -52,19 +52,10 @@ public abstract class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
-        /*if (collision.gameObject.GetInstanceID() == bulletId) return;
-        bulletId = collision.gameObject.GetInstanceID();*/
         if (tag.Equals("PlayerBullet"))
         {
             removeLifePoints(40);
             collision.gameObject.SetActive(false);
-            /*Bullet b = collision.gameObject.GetComponent<Bullet>();
-            if (b.bulletId == lastBulletId) return;
-            lastBulletId = b.bulletId;
-            //Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-            
-            
-            b.activate(false);*/
         }
     }
 
