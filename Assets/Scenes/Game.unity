@@ -1628,8 +1628,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 555166630}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 1251824197}
+        m_TargetAssemblyTypeName: Main, Assembly-CSharp
         m_MethodName: restartGame
         m_Mode: 1
         m_Arguments:
@@ -1845,10 +1845,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28cd5fafc31e8540a272a2807270f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cols: 9
-  rows: 9
+  cols: 6
+  rows: 6
   goodRoom: {x: 0, y: 0}
   badRoom: {x: 0, y: 0}
+  startRoom: {x: 0, y: 0}
 --- !u!1 &785520932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,6 +2832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectMap: {fileID: 774291037}
+  mapController: {fileID: 774291039}
   roomPrefab: {fileID: 7099209808659752680, guid: 0ff9c4643a2d09847bf44e5954a30a0e, type: 3}
   right: {fileID: 344714046}
   left: {fileID: 1734886157}
@@ -2838,7 +2840,11 @@ MonoBehaviour:
   down: {fileID: 603011571}
   gameOverText: {fileID: 222568502}
   currentActiveRoom: {x: 0, y: 0}
+  enemies: []
+  enemiesCount: 0
+  runningOnPC: 0
   timerText: {fileID: 962804350}
+  playerController: {fileID: 555166630}
 --- !u!4 &1251824198
 Transform:
   m_ObjectHideFlags: 0
@@ -4973,7 +4979,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -732881259
   m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c35e00992fa76444d822311c3f7d7a50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

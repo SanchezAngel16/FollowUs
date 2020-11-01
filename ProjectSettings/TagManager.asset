@@ -15,6 +15,7 @@ TagManager:
   - Collectable_Ammo
   - Collectable_Health
   - EmptyRoom
+  - StaticObjectEnemy
   layers:
   - Default
   - TransparentFX

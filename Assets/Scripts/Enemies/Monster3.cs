@@ -60,21 +60,6 @@ public class Monster3 : Enemy
     {
         rotateBlocks(blocks, 300);
         rotateBlocks(blocks_2, 180);
-        /*transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime));
-        if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
-        {
-            if (waitTime < 0)
-            {
-                //Change destination target
-                targetPosition = Util.getRandomPosition(transform.parent, 0);
-                waitTime = startWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
-        }*/
 
         if (waitShootTime < 0)
         {

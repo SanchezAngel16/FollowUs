@@ -73,19 +73,19 @@ public class PlayerCollider : MonoBehaviour
             playerController.updateLifePoints(40);
         }else if (tag.Equals("Room"))
         {
-            //playerController.mainCamera.GetComponent<CameraFollow>().moveCamera(collision.transform.position);
             Room currentRoom = collision.gameObject.GetComponent<Room>();
             playerController.currentLocation = currentRoom.mapLocation;
             timer = currentRoom.timer;
             if (currentRoom.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
-            if (Vector2Int.Equals(playerController.currentLocation, playerController.gameController.currentActiveRoom))
+            if (Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.goodRoom))
             {
-                playerController.gameController.setActiveAllUIArrows(true);
-                playerController.gameController.updateUIArrows();
-            }
-            else
+                playerController.restart.gameObject.SetActive(true);
+                Main.Instance.setActiveAllUIArrows(false);
+            }else if(Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.badRoom))
             {
-                playerController.gameController.setActiveAllUIArrows(false);
+                playerController.updateLifePoints(-playerController.lifePoints);
+                playerController.restart.gameObject.SetActive(true);
+                Main.Instance.setActiveAllUIArrows(false);
             }
         }else if (tag.Equals("EmptyRoom"))
         {

@@ -25,7 +25,7 @@ public class Room : MonoBehaviour
     public GameObject[] staticElements;
 
     public Transform[] corners;
-    public Transform[] centipedePoints;
+    public CentipedePoint[] centipedePoints;
 
     public float timer;
     public float maxTimer;
@@ -45,6 +45,8 @@ public class Room : MonoBehaviour
 
     private int currentCrackSprite = -1;
 
+    private int enemiesCount;
+
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -62,6 +64,7 @@ public class Room : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(1, backgroundSprites.Length)];
         crackTime = maxTimer / 5;
+        enemiesCount = 0;
     }
 
     private void OnEnable()
@@ -69,6 +72,7 @@ public class Room : MonoBehaviour
         if (!firstTime) generateEnemies();
         else firstTime = false;
     }
+
 
     private void Update()
     {
@@ -158,23 +162,26 @@ public class Room : MonoBehaviour
             Invoke("CancelGeneration", 15);
         }else if (enemyType == 5)
         {
-            for(int i = 0; i < 14; i++)
-            {
-                GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-                if(i == 0) newCentipede.transform.GetChild(1).GetComponent<Centipede>().setCentipedeAttributes(true, i, this);
-                else newCentipede.transform.GetChild(1).GetComponent<Centipede>().setCentipedeAttributes(false, i, this);
-                Main.enemies.Add(newCentipede.transform);
-            }
+            GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
+            newCentipede.GetComponent<Centipede>().initCentipede(this);
+            Main.Instance.enemies.Add(newCentipede.transform);
+            Main.Instance.enemiesCount++;
         }
         else
         {
             for (int i = 0; i < enemiesCount; i++)
             {
                 GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-                Main.enemies.Add(newEnemy.transform);
+                Main.Instance.enemies.Add(newEnemy.transform);
+                Main.Instance.enemiesCount++;
             }
         }
         
+    }
+
+    public void updateEnemiesCount(int count)
+    {
+        this.enemiesCount += count;
     }
 
     private void CancelGeneration()
@@ -186,7 +193,8 @@ public class Room : MonoBehaviour
     {
         GameObject newZombie = Instantiate(enemiesPrefab[4], enemiesGenerationPoint );
         newZombie.transform.position = corners[cornersIndex[Random.Range(0, cornersIndex.Length)]].transform.position;
-        Main.enemies.Add(newZombie.transform);
+        Main.Instance.enemies.Add(newZombie.transform);
+        Main.Instance.enemiesCount++;
     }
 
 

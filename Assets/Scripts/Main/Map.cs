@@ -10,7 +10,7 @@ public class Map : MonoBehaviour
 
     public Vector2Int goodRoom;
     public Vector2Int badRoom;
-
+    public Vector2Int startRoom;
 
     public void initMapArray()
     {

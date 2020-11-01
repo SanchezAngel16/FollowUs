@@ -30,12 +30,12 @@ public class Shooting : MonoBehaviour
         bulletsCount = maxBulletsCount;
         updateBulletsCountText();
         lookAt = new Vector2(0, 0);
-        if (Main.runningOnPC) shootingJoystick.gameObject.SetActive(false);
+        if (Main.Instance.runningOnPC) shootingJoystick.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (Main.runningOnPC)
+        if (Main.Instance.runningOnPC)
         {
             if (Input.GetButtonDown("Fire1"))
             {

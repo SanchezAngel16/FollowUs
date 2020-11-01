@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Main : MonoBehaviour
     private const int DOWN_DIR = 3;
 
     public GameObject gameObjectMap;
-    Map mapController;
+    public Map mapController;
     public GameObject roomPrefab;
 
     Vector2 roomSize;
@@ -26,32 +27,60 @@ public class Main : MonoBehaviour
 
     public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
-    public static List<Transform> enemies = new List<Transform>();
-    public static bool runningOnPC;
+    public List<Transform> enemies = new List<Transform>();
+    public int enemiesCount = 0;
+    public bool runningOnPC;
 
     public TextMeshProUGUI timerText;
 
-    //public PlayerController playerController;
+    public PlayerController playerController;
 
-    private int enemyType;
+    private static Main instance = null;
 
-    private void Awake()
+    public static Main Instance
     {
-        checkRunningPlatform();
+        get
+        {
+            return instance;
+        }
+    }
+    void Awake()
+    {
+
+        if (instance == null)
+        {
+
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+
+            checkRunningPlatform();
+            Application.targetFrameRate = 60;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     void Start()
     {
+        initGame();
+    }
+
+    private void initGame()
+    {
         enemies.Clear();
         roomSize = new Vector2(roomPrefab.GetComponent<Renderer>().bounds.size.x, roomPrefab.GetComponent<Renderer>().bounds.size.y);
-        
+
         mapController = gameObjectMap.GetComponent<Map>();
         mapController.initMapArray();
         createMap(roomSize.x, roomSize.y);
-        mapController.map[0, 0].GetComponent<Room>().isRoomActive = true;
-        mapController.map[0, 0].SetActive(true);
+        GameObject startRoom = mapController.map[mapController.startRoom.x, mapController.startRoom.y];
+        startRoom.GetComponent<Room>().isRoomActive = true;
+        startRoom.SetActive(true);
+        playerController.transform.position = startRoom.transform.position;
         mapController.updatePosibleDirections();
-
+        enemiesCount = 0;
         initUI();
     }
 
@@ -71,20 +100,27 @@ public class Main : MonoBehaviour
         initializeArrows();
     }
 
-    private void setGoodAndBadRooms()
+    private void setRoomsType()
     {
-        mapController.goodRoom = new Vector2Int(Random.Range(1, mapController.cols), Random.Range(1, mapController.rows));
+        mapController.goodRoom = new Vector2Int(Random.Range(0, mapController.cols), Random.Range(0, mapController.rows));
         do
         {
-            mapController.badRoom = new Vector2Int(Random.Range(1, mapController.cols), Random.Range(1, mapController.rows));
+            mapController.badRoom = new Vector2Int(Random.Range(0, mapController.cols), Random.Range(0, mapController.rows));
         } while (Vector2Int.Equals(mapController.goodRoom, mapController.badRoom));
+
+        do
+        {
+            mapController.startRoom = new Vector2Int(Random.Range(0, mapController.cols), Random.Range(0, mapController.rows));
+        } while (Vector2Int.Equals(mapController.startRoom, mapController.goodRoom) 
+        && Vector2Int.Equals(mapController.startRoom, mapController.goodRoom));
+
+        currentActiveRoom = mapController.startRoom;
     }
 
     private void createMap(float wRoom, float hRoom)
     {
         Color rColor;
-        setGoodAndBadRooms();
-        enemyType = 3;
+        setRoomsType();
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -99,17 +135,15 @@ public class Main : MonoBehaviour
                 newRoom.transform.position = new Vector2(posX, posY);
 
                 
-                if (col == 0 && row == 0)
+                if (col == mapController.startRoom.x && row == mapController.startRoom.y)
                 {
                     roomScript.generateStaticElements(1);
+                    newRoom.SetActive(true);
                 }
                 else
                 {
-                    //roomScript.threatType = Random.Range(8,9);
-                    roomScript.threatType = Random.Range(9,10);
-                    //roomScript.threatType = enemyType++;
-                    if (enemyType == 10) enemyType = 1;
-                    
+                    roomScript.threatType = Random.Range(8,9);
+                    //roomScript.threatType = Random.Range(1,10);
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
@@ -219,4 +253,10 @@ public class Main : MonoBehaviour
         down.gameObject.SetActive(active);
     }
 
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene(1);
+        initGame();
+    }
 }

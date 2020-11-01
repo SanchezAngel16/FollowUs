@@ -59,7 +59,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void removeLifePoints(int points)
+    protected int removeLifePoints(int points)
     {
         this.lifePoints -= points;
         if (this.lifePoints <= 0)
@@ -70,8 +70,14 @@ public abstract class Enemy : MonoBehaviour
                 collectable.transform.position = transform.position;
             }
             Destroy(gameObject);
-            Main.enemies.Remove(this.transform);
+            Main.Instance.enemies.Remove(this.transform);
+            Main.Instance.enemiesCount--;
+            if (Main.Instance.enemiesCount <= 0)
+            {
+                Main.Instance.updateUIArrows();
+            }
         }
+        return this.lifePoints;
     }
 
     public abstract void initEnemy();

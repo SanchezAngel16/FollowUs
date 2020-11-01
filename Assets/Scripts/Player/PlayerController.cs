@@ -56,10 +56,14 @@ public class PlayerController : MonoBehaviour
 
         flipped = false;
 
-        if (Main.runningOnPC)
+        if (Main.Instance.runningOnPC)
         {
             joystick.gameObject.SetActive(false);
         }
+        /*
+        GameObject[,] m = gameController.mapController.map;
+        transform.position = gameController.mapController.map[gameController.currentActiveRoom.x, gameController.currentActiveRoom.y].transform.position;
+        */
     }
 
     void Update()
@@ -68,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             moveInput.x = moveInput.y = 0;
             mousePos.x = mousePos.y = 0;
-            if (Main.runningOnPC)
+            if (Main.Instance.runningOnPC)
             {
                 //moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                 moveInput.x = Input.GetAxisRaw("Horizontal");
@@ -145,10 +149,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void restartGame()
-    {
-        SceneManager.LoadScene(1);
-    }
 
     private void updateHealthUI()
     {

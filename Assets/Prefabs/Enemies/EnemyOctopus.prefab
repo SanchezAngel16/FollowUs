@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   startWaitTime: 0.8
-  lifePoints: 100
+  lifePoints: 80
   bulletsPool: {fileID: 9099488109133007161}
   rb: {fileID: 8080623636181263768}
   collectables:
