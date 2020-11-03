@@ -112,7 +112,7 @@ public class Main : MonoBehaviour
         {
             mapController.startRoom = new Vector2Int(Random.Range(0, mapController.cols), Random.Range(0, mapController.rows));
         } while (Vector2Int.Equals(mapController.startRoom, mapController.goodRoom) 
-        && Vector2Int.Equals(mapController.startRoom, mapController.goodRoom));
+        || Vector2Int.Equals(mapController.startRoom, mapController.goodRoom));
 
         currentActiveRoom = mapController.startRoom;
     }
@@ -142,8 +142,8 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    roomScript.threatType = Random.Range(8,9);
-                    //roomScript.threatType = Random.Range(1,10);
+                    //roomScript.threatType = Random.Range(8,9);
+                    roomScript.threatType = Random.Range(1,10);
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)

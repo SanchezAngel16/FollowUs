@@ -288,7 +288,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01033397, y: 0}
+  m_Offset: {x: -0.00048077106, y: 0.0036048293}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -299,7 +299,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8873087, y: 1.28}
+  m_Size: {x: 0.793581, y: 0.8402008}
   m_EdgeRadius: 0
 --- !u!114 &8588175304365820666
 MonoBehaviour:
@@ -326,6 +326,7 @@ MonoBehaviour:
   head: {fileID: 0}
   nextBody: {fileID: 0}
   lastBody: {fileID: 0}
+  centipedeHead: {fileID: 7910722168234476862}
+  tail: {fileID: 3810911422431119241}
   points: []
-  nextTarget: {fileID: 0}
-  pathTraveled: []
+  pointsToTravel: []

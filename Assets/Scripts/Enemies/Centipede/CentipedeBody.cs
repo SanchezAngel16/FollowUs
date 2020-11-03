@@ -15,11 +15,17 @@ public abstract class CentipedeBody : Enemy
     public CentipedeBody head;
     public CentipedeBody nextBody;
     public CentipedeBody lastBody;
+    protected CentipedePoint nextTarget;
+
+    public GameObject centipedeHead;
+    public GameObject tail;
 
     /*private bool isHead;
     private int bodyPos;*/
     private int bodyPos;
-    private float startMoveTime;
+    protected float startMoveTime;
+
+    
     public override void initEnemy()
     {
         lifePoints = 150;
@@ -43,7 +49,7 @@ public abstract class CentipedeBody : Enemy
         if (waitShootTime < 0)
         {
             shoot();
-            waitShootTime = Random.Range(2f, 10f);
+            waitShootTime = Random.Range(5f, 15f);
         }
         else
         {
@@ -86,6 +92,12 @@ public abstract class CentipedeBody : Enemy
         this.startMoveTime = bodyPos * 0.15f;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        manageCollision(collision);
+    }
+
+    public abstract void manageCollision(Collider2D collision);
 
     public abstract void manageMovement();
 

@@ -54,29 +54,33 @@ public abstract class Enemy : MonoBehaviour
         string tag = collision.gameObject.tag;
         if (tag.Equals("PlayerBullet"))
         {
-            removeLifePoints(40);
+            if (removeLifePoints(40) <= 0)
+            {
+                if (Random.Range(0, 100) >= 10 && lootMaker)
+                {
+                    GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                    collectable.transform.position = transform.position;
+                }
+                removeEnemy();
+            }
             collision.gameObject.SetActive(false);
+        }
+    }
+
+    protected void removeEnemy()
+    {
+        Destroy(gameObject);
+        Main.Instance.enemies.Remove(this.transform);
+        Main.Instance.enemiesCount--;
+        if (Main.Instance.enemiesCount <= 0)
+        {
+            Main.Instance.updateUIArrows();
         }
     }
 
     protected int removeLifePoints(int points)
     {
         this.lifePoints -= points;
-        if (this.lifePoints <= 0)
-        {
-            if (Random.Range(0, 100) >= 10 && lootMaker)
-            {
-                GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
-                collectable.transform.position = transform.position;
-            }
-            Destroy(gameObject);
-            Main.Instance.enemies.Remove(this.transform);
-            Main.Instance.enemiesCount--;
-            if (Main.Instance.enemiesCount <= 0)
-            {
-                Main.Instance.updateUIArrows();
-            }
-        }
         return this.lifePoints;
     }
 

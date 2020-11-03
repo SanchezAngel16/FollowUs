@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool hit;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
@@ -15,5 +17,10 @@ public class Bullet : MonoBehaviour
     public void activate(bool active)
     {
         gameObject.SetActive(active);
+    }
+
+    private void OnEnable()
+    {
+        hit = false;
     }
 }

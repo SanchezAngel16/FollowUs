@@ -28,4 +28,23 @@ public static class Util
         };
         return posiblePositions[Random.Range(0, posiblePositions.Length)];
     }
+
+    public static CentipedePoint getNearestTarget(Transform currentPosition, CentipedePoint[] elements)
+    {
+        CentipedePoint nearestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        foreach (CentipedePoint potentialTarget in elements)
+        {
+            if (!potentialTarget.gameObject.activeInHierarchy) break;
+            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition.position;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                nearestTarget = potentialTarget;
+            }
+        }
+
+        return nearestTarget;
+    }
 }

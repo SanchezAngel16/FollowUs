@@ -5,49 +5,63 @@ using UnityEngine;
 public class CentipedeHead : CentipedeBody
 {
     public CentipedePoint[] points;
-    public CentipedePoint nextTarget;
     private CentipedePoint lastTarget;
 
-    private int maxPaths = 20;
-    private int ins = 0;
-    public CentipedePoint[] pathTraveled;
+    private bool fixedHead = false;
 
-    private void addPath(CentipedePoint p)
+    public void createFixedHead(Transform nPos)
     {
-        if (ins >= maxPaths)
-        {
-            ins = 0;
-            pathTraveled[ins] = p;
-            ins++;
-        }
-        else
-        {
-            pathTraveled[ins] = p;
-            ins++;
-        }
-    }
-
-    public void setHeadAttributes(Transform nPos, CentipedePoint nextTarget)
-    {
+        points = currentRoom.centipedePoints;
         this.transform.position = nPos.position;
-        this.nextTarget = nextTarget;
+        CentipedePoint nearestPoint = Util.getNearestTarget(transform, points);
+        this.nextTarget = nearestPoint.getRandomPath(nearestPoint);
         this.lastTarget = nextTarget;
-        this.ins = 0;
-        addPath(this.nextTarget);
+        rotate(nextTarget.transform);
+        fixedHead = true;
     }
 
+
+    public override void manageCollision(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("PlayerBullet"))
+        {
+            if (collision.gameObject.GetComponent<Bullet>().hit) return;
+            collision.gameObject.GetComponent<Bullet>().hit = true;
+            collision.gameObject.SetActive(false);
+            if (removeLifePoints(300) <= 0)
+            {
+                if (lastBody != null)
+                {
+                    this.lifePoints = 150;
+
+                    GameObject last = lastBody.gameObject;
+                    transform.position = last.transform.position;
+
+                    if(lastBody.lastBody != null)
+                    {
+                        lastBody.lastBody.nextBody = this;
+                        lastBody = lastBody.lastBody;
+                    }
+
+                    Destroy(last.gameObject);
+                }
+                else removeEnemy();
+            }
+        }
+    }
 
     public override void initCentipedeBody()
     {
-        points = currentRoom.centipedePoints;
-        int targetIndex = Random.Range(0, points.Length);
-        CentipedePoint currentPoint = points[targetIndex];
-        transform.position = currentPoint.transform.position;
-        lastTarget = currentPoint;
-        nextTarget = currentPoint.getRandomPath(lastTarget);
-        rotate(nextTarget.transform);
-        pathTraveled = new CentipedePoint[maxPaths];
-        addPath(nextTarget);
+        if (!fixedHead)
+        {
+            points = currentRoom.centipedePoints;
+            int randomPosition = Random.Range(0, points.Length);
+            transform.position = points[randomPosition].transform.position;
+            this.nextTarget = points[randomPosition];
+            this.lastTarget = nextTarget;
+            rotate(nextTarget.transform);
+        }
     }
 
     public override void manageMovement()
@@ -55,19 +69,12 @@ public class CentipedeHead : CentipedeBody
         rb.MovePosition(Vector2.MoveTowards(transform.position, nextTarget.transform.position, speed * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, nextTarget.transform.position) < 0.2f || collidingStaticObject)
         {
-            if (waitTime < 0)
-            {
-                CentipedePoint temp = nextTarget;
-                nextTarget = nextTarget.getRandomPath(lastTarget);
-                lastTarget = temp;
-                rotate(nextTarget.transform);
-                addPath(nextTarget);
-                waitTime = startWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
+            CentipedePoint temp = nextTarget;
+            nextTarget = nextTarget.getRandomPath(lastTarget);
+            lastTarget = temp;
+            rotate(nextTarget.transform);
         }
     }
+
+    
 }

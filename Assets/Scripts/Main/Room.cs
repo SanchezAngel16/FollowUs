@@ -163,7 +163,7 @@ public class Room : MonoBehaviour
         }else if (enemyType == 5)
         {
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-            newCentipede.GetComponent<Centipede>().initCentipede(this);
+            newCentipede.GetComponent<Centipede>().initBody(this);
             Main.Instance.enemies.Add(newCentipede.transform);
             Main.Instance.enemiesCount++;
         }

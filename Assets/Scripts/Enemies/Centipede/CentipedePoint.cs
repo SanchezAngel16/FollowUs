@@ -15,4 +15,9 @@ public class CentipedePoint : MonoBehaviour
         } while (randomPoint.Equals(t));
         return randomPoint;
     }
+
+    public IEnumerator GetEnumerator()
+    {
+        return (IEnumerator)this;
+    }
 }
