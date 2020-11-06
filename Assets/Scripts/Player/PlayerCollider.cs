@@ -48,7 +48,7 @@ public class PlayerCollider : MonoBehaviour
     {
         string tag = collision.gameObject.tag;
         
-        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet"))
+        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet") || tag.Equals("Laser"))
         {
             if (hitted) return;
             // Take damage animation and deactivate collider layer.
@@ -90,6 +90,19 @@ public class PlayerCollider : MonoBehaviour
         }else if (tag.Equals("EmptyRoom"))
         {
             playerController.updateLifePoints(-playerController.lifePoints);
+        }
+    }
+
+    public void takeDamage(int lifePoints)
+    {
+        if (hitted) return;
+        // Take damage animation and deactivate collider layer.
+        hitted = true;
+        if (playerController.living)
+        {
+            InvokeRepeating("startHitAnimation", 0f, 0.05f);
+            Invoke("stopTakingDamageAnimation", 3.5f);
+            playerController.updateLifePoints(-lifePoints);
         }
     }
 

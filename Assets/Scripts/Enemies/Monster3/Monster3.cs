@@ -8,8 +8,8 @@ public class Monster3 : Enemy
     public float startWaitShootTime;
 
     public Transform[] blocks;
-    public Transform[] blocks_2;
-
+    public GameObject[] balls;
+    public int shieldsCount;
 
     public override void initEnemy()
     {
@@ -17,6 +17,7 @@ public class Monster3 : Enemy
         startWaitShootTime = Random.Range(2, 4);
         waitShootTime = startWaitShootTime;
         this.transform.position = this.transform.parent.position;
+        shieldsCount = 4;
     }
 
     private void OnDestroy()
@@ -24,11 +25,6 @@ public class Monster3 : Enemy
         for (int i = 0; i < blocks.Length; i++)
         {
             blocks[i].gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i < blocks_2.Length; i++)
-        {
-            blocks_2[i].gameObject.SetActive(false);
         }
     }
 
@@ -44,7 +40,7 @@ public class Monster3 : Enemy
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
             rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
-            angle += 30;
+            angle += 30f;
         }
     }
 
@@ -58,8 +54,7 @@ public class Monster3 : Enemy
 
     public override void move()
     {
-        rotateBlocks(blocks, 300);
-        rotateBlocks(blocks_2, 180);
+        rotateBlocks(blocks, 45);
 
         if (waitShootTime < 0)
         {
@@ -69,6 +64,24 @@ public class Monster3 : Enemy
         else
         {
             waitShootTime -= Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("PlayerBullet") && shieldsCount <= 0)
+        {
+            if (removeLifePoints(40) <= 0)
+            {
+                if (Random.Range(0, 100) >= 10 && lootMaker)
+                {
+                    GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                    collectable.transform.position = transform.position;
+                }
+                removeEnemy();
+            }
+            collision.gameObject.SetActive(false);
         }
     }
 }

@@ -4,12 +4,8 @@ using UnityEngine;
 
 public abstract class CentipedeBody : Enemy
 {
-    /*public CentipedePoint[] points;
-    public CentipedePoint nextTarget;
-    private CentipedePoint lastTarget;*/
     public Transform firePointR;
     public Transform firePointL;
-    //private float startWaitShootTime;
     private float waitShootTime;
 
     public CentipedeBody head;
@@ -20,8 +16,6 @@ public abstract class CentipedeBody : Enemy
     public GameObject centipedeHead;
     public GameObject tail;
 
-    /*private bool isHead;
-    private int bodyPos;*/
     private int bodyPos;
     protected float startMoveTime;
 
@@ -49,7 +43,7 @@ public abstract class CentipedeBody : Enemy
         if (waitShootTime < 0)
         {
             shoot();
-            waitShootTime = Random.Range(5f, 15f);
+            waitShootTime = Random.Range(3f, 10f);
         }
         else
         {
@@ -78,7 +72,6 @@ public abstract class CentipedeBody : Enemy
 
     protected void rotate(Transform t)
     {
-        //Vector2 target = pathPositions[targetIndex].position;
         Vector2 target = t.position;
         Vector2 lookDir = target - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;

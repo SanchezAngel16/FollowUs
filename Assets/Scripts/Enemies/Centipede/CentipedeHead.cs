@@ -29,7 +29,7 @@ public class CentipedeHead : CentipedeBody
             if (collision.gameObject.GetComponent<Bullet>().hit) return;
             collision.gameObject.GetComponent<Bullet>().hit = true;
             collision.gameObject.SetActive(false);
-            if (removeLifePoints(300) <= 0)
+            if (removeLifePoints(40) <= 0)
             {
                 if (lastBody != null)
                 {
@@ -66,7 +66,7 @@ public class CentipedeHead : CentipedeBody
 
     public override void manageMovement()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, nextTarget.transform.position, speed * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, nextTarget.transform.position, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, nextTarget.transform.position) < 0.2f || collidingStaticObject)
         {
             CentipedePoint temp = nextTarget;

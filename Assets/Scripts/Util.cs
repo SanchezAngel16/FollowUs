@@ -5,6 +5,87 @@ using UnityEngine;
 public static class Util
 {
     public static int playableArea = 4;
+    public enum Curse
+    {
+        NOTHING, FREEZEBULLET, SPEEDUPENEMIES, LIGHTSOUT, FRIENDFIRE, INCREASETHREAT 
+    }
+
+    public static float bulletSpeed = 1f;
+    public static float enemiesSpeed = 1f;
+    public static bool lightsOut = false;
+    public static bool friendFire = false;
+    public static bool increaseThreat = false;
+    public static bool reduceTime = false;
+
+    public static void setCurseType(int currentCurse)
+    {
+        switch (currentCurse)
+        {
+            case 0:
+                //Nothing
+                bulletSpeed = 1f;
+                enemiesSpeed = 1f;
+                lightsOut = false;
+                friendFire = false;
+                increaseThreat = false;
+                reduceTime = false;
+                break;
+            case 1:
+                //Freeze Bullets
+                bulletSpeed = 0.45f;
+                enemiesSpeed = 1f;
+                lightsOut = false;
+                friendFire = false;
+                increaseThreat = false;
+                break;
+            case 2:
+                //Reduce time
+                bulletSpeed = 1f;
+                enemiesSpeed = 1f;
+                lightsOut = false;
+                friendFire = false;
+                increaseThreat = false;
+                reduceTime = true;
+                break;
+            case 3:
+                //Speed up enemies
+                bulletSpeed = 1f;
+                enemiesSpeed = 1.4f;
+                lightsOut = false;
+                friendFire = false;
+                increaseThreat = false;
+                reduceTime = false;
+                break;
+            case 4:
+                //Lights out
+                bulletSpeed = 1f;
+                enemiesSpeed = 1f;
+                lightsOut = true;
+                friendFire = false;
+                increaseThreat = false;
+                reduceTime = false;
+                break;
+            case 5:
+                //Friend fire
+                bulletSpeed = 1f;
+                enemiesSpeed = 1f;
+                lightsOut = false;
+                friendFire = true;
+                increaseThreat = false;
+                reduceTime = false;
+                break;
+            case 6:
+                //Increase threat
+                bulletSpeed = 1f;
+                enemiesSpeed = 1f;
+                lightsOut = false;
+                friendFire = false;
+                increaseThreat = true;
+                reduceTime = false;
+                break;
+        }
+    }
+    
 
     public static Vector2 getRandomPosition(Transform parent, float substractOffset)
     {

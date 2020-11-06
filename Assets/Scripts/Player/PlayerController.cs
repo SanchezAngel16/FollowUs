@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private bool flipped;
 
     private Vector3 lookAngle;
+
+    public Image ammoImage;
     void Start()
     {
         living = true;
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (Main.Instance.runningOnPC)
         {
             joystick.gameObject.SetActive(false);
+            ammoImage.gameObject.SetActive(true);
         }
         /*
         GameObject[,] m = gameController.mapController.map;
@@ -138,10 +141,9 @@ public class PlayerController : MonoBehaviour
         this.lifePoints += points;
         if (lifePoints >= maxLifePoints) lifePoints = maxLifePoints;
         updateHealthUI();
-        if(lifePoints == 0)
+        if(lifePoints <= 0)
         {
             //Kill player
-            
             restart.gameObject.SetActive(true);
             living = false;
             gun.gameObject.SetActive(false);

@@ -15,7 +15,7 @@ public class CentipedeTail : CentipedeBody
             if (collision.gameObject.GetComponent<Bullet>().hit) return;
             collision.gameObject.GetComponent<Bullet>().hit = true;
             collision.gameObject.SetActive(false);
-            if (removeLifePoints(300) <= 0)
+            if (removeLifePoints(40) <= 0)
             {
                 if (lastBody != null)
                 {
@@ -57,17 +57,9 @@ public class CentipedeTail : CentipedeBody
         {
             if (nextBody != null)
             {
-                rb.MovePosition(Vector2.MoveTowards(transform.position, nextBody.tail.transform.position, speed * Time.fixedDeltaTime));
+                rb.MovePosition(Vector2.MoveTowards(transform.position, nextBody.tail.transform.position, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
                 rotate(nextBody.tail.transform);
             }
-            /*if (Vector2.Distance(transform.position, nextTarget.transform.position) < 0.2f || collidingStaticObject)
-            {
-                currentPoint = nextTarget;
-                currentTargetIndex++;
-                if (currentTargetIndex >= maxSizePaths) currentTargetIndex = 0;
-                nextTarget = currentHead.pointsToTravel[currentTargetIndex];
-                rotate(nextTarget.transform);
-            }*/
         }
         else
         {

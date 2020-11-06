@@ -16,6 +16,8 @@ TagManager:
   - Collectable_Health
   - EmptyRoom
   - StaticObjectEnemy
+  - EnemyShield
+  - Laser
   layers:
   - Default
   - TransparentFX
@@ -33,8 +35,8 @@ TagManager:
   - EnemyHitBox
   - Bullet
   - EnemyZombie
-  - 
-  - 
+  - Laser
+  - PlayerHitbox
   - 
   - 
   - 

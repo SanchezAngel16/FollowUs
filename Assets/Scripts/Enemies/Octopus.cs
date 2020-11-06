@@ -50,7 +50,7 @@ public class Octopus : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)

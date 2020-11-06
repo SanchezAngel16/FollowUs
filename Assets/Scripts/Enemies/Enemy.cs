@@ -54,6 +54,9 @@ public abstract class Enemy : MonoBehaviour
         string tag = collision.gameObject.tag;
         if (tag.Equals("PlayerBullet"))
         {
+            if (collision.gameObject.GetComponent<Bullet>().hit) return;
+            collision.gameObject.GetComponent<Bullet>().hit = true;
+            collision.gameObject.SetActive(false);
             if (removeLifePoints(40) <= 0)
             {
                 if (Random.Range(0, 100) >= 10 && lootMaker)
@@ -63,7 +66,6 @@ public abstract class Enemy : MonoBehaviour
                 }
                 removeEnemy();
             }
-            collision.gameObject.SetActive(false);
         }
     }
 

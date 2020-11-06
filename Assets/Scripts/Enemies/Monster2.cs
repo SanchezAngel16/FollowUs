@@ -41,7 +41,7 @@ public class Monster2 : Enemy
     public override void move()
     {
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)

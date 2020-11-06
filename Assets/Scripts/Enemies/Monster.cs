@@ -51,7 +51,7 @@ public class Monster : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], speed * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[nextTargetIndex]) < 0.2f || collidingStaticObject)
         {
             if (!shooting) shoot();

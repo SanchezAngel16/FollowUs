@@ -47,6 +47,7 @@ public class Room : MonoBehaviour
 
     private int enemiesCount;
 
+
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -69,8 +70,28 @@ public class Room : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!firstTime) generateEnemies();
+        if (!firstTime)
+        {
+            generateEnemies();
+        }
         else firstTime = false;
+    }
+
+    public void setCurseType(int curseType)
+    {
+        Util.setCurseType(curseType);
+        if (curseType == 2)
+        {
+            Debug.Log("Reduce timer");
+            maxTimer /= 2f;
+            timer = maxTimer;
+            crackTime = maxTimer / 5;
+        }else if(curseType == 6)
+        {
+            threatType += 2;
+            if (threatType >= 9) threatType = 9;
+        }
+
     }
 
 
@@ -158,8 +179,14 @@ public class Room : MonoBehaviour
             if (randPos == corners.Length) randPos = 0;
             cornersIndex[1] = randPos;
             corners[randPos].GetComponent<SpriteRenderer>().sprite = zombieHole;
-            InvokeRepeating("generateZombies", 0, 1.2f);
-            Invoke("CancelGeneration", 15);
+            int randomZombiesCount = Random.Range(12, 30);
+            Main.Instance.enemiesCount += randomZombiesCount;
+            for (int i = 0; i < randomZombiesCount; i++)
+            {
+                Invoke("generateZombies", i * 0.7f);
+            }
+            /*InvokeRepeating("generateZombies", 0, 1f);
+            Invoke("CancelGeneration", 15);*/
         }else if (enemyType == 5)
         {
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
@@ -194,7 +221,7 @@ public class Room : MonoBehaviour
         GameObject newZombie = Instantiate(enemiesPrefab[4], enemiesGenerationPoint );
         newZombie.transform.position = corners[cornersIndex[Random.Range(0, cornersIndex.Length)]].transform.position;
         Main.Instance.enemies.Add(newZombie.transform);
-        Main.Instance.enemiesCount++;
+        
     }
 
 

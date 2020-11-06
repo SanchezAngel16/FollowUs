@@ -35,6 +35,12 @@ public class Main : MonoBehaviour
 
     public PlayerController playerController;
 
+    public int currentCurseType;
+    public Image curseTypeImage;
+    public Sprite[] curseTypes;
+
+    public GameObject lightsOut;
+
     private static Main instance = null;
 
     public static Main Instance
@@ -78,9 +84,13 @@ public class Main : MonoBehaviour
         GameObject startRoom = mapController.map[mapController.startRoom.x, mapController.startRoom.y];
         startRoom.GetComponent<Room>().isRoomActive = true;
         startRoom.SetActive(true);
-        playerController.transform.position = startRoom.transform.position;
+        Vector2 randStartPos = startRoom.transform.position;
+        randStartPos.x = (int)Random.Range(randStartPos.x - 1, randStartPos.x + 1);
+        randStartPos.y = (int)Random.Range(randStartPos.y - 1, randStartPos.y - 1);
+        playerController.transform.position = randStartPos;
         mapController.updatePosibleDirections();
         enemiesCount = 0;
+        currentCurseType = 0;
         initUI();
     }
 
@@ -112,7 +122,7 @@ public class Main : MonoBehaviour
         {
             mapController.startRoom = new Vector2Int(Random.Range(0, mapController.cols), Random.Range(0, mapController.rows));
         } while (Vector2Int.Equals(mapController.startRoom, mapController.goodRoom) 
-        || Vector2Int.Equals(mapController.startRoom, mapController.goodRoom));
+        || Vector2Int.Equals(mapController.startRoom, mapController.badRoom));
 
         currentActiveRoom = mapController.startRoom;
     }
@@ -142,7 +152,8 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    //roomScript.threatType = Random.Range(8,9);
+                    //roomScript.threatType = Random.Range(9,10);
+                    //roomScript.threatType = Random.Range(7,8);
                     roomScript.threatType = Random.Range(1,10);
                 }
 
@@ -201,8 +212,10 @@ public class Main : MonoBehaviour
         
         currentActiveRoom.x += x;
         currentActiveRoom.y += y;
-        mapController.map[currentActiveRoom.x, currentActiveRoom.y].SetActive(true);
         room = mapController.map[currentActiveRoom.x, currentActiveRoom.y].GetComponent<Room>();
+        room.setCurseType(this.currentCurseType);
+        setCurrentCurseType();
+        room.gameObject.SetActive(true);
         room.isRoomActive = true;
 
         switch (doorToDeactivate)
@@ -253,10 +266,30 @@ public class Main : MonoBehaviour
         down.gameObject.SetActive(active);
     }
 
-
     public void restartGame()
     {
         SceneManager.LoadScene(1);
         initGame();
+    }
+
+    public void setCurseType(int curse)
+    {
+        this.currentCurseType = curse;
+    }
+
+    private void setCurrentCurseType()
+    {
+        if (this.currentCurseType == 0) curseTypeImage.gameObject.SetActive(false);
+        else
+        {
+            curseTypeImage.gameObject.SetActive(true);
+            curseTypeImage.sprite = curseTypes[this.currentCurseType - 1];
+        }
+
+        //Freeze bullet type
+        if (this.currentCurseType == 4) lightsOut.gameObject.SetActive(true);
+        else lightsOut.gameObject.SetActive(false);
+
+        this.currentCurseType = 0;
     }
 }
