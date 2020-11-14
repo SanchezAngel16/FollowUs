@@ -20,6 +20,7 @@ public class CentipedeTail : CentipedeBody
                 if (lastBody != null)
                 {
                     GameObject newHead = Instantiate(EnemyPrefabManager.Instance.centipedeHead, transform.parent.parent);
+                    Main.Instance.enemiesCount++;
                     CentipedeHead newCentipedeHead = newHead.transform.GetChild(1).GetComponent<CentipedeHead>();
                     newCentipedeHead.setCentipedeAttributes(0, currentRoom);
                     newCentipedeHead.createFixedHead(lastBody.transform);
@@ -38,9 +39,10 @@ public class CentipedeTail : CentipedeBody
                             temp = temp.lastBody;
                         }
                     }
-
+                    last.transform.GetComponent<CentipedeTail>().destroy = true;
                     Destroy(last.gameObject);
                 }
+                this.destroy = true;
                 removeEnemy();
             }
         }

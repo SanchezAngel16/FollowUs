@@ -12,6 +12,7 @@ public static class Util
 
     public static float bulletSpeed = 1f;
     public static float enemiesSpeed = 1f;
+    public static float rotationSpeed = 1f;
     public static bool lightsOut = false;
     public static bool friendFire = false;
     public static bool increaseThreat = false;
@@ -25,6 +26,7 @@ public static class Util
                 //Nothing
                 bulletSpeed = 1f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = false;
                 friendFire = false;
                 increaseThreat = false;
@@ -34,6 +36,7 @@ public static class Util
                 //Freeze Bullets
                 bulletSpeed = 0.45f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = false;
                 friendFire = false;
                 increaseThreat = false;
@@ -42,6 +45,7 @@ public static class Util
                 //Reduce time
                 bulletSpeed = 1f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = false;
                 friendFire = false;
                 increaseThreat = false;
@@ -50,7 +54,8 @@ public static class Util
             case 3:
                 //Speed up enemies
                 bulletSpeed = 1f;
-                enemiesSpeed = 1.4f;
+                enemiesSpeed = 2.3f;
+                rotationSpeed = 2f;
                 lightsOut = false;
                 friendFire = false;
                 increaseThreat = false;
@@ -60,6 +65,7 @@ public static class Util
                 //Lights out
                 bulletSpeed = 1f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = true;
                 friendFire = false;
                 increaseThreat = false;
@@ -69,6 +75,7 @@ public static class Util
                 //Friend fire
                 bulletSpeed = 1f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = false;
                 friendFire = true;
                 increaseThreat = false;
@@ -78,6 +85,7 @@ public static class Util
                 //Increase threat
                 bulletSpeed = 1f;
                 enemiesSpeed = 1f;
+                rotationSpeed = 1f;
                 lightsOut = false;
                 friendFire = false;
                 increaseThreat = true;

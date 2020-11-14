@@ -38,15 +38,19 @@ public class CentipedeHead : CentipedeBody
                     GameObject last = lastBody.gameObject;
                     transform.position = last.transform.position;
 
-                    if(lastBody.lastBody != null)
+                    if (lastBody.lastBody != null)
                     {
                         lastBody.lastBody.nextBody = this;
                         lastBody = lastBody.lastBody;
                     }
-
+                    last.transform.GetComponent<CentipedeTail>().destroy = true;
                     Destroy(last.gameObject);
                 }
-                else removeEnemy();
+                else
+                {
+                    this.destroy = true;
+                    removeEnemy();
+                }
             }
         }
     }

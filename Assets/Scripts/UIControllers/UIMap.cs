@@ -12,6 +12,11 @@ public class UIMap : MonoBehaviour
 
     public GameObject[,] mapTiles;
     private bool firstTime = true;
+
+    public Slider mainHealthBar;
+    public Slider mapHealthBar;
+    public GameObject touchableAreaUI;
+
     void Start()
     {
         gl = GetComponent<GridLayoutGroup>();
@@ -22,8 +27,15 @@ public class UIMap : MonoBehaviour
 
     private void OnEnable()
     {
+        touchableAreaUI.SetActive(false);
+        mapHealthBar.value = mainHealthBar.value;
         if (firstTime) return;
         updateUIMap();
+    }
+
+    private void OnDisable()
+    {
+        touchableAreaUI.SetActive(true);
     }
 
     private void updateUIMap()

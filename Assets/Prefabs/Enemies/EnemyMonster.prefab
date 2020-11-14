@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 214763077634721895}
   - component: {fileID: 214763077634721897}
   - component: {fileID: 6887107810879112482}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Monster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -96,10 +96,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0153259635, y: -0.0178473}
+  m_Offset: {x: 0.015326202, y: 0.5192645}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6368066, y: 2.0019119}
+  m_Size: {x: 0.69816506, y: 0.948547}
   m_EdgeRadius: 0
 --- !u!50 &214763077634721897
 Rigidbody2D:
@@ -153,6 +153,7 @@ MonoBehaviour:
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
+  destroy: 0
 --- !u!1 &214763078641635592
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2887110558056626195
 Transform:
   m_ObjectHideFlags: 0

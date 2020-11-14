@@ -18,6 +18,7 @@ TagManager:
   - StaticObjectEnemy
   - EnemyShield
   - Laser
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - EnemyZombie
   - Laser
   - PlayerHitbox
-  - 
+  - Door
   - 
   - 
   - 

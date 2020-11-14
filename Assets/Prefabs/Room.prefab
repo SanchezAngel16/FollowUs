@@ -429,9 +429,10 @@ GameObject:
   - component: {fileID: 511346892878178414}
   - component: {fileID: 3468084633393440111}
   - component: {fileID: 3867103518239040021}
-  m_Layer: 9
+  - component: {fileID: 8140860270254262822}
+  m_Layer: 18
   m_Name: down
-  m_TagString: StaticObject
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -514,7 +515,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04667376, y: 0}
+  m_Offset: {x: 0.14048025, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -525,8 +526,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.77665246, y: 2.62}
+  m_Size: {x: 0.5890395, y: 2.62}
   m_EdgeRadius: 0
+--- !u!114 &8140860270254262822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370134508226414164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ef13d860b3da9499798d06eb7a9cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opened: 0
+  direction: {x: 0, y: -2}
 --- !u!1 &2654586010403820279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,9 +1058,10 @@ GameObject:
   - component: {fileID: 4324819617124450369}
   - component: {fileID: 3022185611783993893}
   - component: {fileID: 4335776824587121914}
-  m_Layer: 9
+  - component: {fileID: 5899290509008520912}
+  m_Layer: 18
   m_Name: left
-  m_TagString: StaticObject
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1128,7 +1144,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.041857272, y: 0}
+  m_Offset: {x: 0.13374951, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1139,8 +1155,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.78628546, y: 2.62}
+  m_Size: {x: 0.602501, y: 2.62}
   m_EdgeRadius: 0
+--- !u!114 &5899290509008520912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3731175477188773392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ef13d860b3da9499798d06eb7a9cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opened: 0
+  direction: {x: -2, y: 0}
 --- !u!1 &3789166442687568950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,9 +1730,10 @@ GameObject:
   - component: {fileID: 1565473019934321573}
   - component: {fileID: 5343728715699017812}
   - component: {fileID: 1303010523319454112}
-  m_Layer: 9
+  - component: {fileID: 2702338360506502492}
+  m_Layer: 18
   m_Name: up
-  m_TagString: StaticObject
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1785,7 +1816,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.047867537, y: 0}
+  m_Offset: {x: 0.16215633, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1796,8 +1827,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.77426493, y: 2.62}
+  m_Size: {x: 0.5456874, y: 2.62}
   m_EdgeRadius: 0
+--- !u!114 &2702338360506502492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861497127841343442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ef13d860b3da9499798d06eb7a9cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opened: 0
+  direction: {x: 0, y: 2}
 --- !u!1 &5861812340376955965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,7 +2141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7099209808659752680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.043, y: 2.043, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1904754227262086516}
@@ -2187,10 +2232,10 @@ MonoBehaviour:
   - {fileID: 3209048980477968847, guid: ce3712715f5953c44b14fa5545a95cb6, type: 3}
   - {fileID: 6620864933585494533, guid: 1b3709995277046499b972a82fa598a8, type: 3}
   - {fileID: 7293228858705511512, guid: 32364755430993f4b8d7b4ddbebe318d, type: 3}
-  rightDoor: {fileID: 7924694426184753540}
-  leftDoor: {fileID: 3731175477188773392}
-  downDoor: {fileID: 2370134508226414164}
-  upDoor: {fileID: 5861497127841343442}
+  rightDoor: {fileID: 747731869590583098}
+  leftDoor: {fileID: 5899290509008520912}
+  downDoor: {fileID: 8140860270254262822}
+  upDoor: {fileID: 2702338360506502492}
   backgroundSprites:
   - {fileID: 21300000, guid: df1c4c084c133c34d8acf64a33afc971, type: 3}
   - {fileID: 21300000, guid: fe373ba1adcd1374d9bd11b442206615, type: 3}
@@ -2600,9 +2645,10 @@ GameObject:
   - component: {fileID: 6074558194409756940}
   - component: {fileID: 7863599791873772793}
   - component: {fileID: 6674072556817400022}
-  m_Layer: 9
+  - component: {fileID: 747731869590583098}
+  m_Layer: 18
   m_Name: right
-  m_TagString: StaticObject
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2685,7 +2731,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.036625177, y: 0}
+  m_Offset: {x: 0.09047392, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2696,8 +2742,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.79674965, y: 2.62}
+  m_Size: {x: 0.68905216, y: 2.62}
   m_EdgeRadius: 0
+--- !u!114 &747731869590583098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7924694426184753540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ef13d860b3da9499798d06eb7a9cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opened: 0
+  direction: {x: 2, y: 0}
 --- !u!1 &8223829296142363823
 GameObject:
   m_ObjectHideFlags: 0

@@ -288,7 +288,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00048077106, y: 0.0036048293}
+  m_Offset: {x: -0.0041605234, y: -0.0037546754}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -299,7 +299,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.793581, y: 0.8402008}
+  m_Size: {x: 0.87453556, y: 0.94323385}
   m_EdgeRadius: 0
 --- !u!114 &8588175304365820666
 MonoBehaviour:
@@ -321,6 +321,7 @@ MonoBehaviour:
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
+  destroy: 0
   firePointR: {fileID: 1786410741447386721}
   firePointL: {fileID: 854729359483720147}
   head: {fileID: 0}
@@ -329,4 +330,3 @@ MonoBehaviour:
   centipedeHead: {fileID: 7910722168234476862}
   tail: {fileID: 3810911422431119241}
   points: []
-  pointsToTravel: []

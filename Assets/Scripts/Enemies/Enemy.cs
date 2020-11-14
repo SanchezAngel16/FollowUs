@@ -27,6 +27,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected Room currentRoom;
 
+    public bool destroy = false;
     private void Start()
     {
         initEnemy();
@@ -59,12 +60,26 @@ public abstract class Enemy : MonoBehaviour
             collision.gameObject.SetActive(false);
             if (removeLifePoints(40) <= 0)
             {
-                if (Random.Range(0, 100) >= 10 && lootMaker)
-                {
-                    GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
-                    collectable.transform.position = transform.position;
-                }
+                destroy = true;
                 removeEnemy();
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (destroy)
+        {
+            if (Random.Range(0, 100) >= 10 && lootMaker)
+            {
+                GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                collectable.transform.position = transform.position;
+            }
+            Main.Instance.enemies.Remove(this.transform);
+            Main.Instance.enemiesCount--;
+            if (Main.Instance.enemiesCount <= 0)
+            {
+                Main.Instance.updateUIArrows();
             }
         }
     }
@@ -72,12 +87,6 @@ public abstract class Enemy : MonoBehaviour
     protected void removeEnemy()
     {
         Destroy(gameObject);
-        Main.Instance.enemies.Remove(this.transform);
-        Main.Instance.enemiesCount--;
-        if (Main.Instance.enemiesCount <= 0)
-        {
-            Main.Instance.updateUIArrows();
-        }
     }
 
     protected int removeLifePoints(int points)

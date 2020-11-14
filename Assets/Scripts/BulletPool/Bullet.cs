@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
-        if (tag.Equals("StaticObject")) activate(false);
+        if (tag.Equals("StaticObject") || tag.Equals("Door")) activate(false);
         else if (tag.Equals("StaticObjectEnemy") && this.tag.Equals("PlayerBullet")) activate(false);
     }
 

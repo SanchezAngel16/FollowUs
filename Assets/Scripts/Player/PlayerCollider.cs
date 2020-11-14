@@ -42,13 +42,11 @@ public class PlayerCollider : MonoBehaviour
 
     }
 
-    
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
         
-        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet") || tag.Equals("Laser"))
+        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet") || tag.Equals("Laser") || tag.Equals("EnemyShield"))
         {
             if (hitted) return;
             // Take damage animation and deactivate collider layer.

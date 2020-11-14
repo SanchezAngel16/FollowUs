@@ -57,6 +57,7 @@ public class Octopus : Enemy
             {
                 //Change destination target
                 direction *= -1;
+
                 if (horizontal)
                 {
                     targetPosition.x = parent.position.x + (Util.playableArea * direction);
@@ -69,7 +70,7 @@ public class Octopus : Enemy
 
                 if (currentDestination == 1) currentDestination = 0;
                 else currentDestination = 1;
-                waitTime = startWaitTime;
+                waitTime = Random.Range(1f, 3f);
             }
             else
             {

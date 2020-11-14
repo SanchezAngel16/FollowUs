@@ -13,10 +13,10 @@ public class Room : MonoBehaviour
     public Transform enemiesGenerationPoint;
     public GameObject[] enemiesPrefab;
 
-    public GameObject rightDoor;
-    public GameObject leftDoor;
-    public GameObject downDoor;
-    public GameObject upDoor;
+    public Door rightDoor;
+    public Door leftDoor;
+    public Door downDoor;
+    public Door upDoor;
 
     public Sprite[] backgroundSprites;
     public Sprite[] doorSprites;
@@ -192,7 +192,6 @@ public class Room : MonoBehaviour
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
             newCentipede.GetComponent<Centipede>().initBody(this);
             Main.Instance.enemies.Add(newCentipede.transform);
-            Main.Instance.enemiesCount++;
         }
         else
         {

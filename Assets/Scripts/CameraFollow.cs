@@ -17,6 +17,7 @@ public class CameraFollow : MonoBehaviour
     {
         desiredPosition = new Vector3(0, 0, transform.position.z);
         smoothedPosition = new Vector3(0,0,0);
+
     }
 
     void FixedUpdate()

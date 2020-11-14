@@ -34,6 +34,7 @@ public class Centipede : MonoBehaviour
                 body[i].nextBody = body[i - 1];
             }
             Main.Instance.enemies.Add(body[i].transform);
+            Main.Instance.enemiesCount++;
         }
     }
 

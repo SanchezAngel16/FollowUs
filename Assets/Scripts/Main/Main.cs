@@ -131,6 +131,9 @@ public class Main : MonoBehaviour
     {
         Color rColor;
         setRoomsType();
+
+        int enemyType = 1;
+
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -155,6 +158,9 @@ public class Main : MonoBehaviour
                     //roomScript.threatType = Random.Range(9,10);
                     //roomScript.threatType = Random.Range(7,8);
                     roomScript.threatType = Random.Range(1,10);
+                    /*roomScript.threatType = 9;
+                    enemyType++;
+                    if (enemyType == 9) enemyType = 1;*/
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
@@ -193,19 +199,23 @@ public class Main : MonoBehaviour
         switch (direction)
         {
             case RIGHT_DIR:
-                room.rightDoor.gameObject.SetActive(false);
+                //room.rightDoor.gameObject.SetActive(false);
+                room.rightDoor.opened = true;
                 doorToDeactivate = LEFT_DIR;
                 break;
             case LEFT_DIR:
-                room.leftDoor.gameObject.SetActive(false);
+                //room.leftDoor.gameObject.SetActive(false);
+                room.leftDoor.opened = true;
                 doorToDeactivate = RIGHT_DIR;
                 break;
             case UP_DIR:
-                room.upDoor.gameObject.SetActive(false);
+                //room.upDoor.gameObject.SetActive(false);
+                room.upDoor.opened = true;
                 doorToDeactivate = DOWN_DIR;
                 break;
             case DOWN_DIR:
-                room.downDoor.gameObject.SetActive(false);
+                //room.downDoor.gameObject.SetActive(false);
+                room.downDoor.opened = true;
                 doorToDeactivate = UP_DIR;
                 break;
         }
@@ -221,16 +231,20 @@ public class Main : MonoBehaviour
         switch (doorToDeactivate)
         {
             case RIGHT_DIR:
-                room.rightDoor.gameObject.SetActive(false);
+                //room.rightDoor.gameObject.SetActive(false);
+                room.rightDoor.opened = true;
                 break;
             case LEFT_DIR:
-                room.leftDoor.gameObject.SetActive(false);
+                //room.leftDoor.gameObject.SetActive(false);
+                room.leftDoor.opened = true;
                 break;
             case UP_DIR:
-                room.upDoor.gameObject.SetActive(false);
+                //room.upDoor.gameObject.SetActive(false);
+                room.upDoor.opened = true;
                 break;
             case DOWN_DIR:
-                room.downDoor.gameObject.SetActive(false);
+                //room.downDoor.gameObject.SetActive(false);
+                room.downDoor.opened = true;
                 break;
         }
 
@@ -256,7 +270,9 @@ public class Main : MonoBehaviour
         if (activeRoom.posibleDirections[1] == 0) left.gameObject.SetActive(false);
         if (activeRoom.posibleDirections[2] == 0) up.gameObject.SetActive(false);
         if (activeRoom.posibleDirections[3] == 0) down.gameObject.SetActive(false);
+        lightsOut.SetActive(false);
     }
+
 
     public void setActiveAllUIArrows(bool active)
     {

@@ -8,11 +8,13 @@ public class Shield : MonoBehaviour
     public float startWaitTime;
     private int lifePoints;
     public Transform firePoint;
-    public LineRenderer laser;
     public Monster3 monster;
+    public Transform testLaser;
 
     private float waitLaserTime;
     private float startLaserTime;
+
+    private bool destroy = false;
 
     private void Start()
     {
@@ -21,7 +23,6 @@ public class Shield : MonoBehaviour
 
         startLaserTime = 4f;
         waitLaserTime = startLaserTime;
-        laser.sortingLayerName = "Elements";
     }
 
     private void Update()
@@ -30,13 +31,13 @@ public class Shield : MonoBehaviour
         {
             if(startLaserTime >= 0)
             {
-                laser.enabled = true;
+                testLaser.gameObject.SetActive(true);
                 shootLaser();
                 startLaserTime -= Time.deltaTime;
             }
             else
             {
-                laser.enabled = false;
+                testLaser.gameObject.SetActive(false);
                 startLaserTime = startWaitTime;
                 waitTime = startWaitTime;
             }
@@ -55,21 +56,20 @@ public class Shield : MonoBehaviour
             string tag = hitInfo.collider.tag;
             if (tag.Equals("StaticObject"))
             {
-                laser.SetPosition(0, firePoint.localPosition);
-                laser.SetPosition(1, new Vector2(hitInfo.distance, 0));
+                testLaser.localScale = new Vector2(2, hitInfo.distance);
+                
+                
             }else if (tag.Equals("PlayerHitBox"))
             {
                 PlayerCollider p = hitInfo.collider.gameObject.GetComponent<PlayerCollider>();
                 p.takeDamage(25);
-                laser.SetPosition(0, firePoint.localPosition);
-                laser.SetPosition(1, new Vector2(hitInfo.distance, 0));
+                testLaser.localScale = new Vector2(2, hitInfo.distance);
             }
         }
         else
         {
             Debug.Log("No hit");
-            laser.SetPosition(0, firePoint.localPosition);
-            laser.SetPosition(1, new Vector2(hitInfo.distance + 100, 0));
+            testLaser.localScale = new Vector2(2, hitInfo.distance);
         }
     }
 
@@ -82,9 +82,17 @@ public class Shield : MonoBehaviour
             this.lifePoints -= 10;
             if(this.lifePoints <= 0)
             {
-                gameObject.SetActive(false);
-                monster.shieldsCount--;
+                destroy = true;
+                this.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (destroy)
+        {
+            monster.shieldsCount--;
         }
     }
 }

@@ -20,13 +20,7 @@ public class Monster3 : Enemy
         shieldsCount = 4;
     }
 
-    private void OnDestroy()
-    {
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].gameObject.SetActive(false);
-        }
-    }
+    
 
     private void shoot()
     {
@@ -48,7 +42,7 @@ public class Monster3 : Enemy
     {
         for(int i = 0; i < arrBlocks.Length; i++)
         {
-            arrBlocks[i].RotateAround(this.transform.position, new Vector3(0, 0, 1), speed * Time.fixedDeltaTime);
+            arrBlocks[i].RotateAround(this.transform.position, new Vector3(0, 0, 1), (speed * Util.rotationSpeed) * Time.fixedDeltaTime);
         }
     }
 
@@ -74,14 +68,33 @@ public class Monster3 : Enemy
         {
             if (removeLifePoints(40) <= 0)
             {
-                if (Random.Range(0, 100) >= 10 && lootMaker)
-                {
-                    GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
-                    collectable.transform.position = transform.position;
-                }
+                this.destroy = true;
                 removeEnemy();
             }
             collision.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (destroy)
+        {
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                blocks[i].gameObject.SetActive(false);
+            }
+
+            if (Random.Range(0, 100) >= 10 && lootMaker)
+            {
+                GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                collectable.transform.position = transform.position;
+            }
+            Main.Instance.enemies.Remove(this.transform);
+            Main.Instance.enemiesCount--;
+            if (Main.Instance.enemiesCount <= 0)
+            {
+                Main.Instance.updateUIArrows();
+            }
         }
     }
 }
