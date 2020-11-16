@@ -63,10 +63,6 @@ public class PlayerController : MonoBehaviour
             joystick.gameObject.SetActive(false);
             ammoImage.gameObject.SetActive(true);
         }
-        /*
-        GameObject[,] m = gameController.mapController.map;
-        transform.position = gameController.mapController.map[gameController.currentActiveRoom.x, gameController.currentActiveRoom.y].transform.position;
-        */
     }
 
     void Update()
@@ -77,7 +73,6 @@ public class PlayerController : MonoBehaviour
             mousePos.x = mousePos.y = 0;
             if (Main.Instance.runningOnPC)
             {
-                //moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                 moveInput.x = Input.GetAxisRaw("Horizontal");
                 moveInput.y = Input.GetAxisRaw("Vertical");
                 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -91,8 +86,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                /*moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
-                moveInput.x = joystick.Horizontal;*/
                 if(Mathf.Abs(joystick.Horizontal) > .2f) moveInput.x = joystick.Horizontal;
                 else moveInput.x = 0;
 

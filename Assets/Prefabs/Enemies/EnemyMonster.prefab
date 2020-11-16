@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 214763077634721895}
   - component: {fileID: 214763077634721897}
   - component: {fileID: 6887107810879112482}
+  - component: {fileID: 6442031668967973524}
   m_Layer: 13
   m_Name: Monster
   m_TagString: Enemy
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -732881259
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1fa7de62d5184a74cb4fd417e41145e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bfa0e8e9c185314ab3ffa227aae6760, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  startWaitTime: 1.5
+  startWaitTime: 0.5
   lifePoints: 200
   bulletsPool: {fileID: 214763078641635594}
   rb: {fileID: 214763077634721897}
@@ -154,6 +155,26 @@ MonoBehaviour:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
   destroy: 0
+  anim: {fileID: 6442031668967973524}
+--- !u!95 &6442031668967973524
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214763077634721893}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d9a7c19ce4fa8048a255666ba646403, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &214763078641635592
 GameObject:
   m_ObjectHideFlags: 0

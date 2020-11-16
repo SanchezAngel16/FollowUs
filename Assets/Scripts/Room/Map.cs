@@ -12,6 +12,11 @@ public class Map : MonoBehaviour
     public Vector2Int badRoom;
     public Vector2Int startRoom;
 
+    private void Start()
+    {
+        cols = rows = Util.mapSize;
+    }
+
     public void initMapArray()
     {
         map = new GameObject[cols, rows];

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class Util
 {
+
+    public static int mapSize = 5;
+
     public static int playableArea = 4;
     public enum Curse
     {
@@ -17,6 +20,7 @@ public static class Util
     public static bool friendFire = false;
     public static bool increaseThreat = false;
     public static bool reduceTime = false;
+    
 
     public static void setCurseType(int currentCurse)
     {
@@ -54,7 +58,7 @@ public static class Util
             case 3:
                 //Speed up enemies
                 bulletSpeed = 1f;
-                enemiesSpeed = 2.3f;
+                enemiesSpeed = 2f;
                 rotationSpeed = 2f;
                 lightsOut = false;
                 friendFire = false;

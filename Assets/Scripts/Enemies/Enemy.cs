@@ -28,6 +28,8 @@ public abstract class Enemy : MonoBehaviour
     protected Room currentRoom;
 
     public bool destroy = false;
+
+    public Animator anim;
     private void Start()
     {
         initEnemy();

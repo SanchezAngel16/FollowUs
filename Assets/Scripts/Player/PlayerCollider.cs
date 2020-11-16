@@ -17,6 +17,12 @@ public class PlayerCollider : MonoBehaviour
 
     public float timer;
 
+    //public GameObject roomsPreview;
+    [SerializeField]
+    private GameObject[] roomsPreview;
+    [SerializeField]
+    private GameObject roomsAround;
+
     private void Start()
     {
         hitted = false;
@@ -72,22 +78,63 @@ public class PlayerCollider : MonoBehaviour
         }else if (tag.Equals("Room"))
         {
             Room currentRoom = collision.gameObject.GetComponent<Room>();
+            roomsAround.transform.position = currentRoom.transform.position;
+            setRoomsPreview(currentRoom.mapLocation);
             playerController.currentLocation = currentRoom.mapLocation;
             timer = currentRoom.timer;
             if (currentRoom.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
+            Main.Instance.setGameOverText(false,"");
             if (Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.goodRoom))
             {
+                Main.Instance.setGameOverText(true, "You win!");
                 playerController.restart.gameObject.SetActive(true);
                 Main.Instance.setActiveAllUIArrows(false);
             }else if(Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.badRoom))
             {
+                Main.Instance.setGameOverText(true, "You lose!");
                 playerController.updateLifePoints(-playerController.lifePoints);
                 playerController.restart.gameObject.SetActive(true);
                 Main.Instance.setActiveAllUIArrows(false);
             }
         }else if (tag.Equals("EmptyRoom"))
         {
+            Room currentRoom = collision.gameObject.GetComponent<Room>();
+            roomsAround.transform.position = currentRoom.transform.position;
+            setRoomsPreview(currentRoom.mapLocation);
             playerController.updateLifePoints(-playerController.lifePoints);
+        }
+    }
+
+    private void setRoomsPreview(Vector2Int location)
+    {
+
+        for(int i = 0; i < roomsPreview.Length; i++)
+        {
+            roomsPreview[i].SetActive(true);
+        }
+
+        if(location.x == 0)
+        {
+            roomsPreview[0].SetActive(false);
+            roomsPreview[3].SetActive(false);
+            roomsPreview[5].SetActive(false);
+        }else if(location.x == Util.mapSize - 1)
+        {
+            roomsPreview[2].SetActive(false);
+            roomsPreview[4].SetActive(false);
+            roomsPreview[7].SetActive(false);
+        }
+
+        if(location.y == 0)
+        {
+            roomsPreview[0].SetActive(false);
+            roomsPreview[1].SetActive(false);
+            roomsPreview[2].SetActive(false);
+        }else if(location.y == Util.mapSize - 1)
+        {
+            roomsPreview[5].SetActive(false);
+            roomsPreview[6].SetActive(false);
+            roomsPreview[7].SetActive(false);
         }
     }
 

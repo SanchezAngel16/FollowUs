@@ -132,8 +132,6 @@ public class Main : MonoBehaviour
         Color rColor;
         setRoomsType();
 
-        int enemyType = 1;
-
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -155,12 +153,7 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    //roomScript.threatType = Random.Range(9,10);
-                    //roomScript.threatType = Random.Range(7,8);
                     roomScript.threatType = Random.Range(1,10);
-                    /*roomScript.threatType = 9;
-                    enemyType++;
-                    if (enemyType == 9) enemyType = 1;*/
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
@@ -248,15 +241,13 @@ public class Main : MonoBehaviour
                 break;
         }
 
-        if (Vector2Int.Equals(currentActiveRoom, mapController.goodRoom)) setGameOverText(true, "You win!");
-        else if (Vector2Int.Equals(currentActiveRoom, mapController.badRoom))setGameOverText(true, "You lose!");
-        else setGameOverText(false, "");
+        
 
         mapController.updatePosibleDirections();
         setActiveAllUIArrows(false);
     }
 
-    private void setGameOverText(bool active, string text)
+    public void setGameOverText(bool active, string text)
     {
         gameOverText.gameObject.SetActive(active);
         gameOverText.text = text;

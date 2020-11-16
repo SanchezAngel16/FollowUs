@@ -11,6 +11,12 @@ public class Golem : Enemy
     private float waitShootTime;
     public float startWaitShootTime;
 
+    private int golemPosition;
+    public void setGolemAttributes(int golemType)
+    {
+        this.golemPosition = golemType;
+    }
+
     public override void initEnemy()
     {
         lifePoints = 150;
@@ -78,10 +84,29 @@ public class Golem : Enemy
     {
         Vector2[] targets = new Vector2[4];
         Room currentRoom = this.transform.parent.parent.parent.GetComponent<Room>();
-        for(int i = 0; i < 4; i++)
+
+        if(golemPosition == 0f)
         {
-            targets[i] = currentRoom.corners[i].position;
+            for(int i = 0; i < currentRoom.corners.Length; i++)
+            {
+                targets[i] = currentRoom.corners[i].position;
+            }
         }
+        else
+        {
+            targets[0].x = currentRoom.corners[0].position.x - (golemPosition - 0.5f);
+            targets[0].y = currentRoom.corners[0].position.y + (golemPosition + 0.5f);
+
+            targets[1].x = currentRoom.corners[1].position.x - (golemPosition - 0.5f);
+            targets[1].y = currentRoom.corners[1].position.y - (golemPosition - 0.5f);
+
+            targets[2].x = currentRoom.corners[2].position.x + (golemPosition + 0.5f);
+            targets[2].y = currentRoom.corners[2].position.y - (golemPosition - 0.5f);
+
+            targets[3].x = currentRoom.corners[3].position.x + (golemPosition + 0.5f);
+            targets[3].y = currentRoom.corners[3].position.y + (golemPosition + 0.5f);
+        }
+
         return targets;
     }
 

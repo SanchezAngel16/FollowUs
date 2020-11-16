@@ -82,7 +82,6 @@ public class Room : MonoBehaviour
         Util.setCurseType(curseType);
         if (curseType == 2)
         {
-            Debug.Log("Reduce timer");
             maxTimer /= 2f;
             timer = maxTimer;
             crackTime = maxTimer / 5;
@@ -151,7 +150,7 @@ public class Room : MonoBehaviour
                 break;
             case 5:
                 enemyType = 2;
-                enemiesCount = 2;
+                enemiesCount = Random.Range(1,4);
                 break;
             case 6:
                 enemyType = 3;
@@ -192,6 +191,16 @@ public class Room : MonoBehaviour
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
             newCentipede.GetComponent<Centipede>().initBody(this);
             Main.Instance.enemies.Add(newCentipede.transform);
+        }else if(enemyType == 2)
+        {
+            for (int i = 0; i < enemiesCount; i++)
+            {
+                GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
+                Golem g = newEnemy.transform.GetChild(1).GetComponent<Golem>();
+                g.setGolemAttributes(i);
+                Main.Instance.enemies.Add(newEnemy.transform);
+                Main.Instance.enemiesCount++;
+            }
         }
         else
         {

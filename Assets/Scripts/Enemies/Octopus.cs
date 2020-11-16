@@ -70,7 +70,7 @@ public class Octopus : Enemy
 
                 if (currentDestination == 1) currentDestination = 0;
                 else currentDestination = 1;
-                waitTime = Random.Range(1f, 3f);
+                waitTime = Random.Range(0f, 1.5f);
             }
             else
             {

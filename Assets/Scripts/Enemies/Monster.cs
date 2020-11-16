@@ -43,7 +43,7 @@ public class Monster : Enemy
             bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-            rb.AddForce(bullets[i].transform.up * 2f, ForceMode2D.Impulse);
+            rb.AddForce(bullets[i].transform.up * 2.3f, ForceMode2D.Impulse);
             angle += 18f;
         }
         shooting = true;
@@ -54,14 +54,16 @@ public class Monster : Enemy
         rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[nextTargetIndex]) < 0.2f || collidingStaticObject)
         {
+            if (anim != null) anim.SetBool("shooting", true);
             if (!shooting) shoot();
             if (waitTime < 0)
             {
                 //Change destination target
                 if (nextTargetIndex == 0) nextTargetIndex = Random.Range(1, targetsPositions.Length);
                 else nextTargetIndex = 0;
-                waitTime = startWaitTime;
+                waitTime = 0.5f;
                 shooting = false;
+                if (anim != null) anim.SetBool("shooting", false);
             }
             else
             {
