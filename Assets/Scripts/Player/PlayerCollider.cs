@@ -23,6 +23,8 @@ public class PlayerCollider : MonoBehaviour
     [SerializeField]
     private GameObject roomsAround;
 
+    private bool gameOver = false;
+
     private void Start()
     {
         hitted = false;
@@ -33,11 +35,21 @@ public class PlayerCollider : MonoBehaviour
     {
         if (timer > 0)
         {
-            timer -= Time.deltaTime;
-            int minutes = Mathf.FloorToInt(timer / 60f);
-            int seconds = Mathf.RoundToInt(timer % 60f);
+            if (!gameOver)
+            {
+                timer -= Time.deltaTime;
+            }
+            //int minutes = Mathf.FloorToInt(timer / 60f);
+            //int seconds = Mathf.RoundToInt(timer % 60f);
 
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            string minutes = Mathf.Floor(timer / 60).ToString("00");
+            string seconds = (timer % 60).ToString("00");
+
+            //print(string.Format("{0}:{1}", minutes, seconds));
+
+            //.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = string.Format("{0}:{1}", minutes, seconds);
+
         }
         else
         {
@@ -89,19 +101,15 @@ public class PlayerCollider : MonoBehaviour
                 Main.Instance.setGameOverText(true, "You win!");
                 playerController.restart.gameObject.SetActive(true);
                 Main.Instance.setActiveAllUIArrows(false);
+                gameOver = true;
             }else if(Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.badRoom))
             {
                 Main.Instance.setGameOverText(true, "You lose!");
                 playerController.updateLifePoints(-playerController.lifePoints);
                 playerController.restart.gameObject.SetActive(true);
                 Main.Instance.setActiveAllUIArrows(false);
+                gameOver = true;
             }
-        }else if (tag.Equals("EmptyRoom"))
-        {
-            Room currentRoom = collision.gameObject.GetComponent<Room>();
-            roomsAround.transform.position = currentRoom.transform.position;
-            setRoomsPreview(currentRoom.mapLocation);
-            playerController.updateLifePoints(-playerController.lifePoints);
         }
     }
 

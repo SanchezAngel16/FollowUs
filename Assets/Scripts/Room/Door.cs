@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    public Sprite openedSprite;
     public bool opened;
     public Vector2 direction;
 
@@ -20,5 +21,11 @@ public class Door : MonoBehaviour
                 playerController.rb.position = new Vector2(pPos.x + direction.x, pPos.y + direction.y);
             }
         }
+    }
+
+    public void openDoor()
+    {
+        opened = true;
+        GetComponent<SpriteRenderer>().sprite = openedSprite;
     }
 }

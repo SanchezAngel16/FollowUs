@@ -31,7 +31,6 @@ public class Octopus : Enemy
         if (horizontal) targetPosition = new Vector2(parent.position.x + Util.playableArea, transform.position.y);
         else targetPosition = new Vector2(transform.position.x, parent.position.y + Util.playableArea);
     }
-
     private void shoot()
     {
         GameObject[] bullets = new GameObject[4];

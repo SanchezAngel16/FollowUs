@@ -12,6 +12,7 @@ public class Golem : Enemy
     public float startWaitShootTime;
 
     private int golemPosition;
+    private bool hasChangeDirection = false;
     public void setGolemAttributes(int golemType)
     {
         this.golemPosition = golemType;
@@ -21,7 +22,7 @@ public class Golem : Enemy
     {
         lifePoints = 150;
         waitShootTime = startWaitShootTime;
-        if (Random.Range(0, 10) >= 10) direction = 1;
+        if (Random.Range(0, 10) >= 5) direction = 1;
         else direction = -1;
         targetsPositions = getCornersPositions();
         currentTargetPositionIndex = Random.Range(0, targetsPositions.Length);
@@ -36,16 +37,27 @@ public class Golem : Enemy
         {
             if (waitTime < 0)
             {
-                if(direction == 1)
+                if (hasChangeDirection)
                 {
-                    currentTargetPositionIndex++;
-                    if (currentTargetPositionIndex >= targetsPositions.Length) currentTargetPositionIndex = 0;
+                    direction *= -1;
+                    hasChangeDirection = false;
                 }
                 else
                 {
-                    currentTargetPositionIndex--;
-                    if (currentTargetPositionIndex < 0) currentTargetPositionIndex = targetsPositions.Length-1;
+                    if (direction == 1)
+                    {
+                        currentTargetPositionIndex++;
+                        if (currentTargetPositionIndex >= targetsPositions.Length) currentTargetPositionIndex = 0;
+                    }
+                    else
+                    {
+                        currentTargetPositionIndex--;
+                        if (currentTargetPositionIndex < 0) currentTargetPositionIndex = targetsPositions.Length - 1;
+                    }
+
                 }
+
+
                 rotate();
                 waitTime = startWaitTime;
             }
@@ -78,6 +90,26 @@ public class Golem : Enemy
         bullet.SetActive(true);
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(-transform.up * 8f, ForceMode2D.Impulse);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("StaticObject"))
+        {
+            hasChangeDirection = true;
+            if (direction == 1)
+            {
+                currentTargetPositionIndex--;
+                if (currentTargetPositionIndex < 0) currentTargetPositionIndex = targetsPositions.Length - 1;
+            }
+            else
+            {
+                currentTargetPositionIndex++;
+                if (currentTargetPositionIndex >= targetsPositions.Length) currentTargetPositionIndex = 0;
+            }
+            
+        }
     }
 
     private Vector2[] getCornersPositions()

@@ -7,13 +7,14 @@ public class Monster3 : Enemy
     private float waitShootTime;
     public float startWaitShootTime;
 
-    public Transform[] blocks;
-    public GameObject[] balls;
+    public GameObject rotatingObjects;
     public int shieldsCount;
+    public float rotationSpeed;
 
     public override void initEnemy()
     {
         lifePoints = 150;
+        rotationSpeed = 45;
         startWaitShootTime = Random.Range(2, 4);
         waitShootTime = startWaitShootTime;
         this.transform.position = this.transform.parent.position;
@@ -38,17 +39,9 @@ public class Monster3 : Enemy
         }
     }
 
-    private void rotateBlocks(Transform[] arrBlocks, float speed)
-    {
-        for(int i = 0; i < arrBlocks.Length; i++)
-        {
-            arrBlocks[i].RotateAround(this.transform.position, new Vector3(0, 0, 1), (speed * Util.rotationSpeed) * Time.fixedDeltaTime);
-        }
-    }
-
     public override void move()
     {
-        rotateBlocks(blocks, 45);
+        rotatingObjects.transform.Rotate(0, 0, (rotationSpeed * Util.rotationSpeed) * Time.fixedDeltaTime);
 
         if (waitShootTime < 0)
         {
@@ -79,10 +72,12 @@ public class Monster3 : Enemy
     {
         if (destroy)
         {
+            /*
             for (int i = 0; i < blocks.Length; i++)
             {
                 blocks[i].gameObject.SetActive(false);
-            }
+            }*/
+            rotatingObjects.SetActive(false);
 
             if (Random.Range(0, 100) >= 10 && lootMaker)
             {

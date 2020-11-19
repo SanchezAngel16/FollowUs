@@ -58,7 +58,7 @@ public static class Util
             case 3:
                 //Speed up enemies
                 bulletSpeed = 1f;
-                enemiesSpeed = 2f;
+                enemiesSpeed = 1.8f;
                 rotationSpeed = 2f;
                 lightsOut = false;
                 friendFire = false;

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8645263737726588063
 Transform:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 6877810393526639319}
   - component: {fileID: 6374024173846037970}
   - component: {fileID: 1693901534697587279}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Golem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -239,6 +239,8 @@ MonoBehaviour:
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
+  destroy: 0
+  anim: {fileID: 0}
   targetsPositions: []
   direction: 0
   startWaitShootTime: 3
@@ -262,7 +264,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1693901534697587279
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -273,7 +275,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.009535074}

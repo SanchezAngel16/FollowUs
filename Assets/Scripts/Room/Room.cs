@@ -109,12 +109,18 @@ public class Room : MonoBehaviour
         {
             if (firstTimeDestroying)
             {
-                Instantiate(emptyRoom).transform.position = this.transform.position;
-                this.isDestroyed = true;
-                this.gameObject.SetActive(false);
+                DestroyRoom();
                 firstTimeDestroying = false;
             }
         }
+    }
+
+    private void DestroyRoom()
+    {
+        this.isDestroyed = true;
+        setCrackSprite(4);
+        enemiesGenerationPoint.gameObject.SetActive(false);
+        staticElementsGroup.gameObject.SetActive(false);
     }
 
     private void setCrackSprite(int index)
@@ -229,18 +235,21 @@ public class Room : MonoBehaviour
         GameObject newZombie = Instantiate(enemiesPrefab[4], enemiesGenerationPoint );
         newZombie.transform.position = corners[cornersIndex[Random.Range(0, cornersIndex.Length)]].transform.position;
         Main.Instance.enemies.Add(newZombie.transform);
-        
     }
 
 
     public void setDoorSprites(int cols, int rows)
     {
-        Sprite notPassSprite = doorSprites[0];
-        if (mapLocation.x == 0) leftDoor.GetComponent<SpriteRenderer>().sprite = notPassSprite;
-        else if (mapLocation.x == cols - 1) rightDoor.GetComponent<SpriteRenderer>().sprite = notPassSprite;
+        Sprite notPassRight = doorSprites[0];
+        Sprite notPassLeft = doorSprites[1];
+        Sprite notPassUp = doorSprites[2];
+        Sprite notPassDown = doorSprites[3];
 
-        if (mapLocation.y == 0) upDoor.GetComponent<SpriteRenderer>().sprite = notPassSprite;
-        else if (mapLocation.y == rows - 1) downDoor.GetComponent<SpriteRenderer>().sprite = notPassSprite;
+        if (mapLocation.x == 0) leftDoor.GetComponent<SpriteRenderer>().sprite = notPassLeft;
+        else if (mapLocation.x == cols - 1) rightDoor.GetComponent<SpriteRenderer>().sprite = notPassRight;
+
+        if (mapLocation.y == 0) upDoor.GetComponent<SpriteRenderer>().sprite = notPassUp;
+        else if (mapLocation.y == rows - 1) downDoor.GetComponent<SpriteRenderer>().sprite = notPassDown;
     }
 
     public void setPosibleDirections(int right, int left, int up, int down)
@@ -263,7 +272,7 @@ public class Room : MonoBehaviour
             for(int i = 0; i < numElements; i++)
             {
                 GameObject newStaticElement = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
-                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform, .5f);
+                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform, 1f);
             }
         }
     }

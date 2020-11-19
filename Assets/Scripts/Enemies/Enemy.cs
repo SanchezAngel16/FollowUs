@@ -40,7 +40,7 @@ public abstract class Enemy : MonoBehaviour
         move();
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
         if (tag.Equals("StaticObject")) collidingStaticObject = true;

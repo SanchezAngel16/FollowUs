@@ -93,6 +93,7 @@ public class Shield : MonoBehaviour
         if (destroy)
         {
             monster.shieldsCount--;
+            monster.rotationSpeed += 15;
         }
     }
 }

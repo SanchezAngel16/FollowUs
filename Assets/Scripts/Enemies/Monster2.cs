@@ -20,6 +20,7 @@ public class Monster2 : Enemy
         waitShootTime = startWaitShootTime;
 
         targetPosition = Util.getRandomPosition(transform.parent, 0);
+        Debug.Log(targetPosition);
     }
 
     private void shoot()
@@ -41,19 +42,11 @@ public class Monster2 : Enemy
     public override void move()
     {
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
+        
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.deltaTime));
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
         {
-            if (waitTime < 0)
-            {
-                //Change destination target
-                targetPosition = Util.getRandomPosition(transform.parent, 0);
-                waitTime = startWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
+            targetPosition = Util.getRandomPosition(transform.parent, 0);
         }
 
         if (waitShootTime < 0)

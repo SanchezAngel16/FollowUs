@@ -154,6 +154,11 @@ public class Main : MonoBehaviour
                 else
                 {
                     roomScript.threatType = Random.Range(1,10);
+                    //roomScript.threatType = 6;
+                    if(roomScript.threatType != 8 && roomScript.threatType != 9)
+                    {
+                        roomScript.generateStaticElements(Random.Range(2,4));
+                    }
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
@@ -192,23 +197,19 @@ public class Main : MonoBehaviour
         switch (direction)
         {
             case RIGHT_DIR:
-                //room.rightDoor.gameObject.SetActive(false);
-                room.rightDoor.opened = true;
+                room.rightDoor.openDoor();
                 doorToDeactivate = LEFT_DIR;
                 break;
             case LEFT_DIR:
-                //room.leftDoor.gameObject.SetActive(false);
-                room.leftDoor.opened = true;
+                room.leftDoor.openDoor();
                 doorToDeactivate = RIGHT_DIR;
                 break;
             case UP_DIR:
-                //room.upDoor.gameObject.SetActive(false);
-                room.upDoor.opened = true;
+                room.upDoor.openDoor();
                 doorToDeactivate = DOWN_DIR;
                 break;
             case DOWN_DIR:
-                //room.downDoor.gameObject.SetActive(false);
-                room.downDoor.opened = true;
+                room.downDoor.openDoor();
                 doorToDeactivate = UP_DIR;
                 break;
         }
@@ -224,20 +225,16 @@ public class Main : MonoBehaviour
         switch (doorToDeactivate)
         {
             case RIGHT_DIR:
-                //room.rightDoor.gameObject.SetActive(false);
-                room.rightDoor.opened = true;
+                room.rightDoor.openDoor();
                 break;
             case LEFT_DIR:
-                //room.leftDoor.gameObject.SetActive(false);
-                room.leftDoor.opened = true;
+                room.leftDoor.openDoor();
                 break;
             case UP_DIR:
-                //room.upDoor.gameObject.SetActive(false);
-                room.upDoor.opened = true;
+                room.upDoor.openDoor();
                 break;
             case DOWN_DIR:
-                //room.downDoor.gameObject.SetActive(false);
-                room.downDoor.opened = true;
+                room.downDoor.openDoor();
                 break;
         }
 
