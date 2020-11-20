@@ -20,7 +20,7 @@ public class Zombie : Enemy
     {
         if(Vector2.Distance(transform.position, target.position) > 0.2f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, (speed * Util.enemiesSpeed) * Time.deltaTime);
             if(transform.position.x < target.position.x)
             {
                 sprite.flipX = true;

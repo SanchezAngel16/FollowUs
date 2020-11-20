@@ -41,7 +41,7 @@ public class Monster3 : Enemy
 
     public override void move()
     {
-        rotatingObjects.transform.Rotate(0, 0, (rotationSpeed * Util.rotationSpeed) * Time.fixedDeltaTime);
+        rotatingObjects.transform.Rotate(0, 0, (rotationSpeed * Util.rotationSpeed) * Time.deltaTime);
 
         if (waitShootTime < 0)
         {

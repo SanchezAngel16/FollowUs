@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Octopus : Enemy
 {
-    private int direction;
-    private Vector2 targetPosition;
     private Transform parent;
     private bool horizontal;
 
     private float waitShootTime;
     public float startWaitShootTime;
+
+    private float waitDirectionChange;
+    private Vector2[] directions =
+    {
+        new Vector2(1,0),
+        new Vector2(-1,0),
+        new Vector2(0,1),
+        new Vector2(0,-1)
+    };
+    private int currentDirection;
 
     public override void initEnemy()
     {
@@ -22,15 +30,49 @@ public class Octopus : Enemy
         parent = transform.parent;
         transform.position = Util.getRandomPosition(parent, 0);
 
-        direction = 1;
+        waitDirectionChange = Random.Range(3f, 7f);
 
-        int randomDirection = Random.Range(0, 10);
-        if (randomDirection >= 5) horizontal = true;
-        else horizontal = false;
 
-        if (horizontal) targetPosition = new Vector2(parent.position.x + Util.playableArea, transform.position.y);
-        else targetPosition = new Vector2(transform.position.x, parent.position.y + Util.playableArea);
+        currentDirection = Random.Range(0, 4);
+        if(currentDirection < 2)
+        {
+            horizontal = true;
+        }
+        else
+        {
+            horizontal = false;
+        }
+
     }
+
+    private void invertDirection()
+    {
+        if (horizontal)
+        {
+            if (currentDirection == 0) currentDirection = 1;
+            else currentDirection = 0;
+        }
+        else
+        {
+            if (currentDirection == 2) currentDirection = 3;
+            else currentDirection = 2;
+        }
+    }
+
+    private void changeDirection()
+    {
+        if (horizontal)
+        {
+            horizontal = false;
+            currentDirection = Random.Range(2,4);
+        }
+        else
+        {
+            horizontal = true;
+            currentDirection = Random.Range(0, 2);
+        }
+    }
+
     private void shoot()
     {
         GameObject[] bullets = new GameObject[4];
@@ -49,38 +91,27 @@ public class Octopus : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
-        if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
+        rb.MovePosition(rb.position + directions[currentDirection] * speed * Time.deltaTime);
+        if (collidingStaticObject)
         {
-            if (waitTime < 0)
-            {
-                //Change destination target
-                direction *= -1;
+            invertDirection();
+            collidingStaticObject = false;
+        }
 
-                if (horizontal)
-                {
-                    targetPosition.x = parent.position.x + (Util.playableArea * direction);
-                }
-                else
-                {
-                    targetPosition.y = parent.position.y + (Util.playableArea * direction);
-                }
-
-
-                if (currentDestination == 1) currentDestination = 0;
-                else currentDestination = 1;
-                waitTime = Random.Range(0f, 1.5f);
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
+        if(waitDirectionChange < 0)
+        {
+            changeDirection();
+            waitDirectionChange = Random.Range(5f, 7f);
+        }
+        else
+        {
+            waitDirectionChange -= Time.deltaTime;
         }
 
         if (waitShootTime < 0)
         {
             shoot();
-            waitShootTime = startWaitShootTime;
+            waitShootTime = Random.Range(3f, 10f);
         }
         else
         {

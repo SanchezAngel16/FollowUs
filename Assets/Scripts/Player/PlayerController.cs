@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         if (living)
         {
-            rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + moveVelocity * Time.deltaTime);
         }
 
     }

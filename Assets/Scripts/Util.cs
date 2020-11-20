@@ -4,6 +4,11 @@ using UnityEngine;
 
 public static class Util
 {
+    
+    public static Vector2 rightDirection = new Vector2(1, 0);
+    public static Vector2 leftDirection = new Vector2(-1, 0);
+    public static Vector2 UpDirection = new Vector2(0, 1);
+    public static Vector2 DownDirection = new Vector2(0, -1);
 
     public static int mapSize = 5;
 
@@ -107,6 +112,15 @@ public static class Util
         float maxY = parent.position.y + playableArea - substractOffset;
 
         return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+    }
+
+    public static bool isInsideMinDistance(float minDistance, List<Vector2> positions, Vector2 newPos)
+    {
+        foreach (Vector2 pos in positions)
+        {
+            if (Vector2.Distance(pos, newPos) < minDistance) return true;
+        }
+        return false;
     }
 
     public static Vector3 getOneRandomSidePosition(Transform parent)

@@ -32,7 +32,7 @@ public class Golem : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[currentTargetPositionIndex], (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[currentTargetPositionIndex], (speed * Util.enemiesSpeed) * Time.deltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[currentTargetPositionIndex]) < 0.2f || collidingStaticObject)
         {
             if (waitTime < 0)

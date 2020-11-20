@@ -20,7 +20,6 @@ public class Monster2 : Enemy
         waitShootTime = startWaitShootTime;
 
         targetPosition = Util.getRandomPosition(transform.parent, 0);
-        Debug.Log(targetPosition);
     }
 
     private void shoot()

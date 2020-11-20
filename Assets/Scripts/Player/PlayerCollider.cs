@@ -25,6 +25,9 @@ public class PlayerCollider : MonoBehaviour
 
     private bool gameOver = false;
 
+    private string minutes;
+    private string seconds;
+
     private void Start()
     {
         hitted = false;
@@ -39,15 +42,9 @@ public class PlayerCollider : MonoBehaviour
             {
                 timer -= Time.deltaTime;
             }
-            //int minutes = Mathf.FloorToInt(timer / 60f);
-            //int seconds = Mathf.RoundToInt(timer % 60f);
+            minutes = Mathf.Floor(timer / 60).ToString("00");
+            seconds = (timer % 60).ToString("00");
 
-            string minutes = Mathf.Floor(timer / 60).ToString("00");
-            string seconds = (timer % 60).ToString("00");
-
-            //print(string.Format("{0}:{1}", minutes, seconds));
-
-            //.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             timerText.text = string.Format("{0}:{1}", minutes, seconds);
 
         }
@@ -64,7 +61,10 @@ public class PlayerCollider : MonoBehaviour
     {
         string tag = collision.gameObject.tag;
         
-        if (tag.Equals("Enemy") || tag.Equals("EnemyBullet") || tag.Equals("Laser") || tag.Equals("EnemyShield"))
+        if (collision.gameObject.CompareTag("Enemy") || 
+            collision.gameObject.CompareTag("EnemyBullet") || 
+            collision.gameObject.CompareTag("Laser") || 
+            collision.gameObject.CompareTag("EnemyShield"))
         {
             if (hitted) return;
             // Take damage animation and deactivate collider layer.
@@ -74,20 +74,20 @@ public class PlayerCollider : MonoBehaviour
                 InvokeRepeating("startHitAnimation", 0f, 0.05f);
                 Invoke("stopTakingDamageAnimation", 3.5f);
                 playerController.updateLifePoints(-10);
-                if (tag.Equals("EnemyBullet")) collision.gameObject.SetActive(false);
+                if (collision.gameObject.CompareTag("EnemyBullet")) collision.gameObject.SetActive(false);
             }
-        }else if (tag.Equals("Pickable_Area"))
+        }else if (collision.gameObject.CompareTag("Pickable_Area"))
         {
             reloadButton.gameObject.SetActive(true);
-        }else if (tag.Equals("Collectable_Ammo"))
+        }else if (collision.gameObject.CompareTag("Collectable_Ammo"))
         {
             shooting.reloadBullets(30);
             Destroy(collision.gameObject);
-        }else if (tag.Equals("Collectable_Health"))
+        }else if (collision.gameObject.CompareTag("Collectable_Health"))
         {
             Destroy(collision.gameObject);
             playerController.updateLifePoints(40);
-        }else if (tag.Equals("Room"))
+        }else if (collision.gameObject.CompareTag("Room"))
         {
             Room currentRoom = collision.gameObject.GetComponent<Room>();
             roomsAround.transform.position = currentRoom.transform.position;
@@ -153,16 +153,19 @@ public class PlayerCollider : MonoBehaviour
         hitted = true;
         if (playerController.living)
         {
-            InvokeRepeating("startHitAnimation", 0f, 0.05f);
-            Invoke("stopTakingDamageAnimation", 3.5f);
+            
             playerController.updateLifePoints(-lifePoints);
+            if (playerController.living)
+            {
+                InvokeRepeating("startHitAnimation", 0f, 0.05f);
+                Invoke("stopTakingDamageAnimation", 3.5f);
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        string tag = collision.gameObject.tag;
-        if (tag.Equals("Pickable_Area"))
+        if (collision.gameObject.CompareTag("Pickable_Area"))
         {
             reloadButton.gameObject.SetActive(false);
         }

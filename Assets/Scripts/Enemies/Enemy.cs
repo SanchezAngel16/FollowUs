@@ -43,19 +43,17 @@ public abstract class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
-        if (tag.Equals("StaticObject")) collidingStaticObject = true;
+        if (tag.Equals("StaticObject") || tag.Equals("Door")) collidingStaticObject = true;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        string tag = collision.gameObject.tag;
-        if (tag.Equals("StaticObject")) collidingStaticObject = false;
+        if (collision.gameObject.CompareTag("StaticObject") || collision.gameObject.CompareTag("Door")) collidingStaticObject = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string tag = collision.gameObject.tag;
-        if (tag.Equals("PlayerBullet"))
+        if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             if (collision.gameObject.GetComponent<Bullet>().hit) return;
             collision.gameObject.GetComponent<Bullet>().hit = true;

@@ -68,8 +68,12 @@ public class Shooting : MonoBehaviour
 
     private void flipGun(bool flip)
     {
-        playerController.GetComponent<SpriteRenderer>().flipX = flip;
-        gun.GetComponent<SpriteRenderer>().flipX = flip;
+        if (playerController.living)
+        {
+            playerController.spriteRenderer.flipX = flip;
+            gun.GetComponent<SpriteRenderer>().flipX = flip;
+        }
+        
     }
 
     private void CancelShoot()

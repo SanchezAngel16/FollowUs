@@ -59,13 +59,13 @@ public class CentipedeTail : CentipedeBody
         {
             if (nextBody != null)
             {
-                rb.MovePosition(Vector2.MoveTowards(transform.position, nextBody.tail.transform.position, (speed * Util.enemiesSpeed) * Time.fixedDeltaTime));
+                rb.MovePosition(Vector2.MoveTowards(transform.position, nextBody.tail.transform.position, (speed * Util.enemiesSpeed) * Time.deltaTime));
                 rotate(nextBody.tail.transform);
             }
         }
         else
         {
-            startMoveTime -= Time.fixedDeltaTime;
+            startMoveTime -= Time.deltaTime;
         }
     }
 }

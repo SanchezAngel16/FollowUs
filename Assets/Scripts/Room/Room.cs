@@ -269,11 +269,30 @@ public class Room : MonoBehaviour
         }
         else
         {
+            GameObject[] staticObjects = new GameObject[numElements];
+            float minDistance = 2f;
+            Vector2 randomPos;
+            List<Vector2> randomPositions = new List<Vector2>();
+            randomPositions.Add(Util.getRandomPosition(staticElementsGroup.transform, 1f));
+
+            for(int i = 1; i < numElements; i++)
+            {
+                do
+                {
+                    randomPos = Util.getRandomPosition(staticElementsGroup.transform, 1f);
+                } while (Util.isInsideMinDistance(minDistance, randomPositions, randomPos));
+                randomPositions.Add(randomPos);
+            }
+
+
             for(int i = 0; i < numElements; i++)
             {
-                GameObject newStaticElement = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
-                newStaticElement.transform.position = Util.getRandomPosition(staticElementsGroup.transform, 1f);
+                staticObjects[i] = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
+                staticObjects[i].transform.position = randomPositions[i];
+
             }
         }
     }
+
+    
 }
