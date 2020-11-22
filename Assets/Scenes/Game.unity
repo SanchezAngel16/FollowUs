@@ -6977,6 +6977,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centipedeHead: {fileID: 7910722168234476862, guid: a5ce315bf2cf95d42b7431d769b50454, type: 3}
+  centipedeTail: {fileID: 1150692308166668272, guid: ef3e3c3e1de21b9459c9cb8d0b390f64, type: 3}
+  golem: {fileID: 6877810393134003122, guid: cdbb8913f4ec4d547927e7da4d3b1aa3, type: 3}
+  monster: {fileID: 214763078662300438, guid: c2eb48db8b4119341a6d824d08dea0d2, type: 3}
+  monster2: {fileID: 283312156893152520, guid: 4531b768cb254d847a4272b37574681f, type: 3}
+  monster3: {fileID: 7293228858705511512, guid: 32364755430993f4b8d7b4ddbebe318d, type: 3}
+  octopus: {fileID: 6757204696547637691, guid: 6949f08db71cb1c4aad5ea28e6d2d48a, type: 3}
+  zombieGenerator: {fileID: 0}
   evilFairy: {fileID: 8855795423067207055, guid: aba9a36ef51134944916cb21c70a96db, type: 3}
   lightning: {fileID: 3516941198012392344, guid: 11d70a0b1e5e50741bb973985b849ce5, type: 3}
   lightningGenerator: {fileID: 7643946564980782092, guid: 4d172a46181db1443bc6405808fcba95, type: 3}

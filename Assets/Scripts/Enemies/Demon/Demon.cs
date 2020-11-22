@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : Enemy
+public class Demon : Enemy
 {
     private Vector2[] targetsPositions;
     private int nextTargetIndex;

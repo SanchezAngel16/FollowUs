@@ -6,6 +6,13 @@ public class EnemyPrefabManager : MonoBehaviour
 {
     // Assign the prefab in the inspector
     public GameObject centipedeHead;
+    public GameObject centipedeTail;
+    public GameObject golem;
+    public GameObject monster;
+    public GameObject evilEye;
+    public GameObject jellyFish;
+    public GameObject octopus;
+    public GameObject zombieGenerator;
     public GameObject evilFairy;
     public GameObject lightning;
     public GameObject lightningGenerator;

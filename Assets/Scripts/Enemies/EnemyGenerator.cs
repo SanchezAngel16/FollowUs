@@ -5,13 +5,17 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
 
-    public void generate(int threatType)
+    public void generate(Room currentRoom, int threatType)
     {
         switch (threatType)
         {
             case 1:
+                // OCTOPUS 
+                generateEnemies(EnemyPrefabManager.Instance.octopus, Random.Range(4, 6));
                 break;
             case 2:
+                generateEnemies(EnemyPrefabManager.Instance.octopus, Random.Range(6, 8));
+                
                 break;
             case 3:
                 break;
@@ -32,6 +36,9 @@ public class EnemyGenerator : MonoBehaviour
 
     private void generateEnemies(GameObject enemy, int enemiesCount)
     {
-
+        for(int i = 0; i < enemiesCount; i++)
+        {
+            Instantiate(enemy, transform);
+        }
     }
 }
