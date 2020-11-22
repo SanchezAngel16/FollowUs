@@ -133,15 +133,17 @@ public class PlayerController : MonoBehaviour
     {
         this.lifePoints += points;
         if (lifePoints >= maxLifePoints) lifePoints = maxLifePoints;
-        updateHealthUI();
-        if(lifePoints <= 0)
+        else if(lifePoints <= 0)
         {
             //Kill player
-            restart.gameObject.SetActive(true);
+            lifePoints = 0;
             living = false;
             gun.gameObject.SetActive(false);
             animator.SetBool("death", true);
+
+            restart.gameObject.SetActive(true);
         }
+        updateHealthUI();
     }
 
 

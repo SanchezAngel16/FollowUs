@@ -64,7 +64,8 @@ public class PlayerCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") || 
             collision.gameObject.CompareTag("EnemyBullet") || 
             collision.gameObject.CompareTag("Laser") || 
-            collision.gameObject.CompareTag("EnemyShield"))
+            collision.gameObject.CompareTag("EnemyShield") ||
+            collision.gameObject.CompareTag("LightningLaser"))
         {
             if (hitted) return;
             // Take damage animation and deactivate collider layer.
@@ -151,15 +152,11 @@ public class PlayerCollider : MonoBehaviour
         if (hitted) return;
         // Take damage animation and deactivate collider layer.
         hitted = true;
+        playerController.updateLifePoints(-lifePoints);
         if (playerController.living)
         {
-            
-            playerController.updateLifePoints(-lifePoints);
-            if (playerController.living)
-            {
-                InvokeRepeating("startHitAnimation", 0f, 0.05f);
-                Invoke("stopTakingDamageAnimation", 3.5f);
-            }
+            InvokeRepeating("startHitAnimation", 0f, 0.05f);
+            Invoke("stopTakingDamageAnimation", 3.5f);
         }
     }
 

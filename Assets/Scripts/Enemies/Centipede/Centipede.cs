@@ -14,7 +14,6 @@ public class Centipede : MonoBehaviour
     public void initBody(Room r)
     {
         currentRoom = r;
-        
         createBody();
 
         for(int i = 0; i < body.Length; i++)

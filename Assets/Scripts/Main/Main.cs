@@ -157,7 +157,14 @@ public class Main : MonoBehaviour
                     //roomScript.threatType = 6;
                     if(roomScript.threatType != 8 && roomScript.threatType != 9)
                     {
-                        roomScript.generateStaticElements(Random.Range(2,4));
+                        if(Random.Range(0, 10) > 3)
+                        {
+                            roomScript.generateLightnings();
+                        }
+                        else
+                        {
+                            roomScript.generateStaticElements(Random.Range(2,4));
+                        }
                     }
                 }
 

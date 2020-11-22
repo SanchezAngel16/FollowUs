@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2884859386740149920}
   - component: {fileID: 972633449132769281}
   - component: {fileID: 2044529083749864452}
+  - component: {fileID: 3585145166100281389}
   m_Layer: 0
   m_Name: laser
-  m_TagString: Untagged
+  m_TagString: LightningLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,3 +103,48 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &3585145166100281389
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371112068966818004}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.4608295, y: 1}
+    newSize: {x: 1, y: 2.17}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.10599078, y: 0.33640552}
+      - {x: 0.10138249, y: 0.4423963}
+      - {x: 0.124423966, y: 0.52073735}
+      - {x: 0.124423966, y: 0.59447}
+      - {x: 0.10599078, y: 0.6451613}
+      - {x: 0.11059908, y: 0.764977}
+      - {x: 0.11059908, y: 0.92626727}
+      - {x: 0.09677419, y: 1}
+      - {x: -0.11059908, y: 1}
+      - {x: -0.11059908, y: 0.5437788}
+      - {x: -0.10599078, y: 0.50230414}
+      - {x: -0.08294931, y: 0.4423963}
+      - {x: -0.11059908, y: 0.32718894}
+      - {x: -0.10138249, y: 0.12903225}
+      - {x: -0.08755761, y: 0.00921659}
+      - {x: -0.078341015, y: 0}
+      - {x: 0.0921659, y: 0}
+      - {x: 0.115207374, y: 0.06451613}
+      - {x: 0.11059908, y: 0.13824885}
+      - {x: 0.10138249, y: 0.22580644}

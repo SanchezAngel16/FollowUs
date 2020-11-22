@@ -45,7 +45,6 @@ public class Room : MonoBehaviour
 
     private int currentCrackSprite = -1;
 
-    private int enemiesCount;
 
 
     void Awake()
@@ -59,13 +58,10 @@ public class Room : MonoBehaviour
         firstTimeDestroying = true;
     }
 
-
-
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(1, backgroundSprites.Length)];
         crackTime = maxTimer / 5;
-        enemiesCount = 0;
     }
 
     private void OnEnable()
@@ -73,6 +69,7 @@ public class Room : MonoBehaviour
         if (!firstTime)
         {
             generateEnemies();
+            staticElementsGroup.SetActive(true);
         }
         else firstTime = false;
     }
@@ -90,10 +87,7 @@ public class Room : MonoBehaviour
             threatType += 2;
             if (threatType >= 9) threatType = 9;
         }
-
     }
-
-
     private void Update()
     {
         if (timer > 0)
@@ -190,8 +184,6 @@ public class Room : MonoBehaviour
             {
                 Invoke("generateZombies", i * 0.7f);
             }
-            /*InvokeRepeating("generateZombies", 0, 1f);
-            Invoke("CancelGeneration", 15);*/
         }else if (enemyType == 5)
         {
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
@@ -220,11 +212,6 @@ public class Room : MonoBehaviour
         
     }
 
-    public void updateEnemiesCount(int count)
-    {
-        this.enemiesCount += count;
-    }
-
     private void CancelGeneration()
     {
         CancelInvoke("generateZombies");
@@ -237,6 +224,13 @@ public class Room : MonoBehaviour
         Main.Instance.enemies.Add(newZombie.transform);
     }
 
+    public void generateLightnings()
+    {
+        GameObject newLightning = Instantiate(EnemyPrefabManager.Instance.lightning, staticElementsGroup.transform);
+        Lightning l = newLightning.GetComponent<Lightning>();
+        l.transform.position = staticElementsGroup.transform.position;
+        //l.setLightningPoints(lightningPoints);
+    }
 
     public void setDoorSprites(int cols, int rows)
     {
@@ -283,8 +277,6 @@ public class Room : MonoBehaviour
                 } while (Util.isInsideMinDistance(minDistance, randomPositions, randomPos));
                 randomPositions.Add(randomPos);
             }
-
-
             for(int i = 0; i < numElements; i++)
             {
                 staticObjects[i] = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);

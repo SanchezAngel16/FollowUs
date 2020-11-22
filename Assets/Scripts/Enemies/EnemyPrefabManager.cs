@@ -7,6 +7,8 @@ public class EnemyPrefabManager : MonoBehaviour
     // Assign the prefab in the inspector
     public GameObject centipedeHead;
     public GameObject evilFairy;
+    public GameObject lightning;
+    public GameObject lightningGenerator;
     //Singleton
     private static EnemyPrefabManager m_Instance = null;
     public static EnemyPrefabManager Instance

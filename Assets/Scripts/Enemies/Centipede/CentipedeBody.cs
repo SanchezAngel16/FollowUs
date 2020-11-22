@@ -30,26 +30,15 @@ public abstract class CentipedeBody : Enemy
 
     public override void move()
     {
-        if (startMoveTime <= 0)
-        {
-
-            manageMovement();
-        }
-        else
-        {
-            startMoveTime -= Time.deltaTime;
-        }
+        if (startMoveTime <= 0) manageMovement();
+        else startMoveTime -= Time.deltaTime;
 
         if (waitShootTime < 0)
         {
             shoot();
             waitShootTime = Random.Range(3f, 10f);
         }
-        else
-        {
-            waitShootTime -= Time.deltaTime;
-        }
-
+        else waitShootTime -= Time.deltaTime;
     }
 
     

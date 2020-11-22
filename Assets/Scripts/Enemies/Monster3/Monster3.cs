@@ -21,8 +21,6 @@ public class Monster3 : Enemy
         shieldsCount = 4;
     }
 
-    
-
     private void shoot()
     {
         GameObject[] bullets = new GameObject[12];
@@ -72,11 +70,6 @@ public class Monster3 : Enemy
     {
         if (destroy)
         {
-            /*
-            for (int i = 0; i < blocks.Length; i++)
-            {
-                blocks[i].gameObject.SetActive(false);
-            }*/
             rotatingObjects.SetActive(false);
 
             if (Random.Range(0, 100) >= 10 && lootMaker)

@@ -279,7 +279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -378.80908, y: -17.416504}
+  m_AnchoredPosition: {x: -378.80957, y: -17.416504}
   m_SizeDelta: {x: -1042.3702, y: -145.16962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146267901
@@ -2070,7 +2070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 499.0906, y: 14.9313965}
+  m_AnchoredPosition: {x: 499.0906, y: 14.931641}
   m_SizeDelta: {x: 602.69226, y: -155.3042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &618918285
@@ -6978,6 +6978,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centipedeHead: {fileID: 7910722168234476862, guid: a5ce315bf2cf95d42b7431d769b50454, type: 3}
   evilFairy: {fileID: 8855795423067207055, guid: aba9a36ef51134944916cb21c70a96db, type: 3}
+  lightning: {fileID: 3516941198012392344, guid: 11d70a0b1e5e50741bb973985b849ce5, type: 3}
+  lightningGenerator: {fileID: 7643946564980782092, guid: 4d172a46181db1443bc6405808fcba95, type: 3}
 --- !u!1 &1811717495
 GameObject:
   m_ObjectHideFlags: 0

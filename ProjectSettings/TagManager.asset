@@ -19,6 +19,8 @@ TagManager:
   - EnemyShield
   - Laser
   - Door
+  - LightningPoint
+  - LightningLaser
   layers:
   - Default
   - TransparentFX
@@ -39,7 +41,7 @@ TagManager:
   - Laser
   - PlayerHitbox
   - Door
-  - 
+  - LightningPoint
   - 
   - 
   - 

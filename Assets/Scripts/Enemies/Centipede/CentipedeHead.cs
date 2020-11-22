@@ -9,6 +9,7 @@ public class CentipedeHead : CentipedeBody
 
     private bool fixedHead = false;
 
+
     public void createFixedHead(Transform nPos)
     {
         points = currentRoom.centipedePoints;
