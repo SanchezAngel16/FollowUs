@@ -76,6 +76,7 @@ public class Lightning : MonoBehaviour
 
     private void setShootingDirections()
     {
+        Debug.Log("New set of directions");
         int randNextPos = -1;
         for (int i = 0; i < lightnings.Length; i++)
         {

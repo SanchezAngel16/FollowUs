@@ -25,7 +25,7 @@ public abstract class Enemy : MonoBehaviour
     public GameObject[] collectables;
     protected bool lootMaker = true;
 
-    protected Room currentRoom;
+    //protected Room currentRoom;
 
     public bool destroy = false;
 
@@ -98,8 +98,8 @@ public abstract class Enemy : MonoBehaviour
     public abstract void initEnemy();
     public abstract void move();
 
-    public void setCurrentRoom(Room r)
+    /*public void setCurrentRoom(Room r)
     {
         currentRoom = r;
-    }
+    }*/
 }

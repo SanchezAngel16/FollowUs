@@ -38,10 +38,15 @@ public class LightningGenerator : MonoBehaviour
         Vector2 currentPos = firePoint.transform.position;
         Vector2 lookDir = targetPos - currentPos;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        firePoint.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, pointer.up);
-        if (hitInfo && hitInfo.collider.CompareTag("LightningPoint")) return hitInfo.distance;
+        firePoint.transform.localRotation = rotation;
+        //lightning.transform.localRotation = rotation;
+        RaycastHit2D hitInfo = Physics2D.Raycast(pointer.position, pointer.up);
+        if (hitInfo && hitInfo.collider.CompareTag("LightningPoint"))
+        {
+            return hitInfo.distance;
+        }
         return Vector2.Distance(currentPos, targetPos);
     }
 
@@ -49,6 +54,7 @@ public class LightningGenerator : MonoBehaviour
     {
         this.next = next;
         distanceFromTarget = getDistanceFromTarget(next);
+        Debug.Log(distanceFromTarget);
         lightning.localScale = new Vector2(1, distanceFromTarget);
     }
 }

@@ -13,6 +13,7 @@ public class Demon : Enemy
     
     public override void initEnemy()
     {
+        Main.Instance.enemiesCount++;
         lifePoints = 150;
         waitTime = startWaitTime;
         parent = transform.parent;

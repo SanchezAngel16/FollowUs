@@ -24,9 +24,6 @@ public class Room : MonoBehaviour
     public GameObject staticElementsGroup;
     public GameObject[] staticElements;
 
-    public Transform[] corners;
-    public CentipedePoint[] centipedePoints;
-
     public float timer;
     public float maxTimer;
 
@@ -36,8 +33,6 @@ public class Room : MonoBehaviour
 
     private bool firstTime = true;
 
-    public Sprite zombieHole;
-    private int[] cornersIndex = new int[2];
 
     public GameObject emptyRoom;
 
@@ -45,7 +40,8 @@ public class Room : MonoBehaviour
 
     private int currentCrackSprite = -1;
 
-
+    [SerializeField]
+    private EnemyGenerator enemyGenerator = null;
 
     void Awake()
     {
@@ -128,94 +124,7 @@ public class Room : MonoBehaviour
 
     public void generateEnemies()
     {
-        int enemiesCount = 0;
-        int enemyType = -1;
-        switch (threatType)
-        {
-            case 1:
-                enemyType = 0;
-                enemiesCount = Random.Range(1, 3);
-                break;
-            case 2:
-                enemyType = 0;
-                enemiesCount = Random.Range(3, 5);
-                break;
-            case 3:
-                enemyType = 0;
-                enemiesCount = Random.Range(5, 7);
-                break;
-            case 4:
-                enemyType = 1;
-                enemiesCount = 1;
-                break;
-            case 5:
-                enemyType = 2;
-                enemiesCount = Random.Range(1,4);
-                break;
-            case 6:
-                enemyType = 3;
-                enemiesCount = 1;
-                break;
-            case 7:
-                enemyType = 4;
-                enemiesCount = 6;
-                break;
-            case 8:
-                enemyType = 5;
-                break;
-            case 9:
-                enemyType = 6;
-                enemiesCount = 1;
-                break;
-        }
-
-        if(enemyType == 4)
-        {
-            int randPos = Random.Range(0, corners.Length);
-            cornersIndex[0] = randPos;
-            corners[randPos].GetComponent<SpriteRenderer>().sprite = zombieHole;
-            randPos++;
-            if (randPos == corners.Length) randPos = 0;
-            cornersIndex[1] = randPos;
-            corners[randPos].GetComponent<SpriteRenderer>().sprite = zombieHole;
-            int randomZombiesCount = Random.Range(12, 30);
-            Main.Instance.enemiesCount += randomZombiesCount;
-            for (int i = 0; i < randomZombiesCount; i++)
-            {
-                Invoke("generateZombies", i * 0.7f);
-            }
-        }else if (enemyType == 5)
-        {
-            GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-
-            Main.Instance.enemies.Add(newCentipede.transform);
-        }else if(enemyType == 2)
-        {
-            for (int i = 0; i < enemiesCount; i++)
-            {
-                GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-                Golem g = newEnemy.transform.GetChild(1).GetComponent<Golem>();
-                Main.Instance.enemies.Add(newEnemy.transform);
-                Main.Instance.enemiesCount++;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < enemiesCount; i++)
-            {
-                GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-                Main.Instance.enemies.Add(newEnemy.transform);
-                Main.Instance.enemiesCount++;
-            }
-        }
-        
-    }
-
-    private void generateZombies()
-    {
-        GameObject newZombie = Instantiate(enemiesPrefab[4], enemiesGenerationPoint );
-        newZombie.transform.position = corners[cornersIndex[Random.Range(0, cornersIndex.Length)]].transform.position;
-        Main.Instance.enemies.Add(newZombie.transform);
+        enemyGenerator.generate(threatType);
     }
 
     public void generateLightnings()

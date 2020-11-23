@@ -13,6 +13,7 @@ public class JellyFish : Enemy
 
     public override void initEnemy()
     {
+        Main.Instance.enemiesCount++;
         lifePoints = 150;
         rotationSpeed = 45;
         startWaitShootTime = Random.Range(2, 4);

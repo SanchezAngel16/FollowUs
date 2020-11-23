@@ -2289,6 +2289,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: df1c4c084c133c34d8acf64a33afc971, type: 3}
   zombieHole: {fileID: 21300000, guid: f6d9a4f591b1ef545a3d8dbf18f7f896, type: 3}
   emptyRoom: {fileID: 7984295416506831327, guid: 67091ab28d7dffa48ac94b56b957207d, type: 3}
+  enemyGenerator: {fileID: 5276483281030312238}
 --- !u!61 &3118965753260998977
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2857,6 +2858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7369282471791831732}
+  - component: {fileID: 5276483281030312238}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -2878,6 +2880,18 @@ Transform:
   m_Father: {fileID: 1784108101152912011}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5276483281030312238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8773780171567456044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7beff6437630a49b0274f2bc536c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8917828237495944374
 GameObject:
   m_ObjectHideFlags: 0

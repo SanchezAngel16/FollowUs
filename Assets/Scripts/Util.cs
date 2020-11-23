@@ -126,10 +126,10 @@ public static class Util
     {
         Vector2[] corners = new Vector2[4];
 
-        corners[0] = new Vector2(currentPos.x - 4f, currentPos.y + 3.5f);
+        corners[0] = new Vector2(currentPos.x + 4f, currentPos.y - 3.5f);
         corners[1] = new Vector2(currentPos.x + 4f, currentPos.y + 3.5f);
-        corners[2] = new Vector2(currentPos.x - 4f, currentPos.y - 3.5f);
-        corners[2] = new Vector2(currentPos.x + 4f, currentPos.y - 3.5f);
+        corners[2] = new Vector2(currentPos.x - 4f, currentPos.y + 3.5f);
+        corners[3] = new Vector2(currentPos.x - 4f, currentPos.y - 3.5f);
 
         return corners;
     }

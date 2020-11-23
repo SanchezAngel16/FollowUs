@@ -11,7 +11,6 @@ public class CentipedeHead : CentipedeBody
 
     public void createFixedHead(Transform nPos)
     {
-        points = currentRoom.centipedePoints;
         this.transform.position = nPos.position;
         CentipedePoint nearestPoint = Util.getNearestTarget(transform, points);
         this.nextTarget = nearestPoint.getRandomPath(nearestPoint);
@@ -59,7 +58,6 @@ public class CentipedeHead : CentipedeBody
     {
         if (!fixedHead)
         {
-            points = currentRoom.centipedePoints;
             int randomPosition = Random.Range(0, points.Length);
             transform.position = points[randomPosition].transform.position;
             this.nextTarget = points[randomPosition];

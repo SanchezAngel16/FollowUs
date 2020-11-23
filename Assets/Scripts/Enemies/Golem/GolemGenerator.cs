@@ -10,8 +10,9 @@ public class GolemGenerator : MonoBehaviour
         for(int i = 0; i < golemCount; i++)
         {
             GameObject newGolem = Instantiate(EnemyPrefabManager.Instance.golem, transform);
-            Golem g = newGolem.GetComponent<Golem>();
+            Golem g = newGolem.transform.GetChild(1).GetComponent<Golem>();
             g.setGolemAttributes(i, Util.getCorners(transform.position));
+            Main.Instance.enemiesCount++;
         }
     }
 }

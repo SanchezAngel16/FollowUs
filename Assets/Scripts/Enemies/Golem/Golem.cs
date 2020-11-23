@@ -116,13 +116,14 @@ public class Golem : Enemy
 
     private Vector2[] getTargetsPositions(Vector2[] corners)
     {
-        Vector2[] targets = new Vector2[4];
-        if(golemPosition == 0f)
+        
+        if(golemPosition == 0)
         {
             return corners;
         }
         else
         {
+            Vector2[] targets = new Vector2[4];
             targets[0].x = corners[0].x - (golemPosition - 0.5f);
             targets[0].y = corners[0].y + (golemPosition + 0.5f);
 
@@ -134,9 +135,9 @@ public class Golem : Enemy
 
             targets[3].x = corners[3].x + (golemPosition + 0.5f);
             targets[3].y = corners[3].y + (golemPosition + 0.5f);
+            return targets;
         }
 
-        return targets;
     }
 
     private void rotate()

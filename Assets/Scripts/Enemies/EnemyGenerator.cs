@@ -66,7 +66,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         for(int i = 0; i < enemiesCount; i++)
         {
-            Instantiate(enemy, transform);
+            ((GameObject)Instantiate(enemy, transform)).transform.position = transform.position;
         }
     }
 }
