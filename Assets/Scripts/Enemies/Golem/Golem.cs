@@ -13,18 +13,20 @@ public class Golem : Enemy
 
     private int golemPosition;
     private bool hasChangeDirection = false;
-    public void setGolemAttributes(int golemType)
+    public void setGolemAttributes(int golemType, Vector2[] corners)
     {
         this.golemPosition = golemType;
+        targetsPositions = getTargetsPositions(corners);
     }
 
     public override void initEnemy()
     {
         lifePoints = 150;
         waitShootTime = startWaitShootTime;
+        
         if (Random.Range(0, 10) >= 5) direction = 1;
         else direction = -1;
-        targetsPositions = getCornersPositions();
+
         currentTargetPositionIndex = Random.Range(0, targetsPositions.Length);
         transform.position = targetsPositions[currentTargetPositionIndex];
         rotate();
@@ -112,31 +114,26 @@ public class Golem : Enemy
         }
     }
 
-    private Vector2[] getCornersPositions()
+    private Vector2[] getTargetsPositions(Vector2[] corners)
     {
         Vector2[] targets = new Vector2[4];
-        Room currentRoom = this.transform.parent.parent.parent.GetComponent<Room>();
-
         if(golemPosition == 0f)
         {
-            for(int i = 0; i < currentRoom.corners.Length; i++)
-            {
-                targets[i] = currentRoom.corners[i].position;
-            }
+            return corners;
         }
         else
         {
-            targets[0].x = currentRoom.corners[0].position.x - (golemPosition - 0.5f);
-            targets[0].y = currentRoom.corners[0].position.y + (golemPosition + 0.5f);
+            targets[0].x = corners[0].x - (golemPosition - 0.5f);
+            targets[0].y = corners[0].y + (golemPosition + 0.5f);
 
-            targets[1].x = currentRoom.corners[1].position.x - (golemPosition - 0.5f);
-            targets[1].y = currentRoom.corners[1].position.y - (golemPosition - 0.5f);
+            targets[1].x = corners[1].x - (golemPosition - 0.5f);
+            targets[1].y = corners[1].y - (golemPosition - 0.5f);
 
-            targets[2].x = currentRoom.corners[2].position.x + (golemPosition + 0.5f);
-            targets[2].y = currentRoom.corners[2].position.y - (golemPosition - 0.5f);
+            targets[2].x = corners[2].x + (golemPosition + 0.5f);
+            targets[2].y = corners[2].y - (golemPosition - 0.5f);
 
-            targets[3].x = currentRoom.corners[3].position.x + (golemPosition + 0.5f);
-            targets[3].y = currentRoom.corners[3].position.y + (golemPosition + 0.5f);
+            targets[3].x = corners[3].x + (golemPosition + 0.5f);
+            targets[3].y = corners[3].y + (golemPosition + 0.5f);
         }
 
         return targets;

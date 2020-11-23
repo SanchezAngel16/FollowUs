@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster3 : Enemy
+public class JellyFish : Enemy
 {
     private float waitShootTime;
     public float startWaitShootTime;

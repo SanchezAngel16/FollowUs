@@ -19,9 +19,9 @@ public class PlayerCollider : MonoBehaviour
 
     //public GameObject roomsPreview;
     [SerializeField]
-    private GameObject[] roomsPreview;
+    private GameObject[] roomsPreview = null;
     [SerializeField]
-    private GameObject roomsAround;
+    private GameObject roomsAround = null;
 
     private bool gameOver = false;
 

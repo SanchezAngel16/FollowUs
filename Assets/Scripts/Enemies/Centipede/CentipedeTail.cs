@@ -22,7 +22,7 @@ public class CentipedeTail : CentipedeBody
                     GameObject newHead = Instantiate(EnemyPrefabManager.Instance.centipedeHead, transform.parent.parent);
                     Main.Instance.enemiesCount++;
                     CentipedeHead newCentipedeHead = newHead.transform.GetChild(1).GetComponent<CentipedeHead>();
-                    newCentipedeHead.setCentipedeAttributes(0, currentRoom);
+                    newCentipedeHead.setCentipedeAttributes(0, points);
                     newCentipedeHead.createFixedHead(lastBody.transform);
                     newCentipedeHead.lastBody = lastBody.lastBody;
 

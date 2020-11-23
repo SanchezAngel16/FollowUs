@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster2 : Enemy
+public class EvilEye : Enemy
 {
     private Vector2 targetPosition;
 

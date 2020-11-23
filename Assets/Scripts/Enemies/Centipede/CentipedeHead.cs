@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CentipedeHead : CentipedeBody
 {
-    public CentipedePoint[] points;
     private CentipedePoint lastTarget;
 
     private bool fixedHead = false;

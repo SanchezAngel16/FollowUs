@@ -187,7 +187,7 @@ public class Room : MonoBehaviour
         }else if (enemyType == 5)
         {
             GameObject newCentipede = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
-            newCentipede.GetComponent<Centipede>().initBody(this);
+
             Main.Instance.enemies.Add(newCentipede.transform);
         }else if(enemyType == 2)
         {
@@ -195,7 +195,6 @@ public class Room : MonoBehaviour
             {
                 GameObject newEnemy = Instantiate(enemiesPrefab[enemyType], enemiesGenerationPoint);
                 Golem g = newEnemy.transform.GetChild(1).GetComponent<Golem>();
-                g.setGolemAttributes(i);
                 Main.Instance.enemies.Add(newEnemy.transform);
                 Main.Instance.enemiesCount++;
             }
@@ -210,11 +209,6 @@ public class Room : MonoBehaviour
             }
         }
         
-    }
-
-    private void CancelGeneration()
-    {
-        CancelInvoke("generateZombies");
     }
 
     private void generateZombies()

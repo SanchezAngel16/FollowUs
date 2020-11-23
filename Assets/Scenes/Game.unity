@@ -6976,14 +6976,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd2c6c2ca80e5c41b4b3f43b261bf1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centipede: {fileID: 6620864933585494533, guid: 1b3709995277046499b972a82fa598a8, type: 3}
   centipedeHead: {fileID: 7910722168234476862, guid: a5ce315bf2cf95d42b7431d769b50454, type: 3}
   centipedeTail: {fileID: 1150692308166668272, guid: ef3e3c3e1de21b9459c9cb8d0b390f64, type: 3}
+  golemGenerator: {fileID: 4660077662060344035, guid: ce4622806ce35c84e8483a09994b2191, type: 3}
   golem: {fileID: 6877810393134003122, guid: cdbb8913f4ec4d547927e7da4d3b1aa3, type: 3}
-  monster: {fileID: 214763078662300438, guid: c2eb48db8b4119341a6d824d08dea0d2, type: 3}
-  monster2: {fileID: 283312156893152520, guid: 4531b768cb254d847a4272b37574681f, type: 3}
-  monster3: {fileID: 7293228858705511512, guid: 32364755430993f4b8d7b4ddbebe318d, type: 3}
+  demon: {fileID: 214763078662300438, guid: c2eb48db8b4119341a6d824d08dea0d2, type: 3}
+  evilEye: {fileID: 283312156893152520, guid: 4531b768cb254d847a4272b37574681f, type: 3}
+  jellyFish: {fileID: 7293228858705511512, guid: 32364755430993f4b8d7b4ddbebe318d, type: 3}
   octopus: {fileID: 6757204696547637691, guid: 6949f08db71cb1c4aad5ea28e6d2d48a, type: 3}
-  zombieGenerator: {fileID: 0}
+  zombieGenerator: {fileID: 9011838686411773341, guid: 4eeb2d68e5a933b478a9e664b570b0d6, type: 3}
+  zombie: {fileID: 3209048980477968847, guid: ce3712715f5953c44b14fa5545a95cb6, type: 3}
   evilFairy: {fileID: 8855795423067207055, guid: aba9a36ef51134944916cb21c70a96db, type: 3}
   lightning: {fileID: 3516941198012392344, guid: 11d70a0b1e5e50741bb973985b849ce5, type: 3}
   lightningGenerator: {fileID: 7643946564980782092, guid: 4d172a46181db1443bc6405808fcba95, type: 3}

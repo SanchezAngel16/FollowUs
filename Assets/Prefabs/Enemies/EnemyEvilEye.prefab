@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 283312155588833058}
   - component: {fileID: 331583709670506646}
   m_Layer: 12
-  m_Name: Monster_2
+  m_Name: EvilEye
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 283312156893152523}
   m_Layer: 0
-  m_Name: EnemyMonster2
+  m_Name: EnemyEvilEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

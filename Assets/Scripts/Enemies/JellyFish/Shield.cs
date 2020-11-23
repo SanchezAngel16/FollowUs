@@ -8,7 +8,7 @@ public class Shield : MonoBehaviour
     public float startWaitTime;
     private int lifePoints;
     public Transform firePoint;
-    public Monster3 monster;
+    public JellyFish monster;
     public Transform testLaser;
 
     private float waitLaserTime;

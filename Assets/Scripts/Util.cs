@@ -26,7 +26,6 @@ public static class Util
     public static bool increaseThreat = false;
     public static bool reduceTime = false;
     
-
     public static void setCurseType(int currentCurse)
     {
         switch (currentCurse)
@@ -121,6 +120,18 @@ public static class Util
             if (Vector2.Distance(pos, newPos) < minDistance) return true;
         }
         return false;
+    }
+
+    public static Vector2[] getCorners(Vector2 currentPos)
+    {
+        Vector2[] corners = new Vector2[4];
+
+        corners[0] = new Vector2(currentPos.x - 4f, currentPos.y + 3.5f);
+        corners[1] = new Vector2(currentPos.x + 4f, currentPos.y + 3.5f);
+        corners[2] = new Vector2(currentPos.x - 4f, currentPos.y - 3.5f);
+        corners[2] = new Vector2(currentPos.x + 4f, currentPos.y - 3.5f);
+
+        return corners;
     }
 
     

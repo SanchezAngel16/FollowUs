@@ -9,25 +9,30 @@ public class Centipede : MonoBehaviour
     public GameObject centipedeHead;
     public GameObject centipedeBody;
 
-    private int maxBody;
+    public CentipedePoint[] points;
 
-    public void initBody(Room r)
+    private int maxBody;
+    private void Start()
     {
-        currentRoom = r;
+        initBody();        
+    }
+
+    public void initBody()
+    {
         createBody();
 
         for(int i = 0; i < body.Length; i++)
         {
             if (i == 0)
             {
-                body[i].setCentipedeAttributes(i, currentRoom);
+                body[i].setCentipedeAttributes(i, points);
                 body[i].nextBody = null;
                 body[i].lastBody = body[i + 1];
             }
             else
             {
                 ((CentipedeTail)body[i]).currentHead = (CentipedeHead)body[0];
-                body[i].setCentipedeAttributes(i, currentRoom);
+                body[i].setCentipedeAttributes(i, points);
                 if (i == body.Length - 1) body[i].lastBody = null;
                 else body[i].lastBody = body[i + 1];
                 body[i].nextBody = body[i - 1];

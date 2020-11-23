@@ -19,6 +19,7 @@ public abstract class CentipedeBody : Enemy
     private int bodyPos;
     protected float startMoveTime;
 
+    protected CentipedePoint[] points;
     
     public override void initEnemy()
     {
@@ -67,9 +68,9 @@ public abstract class CentipedeBody : Enemy
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
-    public void setCentipedeAttributes(int bodyPos, Room room)
+    public void setCentipedeAttributes(int bodyPos, CentipedePoint[] points)
     {
-        this.currentRoom = room;
+        this.points = points;
         this.bodyPos = bodyPos;
         this.startMoveTime = bodyPos * 0.15f;
     }
