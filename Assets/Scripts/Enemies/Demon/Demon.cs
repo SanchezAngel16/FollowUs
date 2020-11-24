@@ -65,7 +65,7 @@ public class Demon : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], (speed * Util.enemiesSpeed) * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetsPositions[nextTargetIndex], (speed * CurseManager.enemiesSpeed) * Time.deltaTime));
         if (Vector2.Distance(transform.position, targetsPositions[nextTargetIndex]) < 0.2f || collidingStaticObject)
         {
             if (anim != null) anim.SetBool("shooting", true);

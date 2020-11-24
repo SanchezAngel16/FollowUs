@@ -7,35 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
-    private const int RIGHT_DIR = 0;
-    private const int LEFT_DIR = 1;
-    private const int UP_DIR = 2;
-    private const int DOWN_DIR = 3;
-
     public Map mapController;
 
+    [SerializeField]
+    private Button right = null, left = null, up = null, down = null;
+    [SerializeField]
+    private TextMeshProUGUI gameOverText = null;
 
-    public Button right;
-    public Button left;
-    public Button up;
-    public Button down;
-
-    public TextMeshProUGUI gameOverText;
-
-    public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
+    // TODO: TimerManager
+    public TextMeshProUGUI timerText;
+    
+    
+    private Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
     public int enemiesCount = 0;
     public bool runningOnPC;
 
-    public TextMeshProUGUI timerText;
 
     public PlayerController playerController;
-
-    public int currentCurseType;
-    public Image curseTypeImage;
-    public Sprite[] curseTypes;
-
-    public GameObject lightsOut;
 
     private static Main instance = null;
 
@@ -77,7 +66,6 @@ public class Main : MonoBehaviour
         currentActiveRoom = mapController.startRoom;
 
         enemiesCount = 0;
-        currentCurseType = 0;
         initUI();
     }
 
@@ -99,22 +87,21 @@ public class Main : MonoBehaviour
 
     private void initializeArrows()
     {
-        right.onClick.AddListener(() => openDoor(1, 0, RIGHT_DIR));
-        left.onClick.AddListener(() => openDoor(-1, 0, LEFT_DIR));
-        down.onClick.AddListener(() => openDoor(0, 1, DOWN_DIR));
-        up.onClick.AddListener(() => openDoor(0, -1, UP_DIR));
+        right.onClick.AddListener(() => openDoor(1, 0, Util.RIGHT_DIR));
+        left.onClick.AddListener(() => openDoor(-1, 0, Util.LEFT_DIR));
+        down.onClick.AddListener(() => openDoor(0, 1, Util.DOWN_DIR));
+        up.onClick.AddListener(() => openDoor(0, -1, Util.UP_DIR));
         updateUIArrows();
     }
 
     private void openDoor(int x, int y, int direction)
     {
-        mapController.desactivateDoor(x, y, direction, currentActiveRoom, currentCurseType);
+        mapController.desactivateDoor(x, y, direction, currentActiveRoom);
 
         currentActiveRoom.x += x;
         currentActiveRoom.y += y;
         
         setActiveAllUIArrows(false);
-        setCurrentCurseType();
     }
 
     public void setGameOverText(bool active, string text)
@@ -131,7 +118,7 @@ public class Main : MonoBehaviour
         if (activeRoom.isOpen(Util.LEFT_DIR)) left.gameObject.SetActive(false);
         if (activeRoom.isOpen(Util.UP_DIR)) up.gameObject.SetActive(false);
         if (activeRoom.isOpen(Util.DOWN_DIR)) down.gameObject.SetActive(false);
-        lightsOut.SetActive(false);
+        CurseManager.Instance.resetValues();
     }
 
     public void setActiveAllUIArrows(bool active)
@@ -148,21 +135,4 @@ public class Main : MonoBehaviour
         initGame();
     }
 
-    public void setCurseType(int curse)
-    {
-        this.currentCurseType = curse;
-    }
-    private void setCurrentCurseType()
-    {
-        if (this.currentCurseType == 0) curseTypeImage.gameObject.SetActive(false);
-        else
-        {
-            curseTypeImage.gameObject.SetActive(true);
-            curseTypeImage.sprite = curseTypes[this.currentCurseType - 1];
-        }
-        if (this.currentCurseType == 4) lightsOut.gameObject.SetActive(true);
-        else lightsOut.gameObject.SetActive(false);
-
-        this.currentCurseType = 0;
-    }
 }

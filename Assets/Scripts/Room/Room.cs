@@ -47,6 +47,8 @@ public class Room : MonoBehaviour
     [SerializeField]
     private StaticObjectsManager staticObjectsGenerator = null;
 
+    public TimerManager timerManager;
+
     void Awake()
     {
         posibleDirections[0] = 1;
@@ -64,30 +66,6 @@ public class Room : MonoBehaviour
         crackTime = maxTimer / 5;
     }
 
-    private void OnEnable()
-    {
-        if (!firstTime)
-        {
-            generateEnemies();
-            generateStaticElements(Random.Range(0, 2));
-        }
-        else firstTime = false;
-    }
-
-    public void setCurseType(int curseType)
-    {
-        Util.setCurseType(curseType);
-        if (curseType == 2)
-        {
-            maxTimer /= 2f;
-            timer = maxTimer;
-            crackTime = maxTimer / 5;
-        }else if(curseType == 6)
-        {
-            threatType += 2;
-            if (threatType >= 9) threatType = 9;
-        }
-    }
     private void Update()
     {
         if (timer > 0)
@@ -108,6 +86,31 @@ public class Room : MonoBehaviour
             }
         }
     }
+
+    private void OnEnable()
+    {
+        if (!firstTime)
+        {
+            //timerManager.startRunning(timer);
+            generateEnemies();
+            generateStaticElements(Random.Range(0, 2));
+        }
+        else firstTime = false;
+    }
+
+    public void reduceTime()
+    {
+        maxTimer /= 2f;
+        timer = maxTimer;
+        crackTime = maxTimer / 5;
+    }
+
+    public void increaseThreatType()
+    {
+        threatType += 2;
+        if (threatType >= 9) threatType = 9;
+    }
+    
 
     private void DestroyRoom()
     {

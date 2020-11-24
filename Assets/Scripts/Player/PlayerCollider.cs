@@ -17,7 +17,6 @@ public class PlayerCollider : MonoBehaviour
 
     public float timer;
 
-    //public GameObject roomsPreview;
     [SerializeField]
     private GameObject[] roomsPreview = null;
     [SerializeField]
@@ -28,10 +27,13 @@ public class PlayerCollider : MonoBehaviour
     private string minutes;
     private string seconds;
 
+    private List<string> enemiesTags;
+
     private void Start()
     {
         hitted = false;
         sprite = playerController.GetComponent<SpriteRenderer>();
+        setEnemiesTag();
     }
 
     private void Update()
@@ -57,18 +59,23 @@ public class PlayerCollider : MonoBehaviour
 
     }
 
+    private void setEnemiesTag()
+    {
+        enemiesTags = new List<string>();
+        enemiesTags.Add("Enemy");
+        enemiesTags.Add("EnemyBullet");
+        enemiesTags.Add("Laser");
+        enemiesTags.Add("EnemyShield");
+        enemiesTags.Add("LightningLaser");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
-        
-        if (collision.gameObject.CompareTag("Enemy") || 
-            collision.gameObject.CompareTag("EnemyBullet") || 
-            collision.gameObject.CompareTag("Laser") || 
-            collision.gameObject.CompareTag("EnemyShield") ||
-            collision.gameObject.CompareTag("LightningLaser"))
+
+        if (Util.compareTags(enemiesTags, collision.gameObject))
         {
             if (hitted) return;
-            // Take damage animation and deactivate collider layer.
             hitted = true;
             if (playerController.living)
             {

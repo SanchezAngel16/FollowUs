@@ -12,7 +12,6 @@ public class Zombie : Enemy
         lifePoints = 150;
         waitTime = startWaitTime;
         speed = Random.Range(1f, 2f);
-        //transform.position = Util.getRandomPosition(transform.parent, 0);
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -20,7 +19,7 @@ public class Zombie : Enemy
     {
         if(Vector2.Distance(transform.position, target.position) > 0.2f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, (speed * Util.enemiesSpeed) * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, (speed * CurseManager.enemiesSpeed) * Time.deltaTime);
             if(transform.position.x < target.position.x)
             {
                 sprite.flipX = true;

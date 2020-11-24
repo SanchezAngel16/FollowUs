@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour
         updateHealthUI();
     }
 
-
     private void updateHealthUI()
     {
         slider.value = this.lifePoints;

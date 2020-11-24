@@ -17,7 +17,7 @@ public class EvilFairy : Enemy
 
     public override void move()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * Util.enemiesSpeed) * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, (speed * CurseManager.enemiesSpeed) * Time.deltaTime));
         if (Vector2.Distance(transform.position, targetPosition) < 0.2f || collidingStaticObject)
         {
             targetPosition = Util.getRandomPosition(transform.parent, 0);

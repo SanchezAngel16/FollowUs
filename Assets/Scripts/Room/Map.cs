@@ -13,7 +13,7 @@ public class Map : MonoBehaviour
     public Vector2Int startRoom;
 
     [SerializeField]
-    private GameObject roomPrefab;
+    private GameObject roomPrefab = null;
 
     private void Start()
     {
@@ -187,7 +187,7 @@ public class Map : MonoBehaviour
         map[currentCol, currentRow].setPosibleDirections(right, left, up, down);
     }
 
-    public void desactivateDoor(int x, int y, int direction, Vector2Int currentActiveRoom, int curseType)
+    public void desactivateDoor(int x, int y, int direction, Vector2Int currentActiveRoom)
     {
         Vector2Int activeRoom = currentActiveRoom;
         int doorToDeactivate = 0;
@@ -215,7 +215,7 @@ public class Map : MonoBehaviour
         activeRoom.x += x;
         activeRoom.y += y;
         room = map[activeRoom.x, activeRoom.y];
-        room.setCurseType(curseType);
+        CurseManager.Instance.activateCurse(room);
         room.gameObject.SetActive(true);
         room.isRoomActive = true;
 

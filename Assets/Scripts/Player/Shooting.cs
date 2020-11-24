@@ -108,7 +108,7 @@ public class Shooting : MonoBehaviour
             bullet.transform.rotation = firePoint.rotation;
             bullet.SetActive(true);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(firePoint.up * (bulletForce * Util.bulletSpeed), ForceMode2D.Impulse);
+            rb.AddForce(firePoint.up * (bulletForce * CurseManager.bulletSpeed), ForceMode2D.Impulse);
 
             bulletsCount--;
             updateBulletsCountText();

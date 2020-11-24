@@ -68,7 +68,7 @@ public class CentipedeHead : CentipedeBody
 
     public override void manageMovement()
     {
-        rb.MovePosition(Vector2.MoveTowards(transform.position, nextTarget.transform.position, (speed * Util.enemiesSpeed) * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, nextTarget.transform.position, (speed * CurseManager.enemiesSpeed) * Time.deltaTime));
         if (Vector2.Distance(transform.position, nextTarget.transform.position) < 0.2f || collidingStaticObject)
         {
             CentipedePoint temp = nextTarget;

@@ -92,7 +92,7 @@ public class Octopus : Enemy
 
     public override void move()
     {
-        rb.MovePosition(rb.position + directions[currentDirection] * speed * Time.deltaTime);
+        rb.MovePosition(rb.position + directions[currentDirection] * (speed * CurseManager.enemiesSpeed) * Time.deltaTime);
         if (collidingStaticObject)
         {
             invertDirection();
