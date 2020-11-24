@@ -10,6 +10,11 @@ public static class Util
     public static Vector2 UpDirection = new Vector2(0, 1);
     public static Vector2 DownDirection = new Vector2(0, -1);
 
+    public const int RIGHT_DIR = 0;
+    public const int LEFT_DIR = 1;
+    public const int UP_DIR = 2;
+    public const int DOWN_DIR = 3;
+
     public static int mapSize = 5;
 
     public static int playableArea = 4;

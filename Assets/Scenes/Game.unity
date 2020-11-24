@@ -2923,6 +2923,7 @@ MonoBehaviour:
   goodRoom: {x: 0, y: 0}
   badRoom: {x: 0, y: 0}
   startRoom: {x: 0, y: 0}
+  roomPrefab: {fileID: 7099209808659752680, guid: 0ff9c4643a2d09847bf44e5954a30a0e, type: 3}
 --- !u!1 &785520932
 GameObject:
   m_ObjectHideFlags: 0
@@ -4757,16 +4758,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af3e4af76c2d9e2458af7a8814a0c7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectMap: {fileID: 774291037}
   mapController: {fileID: 774291039}
-  roomPrefab: {fileID: 7099209808659752680, guid: 0ff9c4643a2d09847bf44e5954a30a0e, type: 3}
   right: {fileID: 344714046}
   left: {fileID: 1734886157}
   up: {fileID: 1016951077}
   down: {fileID: 603011571}
   gameOverText: {fileID: 222568502}
   currentActiveRoom: {x: 0, y: 0}
-  enemies: []
   enemiesCount: 0
   runningOnPC: 0
   timerText: {fileID: 962804350}

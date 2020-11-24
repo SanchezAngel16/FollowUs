@@ -175,5 +175,8 @@ public class Room : MonoBehaviour
         posibleDirections[3] = down;
     }
 
-    
+    public bool isOpen(int direction)
+    {
+        return posibleDirections[direction] == 0;
+    }
 }
