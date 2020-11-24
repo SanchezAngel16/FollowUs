@@ -7,8 +7,12 @@ public class Room : MonoBehaviour
     public Vector2Int mapLocation;
     public bool isRoomActive;
     public bool isDestroyed;
+    private bool isMainRoom;
     public int[] posibleDirections = new int[4];
+
     public int threatType;
+    public int roomType;
+    private int staticElementsType;
 
     public Transform enemiesGenerationPoint;
     public GameObject[] enemiesPrefab;
@@ -21,8 +25,6 @@ public class Room : MonoBehaviour
     public Sprite[] backgroundSprites;
     public Sprite[] doorSprites;
 
-    public GameObject staticElementsGroup;
-    public GameObject[] staticElements;
 
     public float timer;
     public float maxTimer;
@@ -42,6 +44,8 @@ public class Room : MonoBehaviour
 
     [SerializeField]
     private EnemyGenerator enemyGenerator = null;
+    [SerializeField]
+    private StaticObjectsManager staticObjectsGenerator = null;
 
     void Awake()
     {
@@ -65,7 +69,7 @@ public class Room : MonoBehaviour
         if (!firstTime)
         {
             generateEnemies();
-            staticElementsGroup.SetActive(true);
+            generateStaticElements(Random.Range(0, 2));
         }
         else firstTime = false;
     }
@@ -110,7 +114,7 @@ public class Room : MonoBehaviour
         this.isDestroyed = true;
         setCrackSprite(4);
         enemiesGenerationPoint.gameObject.SetActive(false);
-        staticElementsGroup.gameObject.SetActive(false);
+        staticObjectsGenerator.gameObject.SetActive(false);
     }
 
     private void setCrackSprite(int index)
@@ -122,17 +126,31 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void generateEnemies()
+    public void setRoomType(int threatType, int roomType)
+    {
+        this.threatType = threatType;
+        this.roomType = roomType;
+        if (roomType == (int)Util.RoomType.MAIN) isMainRoom = true;
+    }
+
+    private void generateEnemies()
     {
         enemyGenerator.generate(threatType);
     }
 
-    public void generateLightnings()
+    private void generateStaticElements(int type)
     {
-        GameObject newLightning = Instantiate(EnemyPrefabManager.Instance.lightning, staticElementsGroup.transform);
-        Lightning l = newLightning.GetComponent<Lightning>();
-        l.transform.position = staticElementsGroup.transform.position;
-        //l.setLightningPoints(lightningPoints);
+        if (isMainRoom)
+        {
+            staticObjectsGenerator.generate(1, isMainRoom);
+        }
+        else
+        {
+            if(threatType != 9 && threatType != 0)
+            {
+                staticObjectsGenerator.generate(type, isMainRoom);
+            }
+        }
     }
 
     public void setDoorSprites(int cols, int rows)
@@ -155,38 +173,6 @@ public class Room : MonoBehaviour
         posibleDirections[1] = left;
         posibleDirections[2] = up;
         posibleDirections[3] = down;
-    }
-
-
-    public void generateStaticElements(int numElements)
-    {
-        if (numElements == 1)
-        {
-            Instantiate(staticElements[0], staticElementsGroup.transform).transform.position = staticElementsGroup.transform.position;
-        }
-        else
-        {
-            GameObject[] staticObjects = new GameObject[numElements];
-            float minDistance = 2f;
-            Vector2 randomPos;
-            List<Vector2> randomPositions = new List<Vector2>();
-            randomPositions.Add(Util.getRandomPosition(staticElementsGroup.transform, 1f));
-
-            for(int i = 1; i < numElements; i++)
-            {
-                do
-                {
-                    randomPos = Util.getRandomPosition(staticElementsGroup.transform, 1f);
-                } while (Util.isInsideMinDistance(minDistance, randomPositions, randomPos));
-                randomPositions.Add(randomPos);
-            }
-            for(int i = 0; i < numElements; i++)
-            {
-                staticObjects[i] = Instantiate(staticElements[Random.Range(1, staticElements.Length)], staticElementsGroup.transform);
-                staticObjects[i].transform.position = randomPositions[i];
-
-            }
-        }
     }
 
     

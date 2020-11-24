@@ -27,7 +27,6 @@ public class Main : MonoBehaviour
 
     public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
-    public List<Transform> enemies = new List<Transform>();
     public int enemiesCount = 0;
     public bool runningOnPC;
 
@@ -75,7 +74,6 @@ public class Main : MonoBehaviour
 
     private void initGame()
     {
-        enemies.Clear();
         roomSize = new Vector2(roomPrefab.GetComponent<Renderer>().bounds.size.x, roomPrefab.GetComponent<Renderer>().bounds.size.y);
 
         mapController = gameObjectMap.GetComponent<Map>();
@@ -131,7 +129,6 @@ public class Main : MonoBehaviour
     {
         Color rColor;
         setRoomsType();
-
         for (int row = 0; row < mapController.rows; row++)
         {
             for (int col = 0; col < mapController.cols; col++)
@@ -148,33 +145,30 @@ public class Main : MonoBehaviour
                 
                 if (col == mapController.startRoom.x && row == mapController.startRoom.y)
                 {
-                    roomScript.generateStaticElements(1);
+                    roomScript.setRoomType(0, (int)Util.RoomType.MAIN);
                     newRoom.SetActive(true);
                 }
                 else
                 {
                     roomScript.threatType = Random.Range(1,10);
-                    //roomScript.threatType = 6;
-                    if(roomScript.threatType != 8 && roomScript.threatType != 9)
-                    {
-                        if(Random.Range(0, 10) > 3)
-                        {
-                            roomScript.generateLightnings();
-                        }
-                        else
-                        {
-                            roomScript.generateStaticElements(Random.Range(2,4));
-                        }
-                    }
                 }
 
                 if (col == mapController.goodRoom.x && row == mapController.goodRoom.y)
                 {
                     rColor = Color.blue;
                     roomScript.threatType = 0;
+                    roomScript.setRoomType(0, (int)Util.RoomType.GOOD);
                 }
-                else if (col == mapController.badRoom.x && row == mapController.badRoom.y) rColor = Color.red;
-                else rColor = Color.white;
+                else if (col == mapController.badRoom.x && row == mapController.badRoom.y)
+                {
+                    roomScript.setRoomType(roomScript.threatType, (int)Util.RoomType.BAD);
+                    rColor = Color.red;
+                }
+                else
+                {
+                    roomScript.setRoomType(roomScript.threatType, (int)Util.RoomType.NORMAL);
+                    rColor = Color.white;
+                }
 
                 roomScript.mapLocation = new Vector2Int(col, row);
                 newRoom.GetComponent<SpriteRenderer>().color = rColor;

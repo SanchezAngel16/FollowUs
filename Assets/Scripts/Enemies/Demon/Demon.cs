@@ -55,7 +55,7 @@ public class Demon : Enemy
 
         if(shootingCount >= 5)
         {
-            GameObject newEnemy = Instantiate(EnemyPrefabManager.Instance.evilFairy, transform.parent.parent);
+            GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
             newEnemy.transform.position = transform.position;
             shootingCount = 0;
             Main.Instance.enemiesCount++;

@@ -354,10 +354,10 @@ RectTransform:
   m_Father: {fileID: 146267900}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0.00001335144}
-  m_SizeDelta: {x: 750, y: 750}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -128, y: -64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &172579280
 MonoBehaviour:
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 0, y: 0}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -1896,7 +1896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555166626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.338, y: -0.023, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 2110745670}
@@ -6944,7 +6944,7 @@ GameObject:
   - component: {fileID: 1795509120}
   - component: {fileID: 1795509121}
   m_Layer: 0
-  m_Name: EnemyPrefabManager
+  m_Name: PrefabManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6990,6 +6990,7 @@ MonoBehaviour:
   evilFairy: {fileID: 8855795423067207055, guid: aba9a36ef51134944916cb21c70a96db, type: 3}
   lightning: {fileID: 3516941198012392344, guid: 11d70a0b1e5e50741bb973985b849ce5, type: 3}
   lightningGenerator: {fileID: 7643946564980782092, guid: 4d172a46181db1443bc6405808fcba95, type: 3}
+  explosionEffect: {fileID: 2620560142510256247, guid: 0b9874e65a9e8314287a08e4c2732b5c, type: 3}
 --- !u!1 &1811717495
 GameObject:
   m_ObjectHideFlags: 0

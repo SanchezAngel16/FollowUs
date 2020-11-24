@@ -13,6 +13,12 @@ public static class Util
     public static int mapSize = 5;
 
     public static int playableArea = 4;
+
+    public enum RoomType
+    {
+        GOOD = 0, BAD = 1, NORMAL = 2, MAIN = 3
+    }
+
     public enum Curse
     {
         NOTHING, FREEZEBULLET, SPEEDUPENEMIES, LIGHTSOUT, FRIENDFIRE, INCREASETHREAT 

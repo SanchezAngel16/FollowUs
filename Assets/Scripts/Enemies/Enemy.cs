@@ -70,12 +70,12 @@ public abstract class Enemy : MonoBehaviour
     {
         if (destroy)
         {
+            Instantiate(PrefabManager.Instance.explosionEffect).transform.position = transform.position;
             if (Random.Range(0, 100) >= 10 && lootMaker)
             {
                 GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
                 collectable.transform.position = transform.position;
             }
-            Main.Instance.enemies.Remove(this.transform);
             Main.Instance.enemiesCount--;
             if (Main.Instance.enemiesCount <= 0)
             {

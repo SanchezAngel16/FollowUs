@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWaitTime: 5
   firePoint: {fileID: 613253305679223951}
-  monster: {fileID: 0}
+  monster: {fileID: 973767869345976635}
   testLaser: {fileID: 5831658575408658485}
 --- !u!1 &2227863123761734407
 GameObject:
@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 93916153731032405}
   m_Layer: 0
   m_Name: spike
-  m_TagString: StaticObjectEnemy
+  m_TagString: EnemyShield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWaitTime: 5
   firePoint: {fileID: 6693138985966582817}
-  monster: {fileID: 0}
+  monster: {fileID: 973767869345976635}
   testLaser: {fileID: 8167483632287288712}
 --- !u!1 &4668185824763391449
 GameObject:
@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 7654187507684795451}
   m_Layer: 0
   m_Name: spike (1)
-  m_TagString: StaticObjectEnemy
+  m_TagString: EnemyShield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -795,7 +795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWaitTime: 5
   firePoint: {fileID: 4861877492493198806}
-  monster: {fileID: 0}
+  monster: {fileID: 973767869345976635}
   testLaser: {fileID: 8322873643128368334}
 --- !u!1 &6127807256515036494
 GameObject:
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startWaitTime: 5
   firePoint: {fileID: 8615565985276771738}
-  monster: {fileID: 0}
+  monster: {fileID: 973767869345976635}
   testLaser: {fileID: 4142852361452012494}
 --- !u!1 &6345268945443580072
 GameObject:
@@ -1716,7 +1716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7293228858705511513}
   m_Layer: 0
-  m_Name: EnemyMonster3
+  m_Name: JellyFish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

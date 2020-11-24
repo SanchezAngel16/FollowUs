@@ -76,7 +76,6 @@ public class Lightning : MonoBehaviour
 
     private void setShootingDirections()
     {
-        Debug.Log("New set of directions");
         int randNextPos = -1;
         for (int i = 0; i < lightnings.Length; i++)
         {
@@ -119,7 +118,7 @@ public class Lightning : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            GameObject lightningGenerator = Instantiate(EnemyPrefabManager.Instance.lightningGenerator, transform);
+            GameObject lightningGenerator = Instantiate(PrefabManager.Instance.lightningGenerator, transform);
             lightningGenerator.transform.position = lightningPoints[randomPos[i]];
             lightnings[i] = lightningGenerator.GetComponent<LightningGenerator>();
         }

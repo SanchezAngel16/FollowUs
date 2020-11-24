@@ -24,9 +24,8 @@ public class ZombieGenerator : MonoBehaviour
 
     private void generateZombies()
     {
-        GameObject newZombie = Instantiate(EnemyPrefabManager.Instance.zombie, transform);
+        GameObject newZombie = Instantiate(PrefabManager.Instance.zombie, transform);
         newZombie.transform.position = corners[Random.Range(0,corners.Length)];
-        Main.Instance.enemies.Add(newZombie.transform);
     }
 
     private void createZombieHoles()
