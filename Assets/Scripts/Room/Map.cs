@@ -66,7 +66,7 @@ public class Map : MonoBehaviour
 
                 if (Vector2Int.Equals(newRoomLocation, startRoom))
                 {
-                    roomScript.setRoomType(0, (int)Util.RoomType.MAIN);
+                    roomScript.setRoomType(0, Util.MainRoom);
                     newRoom.SetActive(true);
                 }
                 else
@@ -78,16 +78,16 @@ public class Map : MonoBehaviour
                 {
                     rColor = Color.blue;
                     roomScript.threatType = 0;
-                    roomScript.setRoomType(0, (int)Util.RoomType.GOOD);
+                    roomScript.setRoomType(0, Util.GoodRoom);
                 }
                 else if (Vector2Int.Equals(newRoomLocation, badRoom))
                 {
-                    roomScript.setRoomType(roomScript.threatType, (int)Util.RoomType.BAD);
+                    roomScript.setRoomType(roomScript.threatType, Util.BadRoom);
                     rColor = Color.red;
                 }
                 else
                 {
-                    roomScript.setRoomType(roomScript.threatType, (int)Util.RoomType.NORMAL);
+                    roomScript.setRoomType(roomScript.threatType, Util.NormalRoom);
                     rColor = Color.white;
                 }
 

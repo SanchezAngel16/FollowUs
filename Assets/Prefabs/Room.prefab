@@ -765,6 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1904754227262086516}
   - component: {fileID: 629283998887772093}
+  - component: {fileID: 8814778655357601673}
   m_Layer: 0
   m_Name: CrackEffect
   m_TagString: Untagged
@@ -837,6 +838,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8814778655357601673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711155277969864070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa62f4d8bb614143981a38883ebbfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crackSprites:
+  - {fileID: 21300000, guid: cb275a33f41bfc94983e1fc6b62867fa, type: 3}
+  - {fileID: 21300000, guid: 8720b6db5ea6f034ebc06d959cd18784, type: 3}
+  - {fileID: 21300000, guid: 9e1736b99cd6367459e65de4bf6a6793, type: 3}
+  - {fileID: 21300000, guid: 472a7da8690b00a41bb7a229bae7d1d6, type: 3}
+  - {fileID: 21300000, guid: df1c4c084c133c34d8acf64a33afc971, type: 3}
+  spriteRenderer: {fileID: 629283998887772093}
 --- !u!1 &6830595604165298667
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,14 +1010,6 @@ MonoBehaviour:
   threatType: 0
   roomType: 0
   enemiesGenerationPoint: {fileID: 7369282471791831732}
-  enemiesPrefab:
-  - {fileID: 6757204696547637691, guid: 6949f08db71cb1c4aad5ea28e6d2d48a, type: 3}
-  - {fileID: 214763078662300438, guid: c2eb48db8b4119341a6d824d08dea0d2, type: 3}
-  - {fileID: 6877810393134003122, guid: cdbb8913f4ec4d547927e7da4d3b1aa3, type: 3}
-  - {fileID: 283312156893152520, guid: 4531b768cb254d847a4272b37574681f, type: 3}
-  - {fileID: 3209048980477968847, guid: ce3712715f5953c44b14fa5545a95cb6, type: 3}
-  - {fileID: 6620864933585494533, guid: 1b3709995277046499b972a82fa598a8, type: 3}
-  - {fileID: 7293228858705511512, guid: 32364755430993f4b8d7b4ddbebe318d, type: 3}
   rightDoor: {fileID: 747731869590583098}
   leftDoor: {fileID: 5899290509008520912}
   downDoor: {fileID: 8140860270254262822}
@@ -1013,18 +1025,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 49c4771d1ee424a4ca82e76cd400bc68, type: 3}
   - {fileID: 21300000, guid: 4be3e7851d2a80a48a6868ac25798ed9, type: 3}
   - {fileID: 21300000, guid: 7d19a47c9d97f4b449f749a984bc59c1, type: 3}
-  timer: 0
-  maxTimer: 120
-  crackEffect: {fileID: 629283998887772093}
-  crackSprites:
-  - {fileID: 21300000, guid: cb275a33f41bfc94983e1fc6b62867fa, type: 3}
-  - {fileID: 21300000, guid: 8720b6db5ea6f034ebc06d959cd18784, type: 3}
-  - {fileID: 21300000, guid: 9e1736b99cd6367459e65de4bf6a6793, type: 3}
-  - {fileID: 21300000, guid: 472a7da8690b00a41bb7a229bae7d1d6, type: 3}
-  - {fileID: 21300000, guid: df1c4c084c133c34d8acf64a33afc971, type: 3}
   emptyRoom: {fileID: 7984295416506831327, guid: 67091ab28d7dffa48ac94b56b957207d, type: 3}
   enemyGenerator: {fileID: 5276483281030312238}
   staticObjectsGenerator: {fileID: 4556002822078508561}
+  crackManager: {fileID: 8814778655357601673}
+  timerManager: {fileID: 8212925347127960823}
 --- !u!61 &3118965753260998977
 BoxCollider2D:
   m_ObjectHideFlags: 0

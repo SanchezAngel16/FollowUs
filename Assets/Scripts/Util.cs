@@ -19,10 +19,12 @@ public static class Util
 
     public static int playableArea = 4;
 
-    public enum RoomType
-    {
-        GOOD = 0, BAD = 1, NORMAL = 2, MAIN = 3
-    }
+    public static int maxRoomTime = 180;
+
+    public const int GoodRoom = 0;
+    public const int BadRoom = 1;
+    public const int NormalRoom = 2;
+    public const int MainRoom = 3;
 
     public static Vector2 getRandomPosition(Transform parent, float substractOffset)
     {

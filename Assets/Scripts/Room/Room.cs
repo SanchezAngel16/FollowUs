@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,40 +13,32 @@ public class Room : MonoBehaviour
 
     public int threatType;
     public int roomType;
-    private int staticElementsType;
 
     public Transform enemiesGenerationPoint;
-    public GameObject[] enemiesPrefab;
 
     public Door rightDoor;
     public Door leftDoor;
     public Door downDoor;
     public Door upDoor;
 
+
     public Sprite[] backgroundSprites;
     public Sprite[] doorSprites;
 
-
-    public float timer;
-    public float maxTimer;
-
-    public SpriteRenderer crackEffect;
-    public Sprite[] crackSprites;
-    private float crackTime;
+    private float maxTimer;
 
     private bool firstTime = true;
 
 
     public GameObject emptyRoom;
 
-    private bool firstTimeDestroying;
-
-    private int currentCrackSprite = -1;
 
     [SerializeField]
     private EnemyGenerator enemyGenerator = null;
     [SerializeField]
     private StaticObjectsManager staticObjectsGenerator = null;
+    [SerializeField]
+    private CrackEffectManager crackManager = null;
 
     public TimerManager timerManager;
 
@@ -55,45 +48,29 @@ public class Room : MonoBehaviour
         posibleDirections[1] = 1;
         posibleDirections[2] = 1;
         posibleDirections[3] = 1;
-        timer = maxTimer;
         isDestroyed = false;
-        firstTimeDestroying = true;
+        maxTimer = Util.maxRoomTime;
     }
 
     private void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = backgroundSprites[Random.Range(1, backgroundSprites.Length)];
-        crackTime = maxTimer / 5;
+        GetComponent<SpriteRenderer>().sprite = backgroundSprites[UnityEngine.Random.Range(1, backgroundSprites.Length)];
+        timerManager.OnTimerRanOut += onTimerRanOut;
     }
 
-    private void Update()
+    private void onTimerRanOut(object sender, EventArgs e)
     {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            if (timer > crackTime * 4) crackEffect.sprite = null;
-            else if (timer > crackTime * 3) setCrackSprite(0);
-            else if (timer > crackTime * 2) setCrackSprite(1);
-            else if (timer > crackTime * 1) setCrackSprite(2);
-            else if (timer > 0) setCrackSprite(3);
-        }
-        else
-        {
-            if (firstTimeDestroying)
-            {
-                DestroyRoom();
-                firstTimeDestroying = false;
-            }
-        }
+        DestroyRoom();
     }
 
     private void OnEnable()
     {
         if (!firstTime)
         {
-            //timerManager.startRunning(timer);
+            crackManager.startEffect(maxTimer);
+            timerManager.startRunning(maxTimer);
             generateEnemies();
-            generateStaticElements(Random.Range(0, 2));
+            generateStaticElements(UnityEngine.Random.Range(0, 2));
         }
         else firstTime = false;
     }
@@ -101,8 +78,6 @@ public class Room : MonoBehaviour
     public void reduceTime()
     {
         maxTimer /= 2f;
-        timer = maxTimer;
-        crackTime = maxTimer / 5;
     }
 
     public void increaseThreatType()
@@ -111,29 +86,18 @@ public class Room : MonoBehaviour
         if (threatType >= 9) threatType = 9;
     }
     
-
     private void DestroyRoom()
     {
         this.isDestroyed = true;
-        setCrackSprite(4);
         enemiesGenerationPoint.gameObject.SetActive(false);
         staticObjectsGenerator.gameObject.SetActive(false);
-    }
-
-    private void setCrackSprite(int index)
-    {
-        if(currentCrackSprite != index)
-        {
-            currentCrackSprite = index;
-            crackEffect.sprite = crackSprites[index];
-        }
     }
 
     public void setRoomType(int threatType, int roomType)
     {
         this.threatType = threatType;
         this.roomType = roomType;
-        if (roomType == (int)Util.RoomType.MAIN) isMainRoom = true;
+        if (roomType == Util.MainRoom) isMainRoom = true;
     }
 
     private void generateEnemies()
@@ -182,4 +146,5 @@ public class Room : MonoBehaviour
     {
         return posibleDirections[direction] == 0;
     }
+
 }

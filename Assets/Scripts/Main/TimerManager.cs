@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TimerManager : MonoBehaviour
 {
 
-    private bool run = false;
+    public event EventHandler OnTimerRanOut;
 
+    private bool run = false;
     public float timer;
 
     public void startRunning(float maxTimer)
@@ -20,10 +22,10 @@ public class TimerManager : MonoBehaviour
     {
         if (run)
         {
-
             timer -= Time.deltaTime;
             if (timer <= 0.0f)
             {
+                OnTimerRanOut?.Invoke(this, EventArgs.Empty);
                 timer = 0;
                 run = false;
             }

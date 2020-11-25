@@ -19,7 +19,7 @@ public class CurseManager : MonoBehaviour
 
 
     [SerializeField]
-    private int currentCurseType = -1;
+    private int currentCurseType = 0;
     [SerializeField]
     private Image curseTypeImage = null;
     [SerializeField]

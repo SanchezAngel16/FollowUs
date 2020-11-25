@@ -22,7 +22,6 @@ public class PlayerCollider : MonoBehaviour
     [SerializeField]
     private GameObject roomsAround = null;
 
-    private bool gameOver = false;
 
     private string minutes;
     private string seconds;
@@ -40,7 +39,7 @@ public class PlayerCollider : MonoBehaviour
     {
         if (timer > 0)
         {
-            if (!gameOver)
+            if (playerController.living)
             {
                 timer -= Time.deltaTime;
             }
@@ -75,15 +74,7 @@ public class PlayerCollider : MonoBehaviour
 
         if (Util.compareTags(enemiesTags, collision.gameObject))
         {
-            if (hitted) return;
-            hitted = true;
-            if (playerController.living)
-            {
-                InvokeRepeating("startHitAnimation", 0f, 0.05f);
-                Invoke("stopTakingDamageAnimation", 3.5f);
-                playerController.updateLifePoints(-10);
-                if (collision.gameObject.CompareTag("EnemyBullet")) collision.gameObject.SetActive(false);
-            }
+            takeDamage(10, collision);
         }else if (collision.gameObject.CompareTag("Pickable_Area"))
         {
             reloadButton.gameObject.SetActive(true);
@@ -94,36 +85,44 @@ public class PlayerCollider : MonoBehaviour
         }else if (collision.gameObject.CompareTag("Collectable_Health"))
         {
             Destroy(collision.gameObject);
-            playerController.updateLifePoints(40);
+            playerController.updateLifePoints(30);
         }else if (collision.gameObject.CompareTag("Room"))
         {
             Room currentRoom = collision.gameObject.GetComponent<Room>();
-            roomsAround.transform.position = currentRoom.transform.position;
-            setRoomsPreview(currentRoom.mapLocation);
-            playerController.currentLocation = currentRoom.mapLocation;
-            timer = currentRoom.timer;
-            if (currentRoom.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
-            Main.Instance.setGameOverText(false,"");
-            if (Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.goodRoom))
-            {
-                Main.Instance.setGameOverText(true, "You win!");
-                playerController.restart.gameObject.SetActive(true);
-                Main.Instance.setActiveAllUIArrows(false);
-                gameOver = true;
-            }else if(Vector2Int.Equals(playerController.currentLocation, Main.Instance.mapController.badRoom))
-            {
-                Main.Instance.setGameOverText(true, "You lose!");
-                playerController.updateLifePoints(-playerController.lifePoints);
-                playerController.restart.gameObject.SetActive(true);
-                Main.Instance.setActiveAllUIArrows(false);
-                gameOver = true;
-            }
+            enterRoom(currentRoom);
         }
     }
 
-    private void setRoomsPreview(Vector2Int location)
+    public void enterRoom(Room r)
     {
+        updateRoomsPreview(r);
+        playerController.currentLocation = r.mapLocation;
+        timer = r.timerManager.timer;
 
+        if (r.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
+        else
+        {
+            if (r.roomType == Util.GoodRoom) finishGame(true);
+            else if (r.roomType == Util.BadRoom) finishGame(false);
+        }
+    }
+
+    private void finishGame(bool hasWin)
+    {
+        if (hasWin) Main.Instance.setGameOverText(true, "You Win!");
+        else
+        {
+            Main.Instance.setGameOverText(true, "You lose!");
+            playerController.updateLifePoints(-playerController.lifePoints);
+        }
+        Main.Instance.setActiveAllUIArrows(false);
+        playerController.restart.gameObject.SetActive(false);
+    }
+
+    private void updateRoomsPreview(Room r)
+    {
+        Vector2Int location = r.mapLocation;
+        roomsAround.transform.position = r.transform.position;
         for(int i = 0; i < roomsPreview.Length; i++)
         {
             roomsPreview[i].SetActive(true);
@@ -154,10 +153,22 @@ public class PlayerCollider : MonoBehaviour
         }
     }
 
+    public void takeDamage(int lifePoints, Collider2D collision)
+    {
+        if (hitted) return;
+        hitted = true;
+        playerController.updateLifePoints(-lifePoints);
+        if (playerController.living)
+        {
+            InvokeRepeating("startHitAnimation", 0f, 0.05f);
+            Invoke("stopTakingDamageAnimation", 3.5f);
+            if (collision.gameObject.CompareTag("EnemyBullet")) collision.gameObject.SetActive(false);
+        }
+    }
+
     public void takeDamage(int lifePoints)
     {
         if (hitted) return;
-        // Take damage animation and deactivate collider layer.
         hitted = true;
         playerController.updateLifePoints(-lifePoints);
         if (playerController.living)

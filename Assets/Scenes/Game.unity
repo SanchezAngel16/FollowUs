@@ -279,7 +279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -378.80957, y: -17.416504}
+  m_AnchoredPosition: {x: -378.80957, y: -17.416473}
   m_SizeDelta: {x: -1042.3702, y: -145.16962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146267901
@@ -4769,15 +4769,6 @@ MonoBehaviour:
   enemiesCount: 0
   runningOnPC: 0
   playerController: {fileID: 555166630}
-  currentCurseType: 0
-  curseTypeImage: {fileID: 492606599}
-  curseTypes:
-  - {fileID: 21300000, guid: 721c70b9865498a4a80d72ac7d334e8f, type: 3}
-  - {fileID: 21300000, guid: dfbf9d2219762504681cad8943f6d246, type: 3}
-  - {fileID: 21300000, guid: e97731b7f76200f45bde8f226dd34719, type: 3}
-  - {fileID: 21300000, guid: 0d05ee1a3fa9c1e42abd84f44a266f92, type: 3}
-  - {fileID: 21300000, guid: f7b243f8ac9a6b94194457a5de0e4af5, type: 3}
-  - {fileID: 21300000, guid: 6587759f08e4e7340abfe5599ea2731f, type: 3}
 --- !u!4 &1251824198
 Transform:
   m_ObjectHideFlags: 0
@@ -5441,7 +5432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6fef4cbcc83f844793a6dccf0ff3638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCurseType: -1
+  currentCurseType: 0
   curseTypeImage: {fileID: 492606599}
   curseTypes:
   - {fileID: 21300000, guid: 721c70b9865498a4a80d72ac7d334e8f, type: 3}
