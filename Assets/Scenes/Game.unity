@@ -279,7 +279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -378.80957, y: -17.416473}
+  m_AnchoredPosition: {x: -378.80957, y: -17.416504}
   m_SizeDelta: {x: -1042.3702, y: -145.16962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146267901
@@ -7535,9 +7535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 555166630}
   shooting: {fileID: 555166631}
-  reloadButton: {fileID: 1839663228}
-  timerText: {fileID: 962804350}
-  timer: 25
   roomsPreview:
   - {fileID: 940134310}
   - {fileID: 511777515}
@@ -7548,6 +7545,8 @@ MonoBehaviour:
   - {fileID: 817245287}
   - {fileID: 1522061649}
   roomsAround: {fileID: 101095208}
+  reloadButton: {fileID: 1839663228}
+  timerText: {fileID: 962804350}
 --- !u!1 &1920920152
 GameObject:
   m_ObjectHideFlags: 0

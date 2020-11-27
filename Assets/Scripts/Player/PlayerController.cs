@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Main gameController;
+    public GameController gameController;
     public Vector2Int currentLocation;
 
     [SerializeField]
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         flipped = false;
 
-        if (Main.Instance.runningOnPC)
+        if (GameController.Instance.runningOnPC)
         {
             joystick.gameObject.SetActive(false);
             ammoImage.gameObject.SetActive(true);
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             moveInput.x = moveInput.y = 0;
             mousePos.x = mousePos.y = 0;
-            if (Main.Instance.runningOnPC)
+            if (GameController.Instance.runningOnPC)
             {
                 moveInput.x = Input.GetAxisRaw("Horizontal");
                 moveInput.y = Input.GetAxisRaw("Vertical");
@@ -117,7 +117,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
 
     public void flipPlayer(int flip)
     {

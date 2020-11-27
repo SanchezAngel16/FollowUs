@@ -111,13 +111,13 @@ public class PlayerCollider : MonoBehaviour
     private void finishGame(bool hasWin)
     {
         playerController.restart.gameObject.SetActive(true);
-        if (hasWin) Main.Instance.setGameOverText(true, "You Win!");
+        if (hasWin) GameController.Instance.setGameOverText(true, "You Win!");
         else
         {
-            Main.Instance.setGameOverText(true, "You lose!");
+            GameController.Instance.setGameOverText(true, "You lose!");
             playerController.updateLifePoints(-playerController.lifePoints);
         }
-        Main.Instance.setActiveAllUIArrows(false);
+        GameController.Instance.setActiveAllUIArrows(false);
     }
 
     private void updateRoomsPreview(Room r)

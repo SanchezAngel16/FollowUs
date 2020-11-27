@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Main : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     public Map mapController;
 
@@ -14,10 +14,6 @@ public class Main : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI gameOverText = null;
 
-    // TODO: TimerManager
-    public TextMeshProUGUI timerText;
-    
-    
     private Vector2Int currentActiveRoom = new Vector2Int(0, 0);
 
     public int enemiesCount = 0;
@@ -26,9 +22,9 @@ public class Main : MonoBehaviour
 
     public PlayerController playerController;
 
-    private static Main instance = null;
+    private static GameController instance = null;
 
-    public static Main Instance
+    public static GameController Instance
     {
         get
         {

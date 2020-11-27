@@ -13,7 +13,7 @@ public class Demon : Enemy
     
     public override void initEnemy()
     {
-        Main.Instance.enemiesCount++;
+        GameController.Instance.enemiesCount++;
         lifePoints = 150;
         waitTime = startWaitTime;
         parent = transform.parent;
@@ -58,7 +58,7 @@ public class Demon : Enemy
             GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
             newEnemy.transform.position = transform.position;
             shootingCount = 0;
-            Main.Instance.enemiesCount++;
+            GameController.Instance.enemiesCount++;
         }
 
     }

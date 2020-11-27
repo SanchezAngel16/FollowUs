@@ -12,7 +12,7 @@ public class GolemGenerator : MonoBehaviour
             GameObject newGolem = Instantiate(PrefabManager.Instance.golem, transform);
             Golem g = newGolem.transform.GetChild(1).GetComponent<Golem>();
             g.setGolemAttributes(i, Util.getCorners(transform.position));
-            Main.Instance.enemiesCount++;
+            GameController.Instance.enemiesCount++;
         }
     }
 }

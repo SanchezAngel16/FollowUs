@@ -76,10 +76,10 @@ public abstract class Enemy : MonoBehaviour
                 GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
                 collectable.transform.position = transform.position;
             }
-            Main.Instance.enemiesCount--;
-            if (Main.Instance.enemiesCount <= 0)
+            GameController.Instance.enemiesCount--;
+            if (GameController.Instance.enemiesCount <= 0)
             {
-                Main.Instance.updateUIArrows();
+                GameController.Instance.updateUIArrows();
             }
         }
     }

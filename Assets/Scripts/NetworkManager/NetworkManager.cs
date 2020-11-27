@@ -22,6 +22,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private TMP_InputField inputRoomName = null;
     [SerializeField]
     private TMP_InputField inputMaxPlayers = null;
+    [SerializeField]
+    private TMP_InputField mapSize = null;
+    [SerializeField]
+    private TMP_InputField badLeaders = null;
 
     [Header("Room List")]
     [SerializeField]
@@ -73,8 +77,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = (byte)int.Parse(maxPlayers);
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+        roomOptions.CustomRoomProperties.Add(RoomProperty.MapSize, mapSize.text);
+        roomOptions.CustomRoomProperties.Add(RoomProperty.BadLeaders, badLeaders.text);
+        roomOptions.CustomRoomPropertiesForLobby = new string[]
+        {
+            RoomProperty.MapSize,
+            RoomProperty.BadLeaders
+        };
         
-
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
 
@@ -131,6 +142,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 if (cachedRoomList.ContainsKey(room.Name)) cachedRoomList[room.Name] = room;
                 else cachedRoomList.Add(room.Name,room);
             }
+            
+
         }
 
         foreach(RoomInfo room in cachedRoomList.Values)
@@ -138,10 +151,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             GameObject roomItemListGameObject = Instantiate(roomItemList, roomListParent.transform);
             roomItemListGameObject.transform.localScale = Vector3.one;
 
-
-            roomItemListGameObject.transform.Find("RoomName").GetComponent<TextMeshProUGUI>().text = room.Name;
-            roomItemListGameObject.transform.Find("RoomPlayers").GetComponent<TextMeshProUGUI>().text = room.PlayerCount + "/" + room.MaxPlayers;
-            roomItemListGameObject.transform.Find("JoinButton").GetComponent<Button>().onClick.AddListener(() =>
+            string roomName = room.Name;
+            string playerCount = room.PlayerCount.ToString();
+            string maxPlayers = room.MaxPlayers.ToString();
+            
+            string mapSize = (string)room.CustomProperties[RoomProperty.MapSize];
+            string badLeaders = (string)room.CustomProperties[RoomProperty.BadLeaders];
+            
+            
+            RoomItemController roomItemController = roomItemListGameObject.transform.GetComponent<RoomItemController>();
+            roomItemController.setRoomInfo(roomName, playerCount, maxPlayers, badLeaders, mapSize);
+            roomItemListGameObject.transform.GetComponent<Button>().onClick.AddListener(() =>
             {
                 joinRoom(room.Name);
             });

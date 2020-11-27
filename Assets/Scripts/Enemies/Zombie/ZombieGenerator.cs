@@ -15,7 +15,7 @@ public class ZombieGenerator : MonoBehaviour
         createZombieHoles();
 
         int randomZombiesCount = Random.Range(12, 30);
-        Main.Instance.enemiesCount += randomZombiesCount;
+        GameController.Instance.enemiesCount += randomZombiesCount;
         for (int i = 0; i < randomZombiesCount; i++)
         {
             Invoke("generateZombies", i * 0.7f);

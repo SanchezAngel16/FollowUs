@@ -13,7 +13,7 @@ public class JellyFish : Enemy
 
     public override void initEnemy()
     {
-        Main.Instance.enemiesCount++;
+        GameController.Instance.enemiesCount++;
         lifePoints = 150;
         rotationSpeed = 45;
         startWaitShootTime = Random.Range(2, 4);
@@ -78,10 +78,10 @@ public class JellyFish : Enemy
                 GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
                 collectable.transform.position = transform.position;
             }
-            Main.Instance.enemiesCount--;
-            if (Main.Instance.enemiesCount <= 0)
+            GameController.Instance.enemiesCount--;
+            if (GameController.Instance.enemiesCount <= 0)
             {
-                Main.Instance.updateUIArrows();
+                GameController.Instance.updateUIArrows();
             }
         }
     }
