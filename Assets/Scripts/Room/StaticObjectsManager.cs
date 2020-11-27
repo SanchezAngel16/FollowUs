@@ -34,24 +34,14 @@ public class StaticObjectsManager : MonoBehaviour
         else
         {
             int numElements = Random.Range(3, 4);
-            GameObject[] staticObjects = new GameObject[numElements];
-            float minDistance = 2f;
-            Vector2 randomPos;
-            List<Vector2> randomPositions = new List<Vector2>();
-            randomPositions.Add(Util.getRandomPosition(transform, 1f));
+            List<string> tagsToAvoid = new List<string>();
+            tagsToAvoid.Add("StaticObject");
+            tagsToAvoid.Add("Enemy");
 
-            for (int i = 1; i < numElements; i++)
-            {
-                do
-                {
-                    randomPos = Util.getRandomPosition(transform, 1f);
-                } while (Util.isInsideMinDistance(minDistance, randomPositions, randomPos));
-                randomPositions.Add(randomPos);
-            }
             for (int i = 0; i < numElements; i++)
             {
-                staticObjects[i] = Instantiate(staticElements[Random.Range(1, staticElements.Length)], transform);
-                staticObjects[i].transform.position = randomPositions[i];
+                GameObject g = Instantiate(staticElements[Random.Range(1, staticElements.Length)], transform);
+                g.transform.position = Util.getValidRandomPosition(g, transform, tagsToAvoid, 1.2f);
 
             }
         }

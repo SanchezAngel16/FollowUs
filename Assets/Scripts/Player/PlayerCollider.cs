@@ -9,18 +9,19 @@ public class PlayerCollider : MonoBehaviour
     public PlayerController playerController;
     public Shooting shooting;
     private SpriteRenderer sprite;
+    
     private bool hitted;
 
-    public Button reloadButton;
-
-    public TextMeshProUGUI timerText;
-
-    public float timer;
+    private float timer;
 
     [SerializeField]
     private GameObject[] roomsPreview = null;
     [SerializeField]
     private GameObject roomsAround = null;
+    [SerializeField]
+    private Button reloadButton = null;
+    [SerializeField]
+    private TextMeshProUGUI timerText = null;
 
 
     private string minutes;
@@ -109,6 +110,7 @@ public class PlayerCollider : MonoBehaviour
 
     private void finishGame(bool hasWin)
     {
+        playerController.restart.gameObject.SetActive(true);
         if (hasWin) Main.Instance.setGameOverText(true, "You Win!");
         else
         {
@@ -116,7 +118,6 @@ public class PlayerCollider : MonoBehaviour
             playerController.updateLifePoints(-playerController.lifePoints);
         }
         Main.Instance.setActiveAllUIArrows(false);
-        playerController.restart.gameObject.SetActive(false);
     }
 
     private void updateRoomsPreview(Room r)

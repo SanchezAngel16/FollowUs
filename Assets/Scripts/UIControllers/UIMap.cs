@@ -55,7 +55,7 @@ public class UIMap : MonoBehaviour
         {
             for (int col = 0; col < mapController.cols; col++)
             {
-                GameObject newMapTile = (GameObject)Instantiate(mapTile, this.transform);
+                GameObject newMapTile = Instantiate(mapTile, this.transform);
                 mapTiles[col, row] = newMapTile;
                 newMapTile.GetComponent<Image>().color = getBgMapTileColor(col, row);
                 int threatType = mapController.map[col, row].GetComponent<Room>().threatType;

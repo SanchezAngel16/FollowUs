@@ -45,14 +45,45 @@ public static class Util
         return false;
     }
 
+
+    public static Vector2 getValidRandomPosition(GameObject g, Transform parent, List<string> tags, float offset)
+    {
+        Collider2D objectCollider = g.GetComponent<Collider2D>();
+
+        Vector3 newPosition = Vector3.zero;
+        bool validPosition = false;
+
+        do
+        {
+            newPosition = getRandomPosition(parent, offset);
+
+            Vector2 min = newPosition - objectCollider.bounds.extents;
+            Vector2 max = newPosition + objectCollider.bounds.extents;
+
+
+            Collider2D[] overlapObjects = Physics2D.OverlapAreaAll(min, max);
+
+            bool collidingStaticObject = false;
+            foreach (Collider2D col in overlapObjects)
+            {
+                if (compareTags(tags, col.gameObject)) collidingStaticObject = true;
+            }
+
+            if (!collidingStaticObject) validPosition = true;
+            
+        } while (!validPosition);
+
+        return newPosition;
+    }
+
     public static Vector2[] getCorners(Vector2 currentPos)
     {
         Vector2[] corners = new Vector2[4];
 
-        corners[0] = new Vector2(currentPos.x + 4f, currentPos.y - 3.5f);
-        corners[1] = new Vector2(currentPos.x + 4f, currentPos.y + 3.5f);
-        corners[2] = new Vector2(currentPos.x - 4f, currentPos.y + 3.5f);
-        corners[3] = new Vector2(currentPos.x - 4f, currentPos.y - 3.5f);
+        corners[0] = new Vector2(currentPos.x + 4f, currentPos.y - 3.3f);
+        corners[1] = new Vector2(currentPos.x + 4f, currentPos.y + 3.3f);
+        corners[2] = new Vector2(currentPos.x - 4f, currentPos.y + 3.3f);
+        corners[3] = new Vector2(currentPos.x - 4f, currentPos.y - 3.3f);
 
         return corners;
     }

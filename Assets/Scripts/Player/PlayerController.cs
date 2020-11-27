@@ -9,25 +9,30 @@ public class PlayerController : MonoBehaviour
     public Main gameController;
     public Vector2Int currentLocation;
 
-    public Animator animator;
+    [SerializeField]
+    private Animator animator = null;
+    [SerializeField]
+    private float speed = 0f;
 
-    public float speed;
+    public Rigidbody2D rb = null;
 
-    public Rigidbody2D rb;
     private Vector2 moveVelocity;
     private Vector2 mousePos;
     private Vector2 moveInput;
     private Vector2 lookDir;
 
-    public Camera mainCamera;
-
+    [SerializeField]
+    private Camera mainCamera = null;
+    
     public GameObject gun;
 
     public int lifePoints;
     private int maxLifePoints = 100;
-    public Slider slider;
 
-    public Joystick joystick;
+    [SerializeField]
+    private Slider slider = null;
+    [SerializeField]
+    private Joystick joystick = null;
 
     public bool living;
     public bool targeting;
@@ -40,8 +45,9 @@ public class PlayerController : MonoBehaviour
     private bool flipped;
 
     private Vector3 lookAngle;
+    [SerializeField]
+    private Image ammoImage = null;
 
-    public Image ammoImage;
     void Start()
     {
         living = true;
