@@ -13,7 +13,6 @@ public class CameraFollow : MonoBehaviour
     private Vector3 desiredPosition;
     private Vector3 smoothedPosition;
 
-
     private void Start()
     {
         desiredPosition = new Vector3(0, 0, transform.position.z);

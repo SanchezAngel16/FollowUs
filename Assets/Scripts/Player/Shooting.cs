@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviourPunCallbacks
 {
     public PlayerController playerController;
     public Transform firePoint;
-    public GameObject bulletPrefab;
     public BulletPool bulletPool;
 
     public float bulletForce = 15f;
@@ -17,24 +17,26 @@ public class Shooting : MonoBehaviour
     public TextMeshProUGUI bulletsCountText;
 
     public GameObject gun;
-    public Camera mainCamera;
 
     public Joystick shootingJoystick;
     private bool shoot = false;
 
     private Vector2 lookAt;
 
+    private void Awake()
+    {
+        setPlayerComponents();
+    }
+
     private void Start()
     {
-        maxBulletsCount = 300;
-        bulletsCount = maxBulletsCount;
-        updateBulletsCountText();
-        lookAt = new Vector2(0, 0);
-        if (GameController.Instance.runningOnPC) shootingJoystick.gameObject.SetActive(false);
+        initShootingValues();
+        
     }
 
     void Update()
     {
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         if (GameController.Instance.runningOnPC)
         {
             if (Input.GetButtonDown("Fire1"))
@@ -64,6 +66,22 @@ public class Shooting : MonoBehaviour
             }
         }
         
+    }
+
+    private void initShootingValues()
+    {
+        maxBulletsCount = 300;
+        bulletsCount = maxBulletsCount;
+        updateBulletsCountText();
+        lookAt = new Vector2(0, 0);
+        if (GameController.Instance.runningOnPC) shootingJoystick.gameObject.SetActive(false);
+    }
+
+    private void setPlayerComponents()
+    {
+        bulletPool = PlayerComponents.Instance.bulletPool;
+        bulletsCountText = PlayerComponents.Instance.bulletsCountText;
+        shootingJoystick = PlayerComponents.Instance.aimingJoystick;
     }
 
     private void flipGun(bool flip)

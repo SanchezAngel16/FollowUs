@@ -39,7 +39,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Unity Methods
-
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
     private void Start()
     {
         menuManager.setStatus(MenuStatus.MAIN);
@@ -85,7 +88,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             RoomProperty.MapSize,
             RoomProperty.BadLeaders
         };
-        
+        Util.mapSize = int.Parse(mapSize.text);
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
 
@@ -122,7 +125,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " joined to " + PhotonNetwork.CurrentRoom.Name);
+        int mapSize = int.Parse(PhotonNetwork.CurrentRoom.CustomProperties[RoomProperty.MapSize].ToString());
+        Util.mapSize = mapSize;
+        PhotonNetwork.LoadLevel(2);
     }
+
+    
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {

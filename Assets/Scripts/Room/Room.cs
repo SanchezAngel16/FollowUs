@@ -2,9 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using System.IO;
 
-public class Room : MonoBehaviour
+public class Room : MonoBehaviour, IPunInstantiateMagicCallback
 {
+    public event EventHandler<OnRoomStartedArgs> OnRoomStarted;
+    public class OnRoomStartedArgs : EventArgs
+    {
+        public float initTimer;
+    }
+
+    private Map mapController;
     public Vector2Int mapLocation;
     public bool isRoomActive;
     public bool isDestroyed;
@@ -29,7 +39,6 @@ public class Room : MonoBehaviour
 
     private bool firstTime = true;
 
-
     public GameObject emptyRoom;
 
 
@@ -50,6 +59,8 @@ public class Room : MonoBehaviour
         posibleDirections[3] = 1;
         isDestroyed = false;
         maxTimer = Util.maxRoomTime;
+        transform.SetParent(PlayerComponents.Instance.map);
+        mapController = PlayerComponents.Instance.mapController;
     }
 
     private void Start()
@@ -67,10 +78,17 @@ public class Room : MonoBehaviour
     {
         if (!firstTime)
         {
-            crackManager.startEffect(maxTimer);
-            timerManager.startRunning(maxTimer);
-            generateEnemies();
-            generateStaticElements(UnityEngine.Random.Range(0, 2));
+            if (!isMainRoom)
+            {
+                crackManager.startEffect(maxTimer);
+                timerManager.startRunning(maxTimer);
+                generateEnemies();
+                generateStaticElements(UnityEngine.Random.Range(0, 2));
+            }
+            else
+            {
+                generateStaticElements(1);
+            }
         }
         else firstTime = false;
     }
@@ -85,6 +103,8 @@ public class Room : MonoBehaviour
         threatType += 2;
         if (threatType >= 9) threatType = 9;
     }
+
+    
     
     private void DestroyRoom()
     {
@@ -147,4 +167,24 @@ public class Room : MonoBehaviour
         return posibleDirections[direction] == 0;
     }
 
+    [PunRPC]
+    public void startMainRoom()
+    {
+        OnRoomStarted?.Invoke(this, new OnRoomStartedArgs { initTimer = this.maxTimer });
+        timerManager.startRunning(maxTimer);
+        crackManager.startEffect(maxTimer);
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] roomInit = info.photonView.InstantiationData;
+        this.roomType = (int)roomInit[0];
+        this.threatType = (int)roomInit[1];
+        int x = (int)roomInit[2];
+        int y = (int)roomInit[3];
+        this.mapLocation = new Vector2Int(x, y);
+        this.setDoorSprites(mapController.cols, mapController.rows);
+        mapController.map[x, y] = this;
+        this.gameObject.SetActive(false);
+    }
 }

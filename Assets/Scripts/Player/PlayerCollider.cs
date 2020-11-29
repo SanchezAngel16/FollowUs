@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -27,58 +28,61 @@ public class PlayerCollider : MonoBehaviour
     private string minutes;
     private string seconds;
 
-    private List<string> enemiesTags;
+    private bool waiting = true;
+
+    private void Awake()
+    {
+        setComponents();
+    }
 
     private void Start()
     {
         hitted = false;
         sprite = playerController.GetComponent<SpriteRenderer>();
-        setEnemiesTag();
     }
 
     private void Update()
     {
-        if (timer > 0)
+        if (!waiting)
         {
-            if (playerController.living)
+            if (timer > 0)
             {
-                timer -= Time.deltaTime;
+                if (playerController.living)
+                {
+                    timer -= Time.deltaTime;
+                }
+                minutes = Mathf.Floor(timer / 60).ToString("00");
+                seconds = (timer % 60).ToString("00");
+
+                timerText.text = string.Format("{0}:{1}", minutes, seconds);
+
             }
-            minutes = Mathf.Floor(timer / 60).ToString("00");
-            seconds = (timer % 60).ToString("00");
-
-            timerText.text = string.Format("{0}:{1}", minutes, seconds);
-
+            else
+            {
+                playerController.updateLifePoints(-playerController.lifePoints);
+                timer = 0;
+                timerText.text = "0:00";
+            }
         }
-        else
-        {
-            playerController.updateLifePoints(-playerController.lifePoints);
-            timer = 0;
-            timerText.text = "0:00";
-        }
-
     }
 
-    private void setEnemiesTag()
+    private void setComponents()
     {
-        enemiesTags = new List<string>();
-        enemiesTags.Add("Enemy");
-        enemiesTags.Add("EnemyBullet");
-        enemiesTags.Add("Laser");
-        enemiesTags.Add("EnemyShield");
-        enemiesTags.Add("LightningLaser");
+        reloadButton = PlayerComponents.Instance.reloadButton;
+        timerText = PlayerComponents.Instance.timerText;
+        roomsAround = PlayerComponents.Instance.roomsAround;
+        roomsPreview = PlayerComponents.Instance.roomsPreview;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string tag = collision.gameObject.tag;
-
-        if (Util.compareTags(enemiesTags, collision.gameObject))
+        if (Util.compareTags(collision.gameObject))
         {
             takeDamage(10, collision);
         }else if (collision.gameObject.CompareTag("Pickable_Area"))
         {
-            reloadButton.gameObject.SetActive(true);
+            //reloadButton.gameObject.SetActive(true);
         }else if (collision.gameObject.CompareTag("Collectable_Ammo"))
         {
             shooting.reloadBullets(30);
@@ -94,11 +98,18 @@ public class PlayerCollider : MonoBehaviour
         }
     }
 
+    private void OnRoomStarted(object sender, Room.OnRoomStartedArgs e)
+    {
+        waiting = false;
+        timer = e.initTimer;
+    }
+
     public void enterRoom(Room r)
     {
         updateRoomsPreview(r);
         playerController.currentLocation = r.mapLocation;
-        timer = r.timerManager.timer;
+
+        r.OnRoomStarted += OnRoomStarted;
 
         if (r.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
         else

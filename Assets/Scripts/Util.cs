@@ -26,6 +26,15 @@ public static class Util
     public const int NormalRoom = 2;
     public const int MainRoom = 3;
 
+    private static string[] enemiesTags = new string[]
+    {
+        "Enemy",
+        "EnemyBullet",
+        "Laser",
+        "EnemyShield",
+        "LightningLaser"
+    };
+
     public static Vector2 getRandomPosition(Transform parent, float substractOffset)
     {
         float minX = parent.position.x - playableArea + substractOffset;
@@ -66,7 +75,7 @@ public static class Util
             bool collidingStaticObject = false;
             foreach (Collider2D col in overlapObjects)
             {
-                if (compareTags(tags, col.gameObject)) collidingStaticObject = true;
+                if (compareTags(col.gameObject)) collidingStaticObject = true;
             }
 
             if (!collidingStaticObject) validPosition = true;
@@ -88,12 +97,13 @@ public static class Util
         return corners;
     }
 
-    public static bool compareTags(List<string> tags, GameObject gameObject)
+    public static bool compareTags(GameObject gameObject)
     {
-        foreach(string tag in tags)
+        for(int i = 0; i < enemiesTags.Length; i++)
         {
-            if (gameObject.CompareTag(tag)) return true;
+            if (gameObject.CompareTag(enemiesTags[i])) return true;
         }
+
         return false;
     }
 
@@ -114,5 +124,16 @@ public static class Util
         }
 
         return nearestTarget;
+    }
+
+    public static object[] serializeRoomObject(Room r)
+    {
+        object[] room = new object[4];
+        room[0] = r.roomType;
+        room[1] = r.threatType;
+        room[2] = r.mapLocation.x;
+        room[3] = r.mapLocation.y;
+
+        return room;
     }
 }
