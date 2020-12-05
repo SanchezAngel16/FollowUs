@@ -9,7 +9,9 @@ public class PlayerCollider : MonoBehaviour
 {
     public PlayerController playerController;
     public Shooting shooting;
-    private SpriteRenderer sprite;
+
+    [SerializeField]
+    private SpriteRenderer sprite = null;
     
     private bool hitted;
 
@@ -38,7 +40,6 @@ public class PlayerCollider : MonoBehaviour
     private void Start()
     {
         hitted = false;
-        sprite = playerController.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -70,11 +71,20 @@ public class PlayerCollider : MonoBehaviour
     {
         reloadButton = PlayerComponents.Instance.reloadButton;
         timerText = PlayerComponents.Instance.timerText;
-        roomsAround = PlayerComponents.Instance.roomsAround;
-        roomsPreview = PlayerComponents.Instance.roomsPreview;
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Door"))
+        {
+            Door door = collision.gameObject.GetComponent<Door>();
+            if (door.opened)
+            {
+                Vector2 pPos = playerController.transform.position;
+                playerController.rb.position = new Vector2(pPos.x + door.direction.x, pPos.y + door.direction.y);
+            }
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (Util.compareTags(collision.gameObject))
@@ -128,7 +138,7 @@ public class PlayerCollider : MonoBehaviour
             GameController.Instance.setGameOverText(true, "You lose!");
             playerController.updateLifePoints(-playerController.lifePoints);
         }
-        GameController.Instance.setActiveAllUIArrows(false);
+        VotingSystem.Instance.setActiveUIDirectionsButtons(false);
     }
 
     private void updateRoomsPreview(Room r)

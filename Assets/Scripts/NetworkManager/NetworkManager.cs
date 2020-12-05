@@ -80,6 +80,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = (byte)int.Parse(maxPlayers);
+        roomOptions.CleanupCacheOnLeave = false;
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         roomOptions.CustomRoomProperties.Add(RoomProperty.MapSize, mapSize.text);
         roomOptions.CustomRoomProperties.Add(RoomProperty.BadLeaders, badLeaders.text);

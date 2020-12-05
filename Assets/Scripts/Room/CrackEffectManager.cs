@@ -14,6 +14,7 @@ public class CrackEffectManager : MonoBehaviour
 
     public void startEffect(float maxTime)
     {
+        Debug.Log("started");
         waitTime = maxTime / crackSprites.Length;
         spriteRenderer.sprite = null;
         co = StartCoroutine("setSprite");

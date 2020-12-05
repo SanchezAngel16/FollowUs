@@ -79,7 +79,8 @@ public abstract class Enemy : MonoBehaviour
             GameController.Instance.enemiesCount--;
             if (GameController.Instance.enemiesCount <= 0)
             {
-                GameController.Instance.updateUIArrows();
+                //GameController.Instance.updateUIArrows();
+                VotingSystem.Instance.updateUIDirectionsButtons();
             }
         }
     }

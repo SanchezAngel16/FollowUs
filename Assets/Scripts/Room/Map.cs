@@ -16,7 +16,7 @@ public class Map : MonoBehaviour, IPunObservable
     [SerializeField]
     private GameObject roomPrefab = null;
     [SerializeField]
-    private Room tempRoom;
+    private Room tempRoom = null;
 
     private void Awake()
     {
@@ -46,12 +46,10 @@ public class Map : MonoBehaviour, IPunObservable
             startRoom = new Vector2Int(Random.Range(0, cols), Random.Range(0, rows));
         } while (Vector2Int.Equals(startRoom, goodRoom)
         || Vector2Int.Equals(startRoom, badRoom));
-
     }
 
     private void createMap(float wRoom, float hRoom)
     {
-        Color rColor;
         setRoomsType();
         for (int row = 0; row < rows; row++)
         {
@@ -62,44 +60,34 @@ public class Map : MonoBehaviour, IPunObservable
                 float posX = col * wRoom;
                 float posY = row * -hRoom;
 
-                Vector2 newPos = new Vector2(posX, posY);
-
-                //GameObject newRoom = Instantiate(roomPrefab, transform);
-
-
-                if (Vector2Int.Equals(newRoomLocation, startRoom))
-                {
-                    tempRoom.setRoomType(0, Util.MainRoom);
-                }
-                else
-                {
-                    tempRoom.threatType = Random.Range(1, 10);
-                }
-
                 if (Vector2Int.Equals(newRoomLocation, goodRoom))
                 {
-                    rColor = Color.blue;
                     tempRoom.threatType = 0;
                     tempRoom.setRoomType(0, Util.GoodRoom);
                 }
                 else if (Vector2Int.Equals(newRoomLocation, badRoom))
                 {
                     tempRoom.setRoomType(tempRoom.threatType, Util.BadRoom);
-                    rColor = Color.red;
                 }
                 else
                 {
-                    tempRoom.setRoomType(tempRoom.threatType, Util.NormalRoom);
-                    rColor = Color.white;
+                    if (Vector2Int.Equals(newRoomLocation, startRoom))
+                    {
+                        tempRoom.setRoomType(0, Util.MainRoom);
+                    }
+                    else
+                    {
+                        tempRoom.threatType = Random.Range(1, 10);
+                        tempRoom.setRoomType(tempRoom.threatType, Util.NormalRoom);
+                    }
                 }
 
                 tempRoom.mapLocation = newRoomLocation;
-                /*newRoom.GetComponent<SpriteRenderer>().color = rColor;
-                newRoom.SetActive(false);*/
                 tempRoom.isRoomActive = false;
                 object[] initData = Util.serializeRoomObject(tempRoom);
+
+                Vector2 newPos = new Vector2(posX, posY);
                 PhotonNetwork.Instantiate(roomPrefab.name, newPos, Quaternion.identity, 0, initData);
-                //map[col, row] = tempRoom;
             }
         }
     }

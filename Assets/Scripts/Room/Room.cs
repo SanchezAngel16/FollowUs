@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
 
-public class Room : MonoBehaviour, IPunInstantiateMagicCallback
+public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
 {
     public event EventHandler<OnRoomStartedArgs> OnRoomStarted;
     public class OnRoomStartedArgs : EventArgs
@@ -58,9 +58,12 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback
         posibleDirections[2] = 1;
         posibleDirections[3] = 1;
         isDestroyed = false;
+        if(PlayerComponents.Instance != null)
+        {
+            transform.SetParent(PlayerComponents.Instance.map);
+            mapController = PlayerComponents.Instance.mapController;
+        }
         maxTimer = Util.maxRoomTime;
-        transform.SetParent(PlayerComponents.Instance.map);
-        mapController = PlayerComponents.Instance.mapController;
     }
 
     private void Start()
@@ -104,8 +107,6 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback
         if (threatType >= 9) threatType = 9;
     }
 
-    
-    
     private void DestroyRoom()
     {
         this.isDestroyed = true;
@@ -186,5 +187,30 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback
         this.setDoorSprites(mapController.cols, mapController.rows);
         mapController.map[x, y] = this;
         this.gameObject.SetActive(false);
+        switch (this.roomType)
+        {
+            case Util.MainRoom:
+                isMainRoom = true;
+                break;
+            case Util.GoodRoom:
+                GetComponent<SpriteRenderer>().color = Color.blue;
+                break;
+            case Util.BadRoom:
+                GetComponent<SpriteRenderer>().color = Color.red;
+                break;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(isRoomActive);
+        }
+        else if (stream.IsReading)
+        {
+            isRoomActive = (bool)stream.ReceiveNext();
+            if (isRoomActive) gameObject.SetActive(true);
+        }
     }
 }

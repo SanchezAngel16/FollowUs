@@ -81,7 +81,8 @@ public class JellyFish : Enemy
             GameController.Instance.enemiesCount--;
             if (GameController.Instance.enemiesCount <= 0)
             {
-                GameController.Instance.updateUIArrows();
+                //GameController.Instance.updateUIArrows();
+                VotingSystem.Instance.updateUIDirectionsButtons();
             }
         }
     }

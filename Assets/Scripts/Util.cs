@@ -5,10 +5,10 @@ using UnityEngine;
 public static class Util
 {
     
-    public static Vector2 rightDirection = new Vector2(1, 0);
-    public static Vector2 leftDirection = new Vector2(-1, 0);
-    public static Vector2 UpDirection = new Vector2(0, 1);
-    public static Vector2 DownDirection = new Vector2(0, -1);
+    public static Vector2Int rightDirection = new Vector2Int(1, 0);
+    public static Vector2Int leftDirection = new Vector2Int(-1, 0);
+    public static Vector2Int UpDirection = new Vector2Int(0, 1);
+    public static Vector2Int DownDirection = new Vector2Int(0, -1);
 
     public const int RIGHT_DIR = 0;
     public const int LEFT_DIR = 1;
