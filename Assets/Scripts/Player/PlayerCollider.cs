@@ -7,11 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerCollider : MonoBehaviour
 {
-    public PlayerController playerController;
-    public Shooting shooting;
-
     [SerializeField]
-    private SpriteRenderer sprite = null;
+    PlayerController playerController = null;
     
     private bool hitted;
 
@@ -95,7 +92,7 @@ public class PlayerCollider : MonoBehaviour
             //reloadButton.gameObject.SetActive(true);
         }else if (collision.gameObject.CompareTag("Collectable_Ammo"))
         {
-            shooting.reloadBullets(30);
+            playerController.playerShooting.reloadBullets(30);
             Destroy(collision.gameObject);
         }else if (collision.gameObject.CompareTag("Collectable_Health"))
         {
@@ -211,12 +208,12 @@ public class PlayerCollider : MonoBehaviour
 
     private void startHitAnimation()
     {
-        sprite.enabled = !sprite.enabled;
+        playerController.spriteRenderer.enabled = !playerController.spriteRenderer.enabled;
     }
 
     private void stopTakingDamageAnimation()
     {
-        sprite.enabled = true;
+        playerController.spriteRenderer.enabled = true;
         hitted = false;
         CancelInvoke("startHitAnimation");
     }

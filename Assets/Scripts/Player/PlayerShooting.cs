@@ -4,9 +4,12 @@ using TMPro;
 using UnityEngine;
 using Photon.Pun;
 
-public class Shooting : MonoBehaviourPunCallbacks
+public class PlayerShooting : MonoBehaviourPunCallbacks
 {
-    public PlayerController playerController;
+    [SerializeField]
+    PlayerController playerController = null;
+
+
     public Transform firePoint;
     public BulletPool bulletPool;
 
@@ -89,7 +92,7 @@ public class Shooting : MonoBehaviourPunCallbacks
         if (playerController.living)
         {
             playerController.spriteRenderer.flipX = flip;
-            gun.GetComponent<SpriteRenderer>().flipX = flip;
+            playerController.gunSpriteRenderer.flipX = flip;
         }
         
     }
