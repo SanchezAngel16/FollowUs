@@ -96,9 +96,28 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void initGame()
     {
+        int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        int badLeaderIndex = Random.Range(0, playersCount);
+        int cont = 0;
+        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (cont == badLeaderIndex)
+            {
+                Debug.Log("Bad");
+                hash.Add(PlayerType.key, PlayerType.BadLeader);
+            }
+            else
+            {
+                Debug.Log("Normal");
+                hash.Add(PlayerType.key, PlayerType.Normal);
+            }
+            player.SetCustomProperties(hash);
+            hash.Clear();
+            cont++;
+        }
         startRoom.GetComponent<PhotonView>().RPC("startMainRoom", RpcTarget.All);
         startButton.gameObject.SetActive(false);
-        
     }
 
 

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     public Vector2Int currentLocation;
 
+    [SerializeField]
+    private int playerType = -1;
 
 
     public int lifePoints;
@@ -101,9 +105,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(spriteRenderer.flipX);
+            stream.SendNext(gunSpriteRenderer.flipX);
         }else if (stream.IsReading)
         {
             spriteRenderer.flipX = (bool)stream.ReceiveNext();
+            gunSpriteRenderer.flipX = (bool)stream.ReceiveNext();
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if (photonView.IsMine)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == targetPlayer.ActorNumber)
+            {
+                playerType = (int)changedProps[PlayerType.key];
+                if (playerType == PlayerType.BadLeader) GameUIManager.Instance.curseButton.SetActive(true);
+                else GameUIManager.Instance.curseButton.SetActive(false);
+            }
         }
     }
 

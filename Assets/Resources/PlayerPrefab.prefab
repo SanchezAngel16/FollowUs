@@ -550,6 +550,7 @@ MonoBehaviour:
   rb: {fileID: 2179585060529593767}
   gun: {fileID: 5636248611940178476}
   currentLocation: {x: 0, y: 0}
+  playerType: -1
   lifePoints: 0
   slider: {fileID: 0}
   restart: {fileID: 0}

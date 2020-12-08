@@ -84,6 +84,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
         roomOptions.CustomRoomProperties.Add(RoomProperty.MapSize, mapSize.text);
         roomOptions.CustomRoomProperties.Add(RoomProperty.BadLeaders, badLeaders.text);
+        
         roomOptions.CustomRoomPropertiesForLobby = new string[]
         {
             RoomProperty.MapSize,
@@ -113,6 +114,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         connectionStatusPanel.SetActive(false);
         showRoomList();
     }
+
 
     public override void OnConnected()
     {

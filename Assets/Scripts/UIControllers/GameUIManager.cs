@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class GameUIManager : MonoBehaviour
     private GameObject gameStartedPanel = null;
     [SerializeField]
     private GameObject votingPanel = null;
+
+    [Header("Extra elements")]
+    public GameObject curseButton;
 
     private static GameUIManager instance = null;
 
