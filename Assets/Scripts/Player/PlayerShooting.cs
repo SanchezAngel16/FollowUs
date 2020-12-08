@@ -9,9 +9,12 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
     [SerializeField]
     PlayerController playerController = null;
 
-
-    public Transform firePoint;
-    public BulletPool bulletPool;
+    [SerializeField]
+    private Transform firePoint = null;
+    [SerializeField]
+    private BulletPool bulletPool = null;
+    [SerializeField]
+    private BulletPool outsideBulletPool = null;
 
     public float bulletForce = 15f;
 
@@ -82,7 +85,6 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
 
     private void setPlayerComponents()
     {
-        bulletPool = PlayerComponents.Instance.bulletPool;
         bulletsCountText = PlayerComponents.Instance.bulletsCountText;
         shootingJoystick = PlayerComponents.Instance.aimingJoystick;
     }
@@ -104,7 +106,7 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
 
     public void Shoot()
     {
-        if(!(bulletsCount <= 0) && playerController.living)
+        if(!(bulletsCount <= 0) && playerController.living && GameUIManager.Instance.currentState != GameUIStates.WAITING)
         {
             /*   SHOOT AT NEAREST TARGET 
             Transform target = getNearestTarget(Main.enemies);
@@ -130,7 +132,10 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
             bullet.SetActive(true);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(firePoint.up * (bulletForce * CurseManager.bulletSpeed), ForceMode2D.Impulse);
-
+            float posX = bullet.transform.position.x;
+            float posY = bullet.transform.position.y;
+            Vector3 rotation = bullet.transform.rotation.eulerAngles;
+            playerController.photonView.RPC("displayBullet", RpcTarget.Others, posX, posY, rotation.z);
             bulletsCount--;
             updateBulletsCountText();
         }
@@ -168,4 +173,19 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
         if (bulletsCount >= maxBulletsCount) bulletsCount = maxBulletsCount;
         updateBulletsCountText();
     }
+
+    #region RPC
+
+    [PunRPC]
+    public void displayBullet(float startPosX, float startPosY, float eulerAngleZ)
+    {
+        GameObject newBullet = outsideBulletPool.getBullet();
+        newBullet.transform.position = new Vector2(startPosX, startPosY);
+        newBullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, eulerAngleZ));
+        newBullet.SetActive(true);
+        Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
+        rb.AddForce(newBullet.transform.up * (bulletForce * CurseManager.bulletSpeed), ForceMode2D.Impulse);
+    }
+
+    #endregion
 }

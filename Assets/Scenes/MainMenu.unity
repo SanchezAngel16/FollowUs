@@ -829,7 +829,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1299614515}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: setStatus
+        m_MethodName: setState
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -960,7 +960,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1299614515}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: setStatus
+        m_MethodName: setState
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5215,7 +5215,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1299614515}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: setStatus
+        m_MethodName: setState
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6696,7 +6696,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1299614515}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: setStatus
+        m_MethodName: setState
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7616,7 +7616,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1299614515}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: setStatus
+        m_MethodName: setState
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

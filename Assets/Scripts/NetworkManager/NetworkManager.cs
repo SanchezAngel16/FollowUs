@@ -45,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        menuManager.setStatus(MenuStatus.MAIN);
+        menuManager.setState(MenuStatus.MAIN);
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListGameObjects = new Dictionary<string, GameObject>();
     }
@@ -108,7 +108,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        menuManager.setStatus(MenuStatus.LOBBY);
+        menuManager.setState(MenuStatus.LOBBY);
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " connected to Photon");
         connectionStatusPanel.SetActive(false);
         showRoomList();

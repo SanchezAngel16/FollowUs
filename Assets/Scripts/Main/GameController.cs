@@ -51,6 +51,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsConnected)
         {
+            GameUIManager.Instance.setState(GameUIStates.WAITING);
             if (PhotonNetwork.IsMasterClient)
             {
                 startButton.gameObject.SetActive(true);
@@ -62,7 +63,7 @@ public class GameController : MonoBehaviourPunCallbacks
             {
                 PlayerComponents.Instance.mainCamera.gameObject.SetActive(true);
                 PlayerComponents.Instance.mainCamera.transform.position = new Vector2(-10, 10);
-                Invoke("instantiatePlayer", 1.5f);
+                Invoke("instantiatePlayer", 1f);
             }
         }
     }
@@ -97,6 +98,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         startRoom.GetComponent<PhotonView>().RPC("startMainRoom", RpcTarget.All);
         startButton.gameObject.SetActive(false);
+        
     }
 
 

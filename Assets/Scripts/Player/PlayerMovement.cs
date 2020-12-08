@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     PlayerController playerController = null;
@@ -14,8 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         moveVelocity = playerController.playerInput.moveInput.normalized * speed;
-
         managePlayerDirection();
     }
 

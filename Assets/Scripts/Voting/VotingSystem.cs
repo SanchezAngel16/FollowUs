@@ -60,6 +60,7 @@ public class VotingSystem : MonoBehaviourPunCallbacks
     {
         setActiveUIDirectionsButtons(true);
         Vector2Int currentActiveRoom = GameController.Instance.currentActiveRoom;
+        Debug.Log(currentActiveRoom);
         Room activeRoom = GameController.Instance.mapController.map[currentActiveRoom.x, currentActiveRoom.y];
         if (activeRoom.isOpen(Util.RIGHT_DIR)) rightButton.gameObject.SetActive(false);
         if (activeRoom.isOpen(Util.LEFT_DIR)) leftButton.gameObject.SetActive(false);
@@ -79,27 +80,26 @@ public class VotingSystem : MonoBehaviourPunCallbacks
     #endregion
 
     #region Private Methods
+    private void onVoteButtonClick(int direction)
+    {
+        setActiveUIDirectionsButtons(false);
+        photonView.RPC("vote", RpcTarget.All, direction);
+        checkVoting();
+    }
+
     private void initDirectionButtons()
     {
         rightButton.onClick.AddListener(() => {
-            setActiveUIDirectionsButtons(false);
-            photonView.RPC("vote", RpcTarget.All, Util.RIGHT_DIR);
-            checkVoting();
+            onVoteButtonClick(Util.RIGHT_DIR);
         });
         leftButton.onClick.AddListener(() => {
-            setActiveUIDirectionsButtons(false);
-            photonView.RPC("vote", RpcTarget.All, Util.LEFT_DIR);
-            checkVoting();
+            onVoteButtonClick(Util.LEFT_DIR);
         });
         downButton.onClick.AddListener(() => {
-            setActiveUIDirectionsButtons(false);
-            photonView.RPC("vote", RpcTarget.All, Util.DOWN_DIR);
-            checkVoting();
+            onVoteButtonClick(Util.DOWN_DIR);
         });
         upButton.onClick.AddListener(() => {
-            setActiveUIDirectionsButtons(false);
-            photonView.RPC("vote", RpcTarget.All, Util.UP_DIR);
-            checkVoting();
+            onVoteButtonClick(Util.UP_DIR);
         });
         updateUIDirectionsButtons();
     }

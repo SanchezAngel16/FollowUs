@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         resetMenus();
-        setStatus(MenuStatus.MAIN);
+        setState(MenuStatus.MAIN);
     }
 
     private void resetMenus()
@@ -38,10 +38,10 @@ public class MenuManager : MonoBehaviour
         lobbyPanel.SetActive(false);
     }
 
-    public void setStatus(int status)
+    public void setState(int state)
     {
         resetMenus();
-        switch (status)
+        switch (state)
         {
             case MenuStatus.MAIN:
                 mainMenu.SetActive(true);

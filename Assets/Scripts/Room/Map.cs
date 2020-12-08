@@ -18,6 +18,8 @@ public class Map : MonoBehaviour, IPunObservable
     [SerializeField]
     private Room tempRoom = null;
 
+    private bool firstTimeChecking = true;
+
     private void Awake()
     {
         int mapSize = int.Parse(PhotonNetwork.CurrentRoom.CustomProperties[RoomProperty.MapSize].ToString());
@@ -249,6 +251,11 @@ public class Map : MonoBehaviour, IPunObservable
             goodRoom.y = (int)stream.ReceiveNext();
             badRoom.x = (int)stream.ReceiveNext();
             badRoom.y = (int)stream.ReceiveNext();
+            if (firstTimeChecking)
+            {
+                updatePosibleDirections();
+                firstTimeChecking = false;
+            }
         }
     }
 }

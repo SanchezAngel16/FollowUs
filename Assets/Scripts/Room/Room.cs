@@ -174,6 +174,7 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
         OnRoomStarted?.Invoke(this, new OnRoomStartedArgs { initTimer = this.maxTimer });
         timerManager.startRunning(maxTimer);
         crackManager.startEffect(maxTimer);
+        GameUIManager.Instance.setState(GameUIStates.GAME_HAS_STARTED);
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
