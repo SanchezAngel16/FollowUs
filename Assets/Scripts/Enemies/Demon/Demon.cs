@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,8 +38,12 @@ public class Demon : Enemy
 
     private void shoot()
     {
-        GameObject[] bullets = new GameObject[20];
+        int bulletsCount = 20;
+        GameObject[] bullets = new GameObject[bulletsCount];
         float angle = 0;
+        float startingAngle = angle;
+        float incrementalAngles = 18f;
+        float bulletSpeed = 2.3f;
         for (int i = 0; i < bullets.Length; i++)
         {
             bullets[i] = bulletsPool.getBullet();
@@ -46,17 +51,22 @@ public class Demon : Enemy
             bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-            rb.AddForce(bullets[i].transform.up * 2.3f, ForceMode2D.Impulse);
-            angle += 18f;
+            rb.AddForce(bullets[i].transform.up * bulletSpeed, ForceMode2D.Impulse);
+            angle += incrementalAngles;
         }
+
+        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
+
         shooting = true;
 
         shootingCount++;
 
         if(shootingCount >= 5)
         {
-            GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
+            //GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
+            GameObject newEnemy = PhotonNetwork.Instantiate(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
             newEnemy.transform.position = transform.position;
+            newEnemy.transform.SetParent(transform.parent.parent);
             shootingCount = 0;
             GameController.Instance.enemiesCount++;
         }

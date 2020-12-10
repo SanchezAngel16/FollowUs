@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class Golem : Enemy
 
     private int golemPosition;
     private bool hasChangeDirection = false;
+
     public void setGolemAttributes(int golemType, Vector2[] corners)
     {
         this.golemPosition = golemType;
@@ -88,10 +90,14 @@ public class Golem : Enemy
 
     private void shoot()
     {
+        float bulletSpeed = 8f;
         GameObject bullet = bulletsPool.getBullet();
         bullet.SetActive(true);
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Rigidbody2D>().AddForce(-transform.up * 8f, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(-transform.up * bulletSpeed, ForceMode2D.Impulse);
+
+        photonView.RPC("displayBullet", RpcTarget.Others, 1, 0f, 0f, bulletSpeed, -1);
+        //photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -162,4 +168,39 @@ public class Golem : Enemy
                 break;
         }
     }
+
+    [PunRPC]
+    public void initGolemAttributes(int golemPosition, float x, float y)
+    {
+        Debug.Log("Starting golem attributes");
+        setGolemAttributes(golemPosition, Util.getCorners(new Vector2(x,y)));
+    }
+    /*
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        Debug.Log("Holi Golem");
+        /*object[] golemInit = info.photonView.InstantiationData;
+        int golemType = (int)golemInit[0];
+        float posX = (float)golemInit[1];
+        float posY = (float)golemInit[2];
+        setGolemAttributes(golemType, Util.getCorners(new Vector2(posX, posY)));
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(this.golemPosition);
+            Debug.Log("Holi golem sending");
+        }
+        else if (stream.IsReading)
+        {
+            
+            if (firstTimeChecking)
+            {
+                
+                firstTimeChecking = false;
+            }
+        }
+    }*/
 }

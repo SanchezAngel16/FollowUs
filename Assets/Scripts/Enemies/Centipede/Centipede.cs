@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,12 +50,16 @@ public class Centipede : MonoBehaviour
         {
             if(i == 0)
             {
-                GameObject newCentipedeHead = Instantiate(centipedeHead, transform);
+                //GameObject newCentipedeHead = Instantiate(centipedeHead, transform);
+                GameObject newCentipedeHead = PhotonNetwork.Instantiate(PrefabManager.Instance.centipedeHead.name, transform.position, Quaternion.identity);
+                newCentipedeHead.transform.SetParent(transform);
                 body[i] = newCentipedeHead.transform.GetChild(1).GetComponent<CentipedeHead>();
             }
             else
             {
-                GameObject newCentipedeTail = Instantiate(centipedeBody, transform);
+                //GameObject newCentipedeTail = Instantiate(centipedeBody, transform);
+                GameObject newCentipedeTail = PhotonNetwork.Instantiate(PrefabManager.Instance.centipedeTail.name, transform.position, Quaternion.identity);
+                newCentipedeTail.transform.SetParent(transform);
                 body[i] = newCentipedeTail.transform.GetChild(1).GetComponent<CentipedeTail>();
             }
         }

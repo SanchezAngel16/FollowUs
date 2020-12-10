@@ -60,7 +60,6 @@ public class VotingSystem : MonoBehaviourPunCallbacks
     {
         setActiveUIDirectionsButtons(true);
         Vector2Int currentActiveRoom = GameController.Instance.currentActiveRoom;
-        Debug.Log(currentActiveRoom);
         Room activeRoom = GameController.Instance.mapController.map[currentActiveRoom.x, currentActiveRoom.y];
         if (activeRoom.isOpen(Util.RIGHT_DIR)) rightButton.gameObject.SetActive(false);
         if (activeRoom.isOpen(Util.LEFT_DIR)) leftButton.gameObject.SetActive(false);

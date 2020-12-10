@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -37,10 +38,10 @@ public class EnemyGenerator : MonoBehaviour
             case 7:
                 generateEnemies(PrefabManager.Instance.golemGenerator, 1);
                 generateEnemies(PrefabManager.Instance.octopus, Random.Range(4, 6));
-                generateEnemies(PrefabManager.Instance.zombieGenerator, 1);
+                //generateEnemies(PrefabManager.Instance.zombieGenerator, 1);
                 break;
             case 8:
-                generateEnemies(PrefabManager.Instance.zombieGenerator, 1);
+                //generateEnemies(PrefabManager.Instance.zombieGenerator, 1);
                 generateEnemies(PrefabManager.Instance.golemGenerator, 1);
                 generateEnemies(PrefabManager.Instance.octopus, Random.Range(1, 4));
                 generateEnemies(PrefabManager.Instance.evilEye, Random.Range(1, 2));
@@ -61,9 +62,20 @@ public class EnemyGenerator : MonoBehaviour
 
     private void generateEnemies(GameObject enemy, int enemiesCount)
     {
+        /*GameObject g = PhotonNetwork.Instantiate(PrefabManager.Instance.demon.name, transform.position, Quaternion.identity);
+
+        g.transform.SetParent(transform);
+        PhotonNetwork.Instantiate(PrefabManager.Instance.octopus.name, transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(PrefabManager.Instance.golemGenerator.name, transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(PrefabManager.Instance.evilEye.name, transform.position, Quaternion.identity);*/
+        /*GameObject centipede = PhotonNetwork.Instantiate(PrefabManager.Instance.jellyFish.name, transform.position, Quaternion.identity);
+        centipede.transform.SetParent(transform);
+        */
         for(int i = 0; i < enemiesCount; i++)
         {
-            Instantiate(enemy, transform).transform.position = transform.position;
+            //Instantiate(enemy, transform).transform.position = transform.position;
+            GameObject newEnemy = PhotonNetwork.Instantiate(enemy.name, transform.position, Quaternion.identity);
+            newEnemy.transform.SetParent(transform);
         }
     }
 }

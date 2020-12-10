@@ -4,8 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Photon.Pun;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviourPunCallbacks
 {
     public float speed;
     protected Vector2[] spots;
@@ -18,6 +19,7 @@ public abstract class Enemy : MonoBehaviour
 
 
     public BulletPool bulletsPool;
+    public BulletPool outsideBulletPool;
     public Rigidbody2D rb;
 
     protected bool collidingStaticObject;
@@ -33,11 +35,15 @@ public abstract class Enemy : MonoBehaviour
     private void Start()
     {
         initEnemy();
+        
     }
 
     private void FixedUpdate()
     {
-        move();
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            move();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -87,7 +93,11 @@ public abstract class Enemy : MonoBehaviour
 
     protected void removeEnemy()
     {
-        Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            //PhotonNetwork.Destroy(photonView);
+            PhotonNetwork.Destroy(this.gameObject);
+        }
     }
 
     protected int removeLifePoints(int points)
@@ -99,8 +109,36 @@ public abstract class Enemy : MonoBehaviour
     public abstract void initEnemy();
     public abstract void move();
 
-    /*public void setCurrentRoom(Room r)
+    #region RPC Calls
+
+
+
+    [PunRPC]
+    public void displayBullet(int bulletsCount, float startingAngle, float incrementalAngles, float bulletSpeed, int direction)
     {
-        currentRoom = r;
-    }*/
+        if (bulletsCount == 1)
+        {
+            GameObject bullet = outsideBulletPool.getBullet();
+            bullet.SetActive(true);
+            bullet.transform.position = transform.position;
+            bullet.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed * direction, ForceMode2D.Impulse);
+        }
+        else
+        {
+            GameObject[] bullets = new GameObject[bulletsCount];
+            float angle = startingAngle;
+            for (int i = 0; i < bullets.Length; i++)
+            {
+                bullets[i] = outsideBulletPool.getBullet();
+                bullets[i].transform.position = transform.position;
+                bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+                bullets[i].SetActive(true);
+                Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
+                rb.AddForce(bullets[i].transform.up * bulletSpeed * direction, ForceMode2D.Impulse);
+                angle += incrementalAngles;
+            }
+        }
+    }
+
+    #endregion
 }

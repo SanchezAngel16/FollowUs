@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         initPlayer();
     }
 
-
     private void initPlayer()
     {
         living = true;

@@ -85,8 +85,11 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
             {
                 crackManager.startEffect(maxTimer);
                 timerManager.startRunning(maxTimer);
-                generateEnemies();
-                generateStaticElements(UnityEngine.Random.Range(0, 2));
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    generateEnemies();
+                    generateStaticElements(UnityEngine.Random.Range(0, 2));
+                }
             }
             else
             {

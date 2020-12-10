@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Octopus : Enemy
 {
@@ -74,22 +75,6 @@ public class Octopus : Enemy
         }
     }
 
-    private void shoot()
-    {
-        GameObject[] bullets = new GameObject[4];
-        float angle = 0;
-        for (int i = 0; i < bullets.Length; i++)
-        {
-            bullets[i] = bulletsPool.getBullet();
-            bullets[i].transform.position = transform.position;
-            bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
-            bullets[i].SetActive(true);
-            Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-            rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
-            angle += 90;
-        }
-    }
-
     public override void move()
     {
         rb.MovePosition(rb.position + directions[currentDirection] * (speed * CurseManager.enemiesSpeed) * Time.deltaTime);
@@ -119,4 +104,43 @@ public class Octopus : Enemy
             waitShootTime -= Time.deltaTime;
         }
     }
+    private void shoot()
+    {
+        int bulletsCount = 4;
+        GameObject[] bullets = new GameObject[bulletsCount];
+        float angle = 0;
+        float startingAngle = angle;
+        const float incrementalAngles = 90;
+        float bulletSpeed = 3f;
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            bullets[i] = bulletsPool.getBullet();
+            bullets[i].transform.position = transform.position;
+            bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            bullets[i].SetActive(true);
+            Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
+            rb.AddForce(bullets[i].transform.up * bulletSpeed, ForceMode2D.Impulse);
+            
+            angle += incrementalAngles;
+        }
+        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
+    }
+    /*
+    [PunRPC]
+    public void displayBullet(int bulletsCount, float incrementalAngles)
+    {
+        GameObject[] bullets = new GameObject[bulletsCount];
+        float angle = 0;
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            bullets[i] = outsideBulletPool.getBullet();
+            bullets[i].transform.position = transform.position;
+            bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            bullets[i].SetActive(true);
+            Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
+            rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
+
+            angle += incrementalAngles;
+        }
+    }*/
 }

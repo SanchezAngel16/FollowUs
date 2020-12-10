@@ -86,7 +86,7 @@ public class PlayerCollider : MonoBehaviour
     {
         if (Util.compareTags(collision.gameObject))
         {
-            takeDamage(10, collision);
+            //takeDamage(10, collision);
         }else if (collision.gameObject.CompareTag("Pickable_Area"))
         {
             //reloadButton.gameObject.SetActive(true);

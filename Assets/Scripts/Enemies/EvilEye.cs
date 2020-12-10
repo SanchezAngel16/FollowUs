@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,8 +26,12 @@ public class EvilEye : Enemy
 
     private void shoot()
     {
-        GameObject[] bullets = new GameObject[4];
+        int bulletsCount = 4;
+        GameObject[] bullets = new GameObject[bulletsCount];
         float angle = Random.Range(0f, 360f);
+        float startingAngle = angle;
+        float incrementalAngles = 25f;
+        float bulletSpeed = 3f;
         for (int i = 0; i < bullets.Length; i++)
         {
             bullets[i] = bulletsPool.getBullet();
@@ -34,9 +39,11 @@ public class EvilEye : Enemy
             bullets[i].transform.rotation = Quaternion.Euler(0, 0, angle);
             bullets[i].SetActive(true);
             Rigidbody2D rb = bullets[i].GetComponent<Rigidbody2D>();
-            rb.AddForce(bullets[i].transform.up * 3, ForceMode2D.Impulse);
-            angle += 25;
+            rb.AddForce(bullets[i].transform.up * bulletSpeed, ForceMode2D.Impulse);
+            angle += incrementalAngles;
         }
+
+        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
 
     public override void move()
@@ -59,4 +66,10 @@ public class EvilEye : Enemy
             waitShootTime -= Time.deltaTime;
         }
     }
+
+    #region RPC Calls
+
+
+
+    #endregion
 }

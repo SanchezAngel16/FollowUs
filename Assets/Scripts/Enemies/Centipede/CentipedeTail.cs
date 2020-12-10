@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,9 @@ public class CentipedeTail : CentipedeBody
             {
                 if (lastBody != null)
                 {
-                    GameObject newHead = Instantiate(PrefabManager.Instance.centipedeHead, transform.parent.parent);
+                    //GameObject newHead = Instantiate(PrefabManager.Instance.centipedeHead, transform.parent.parent);
+                    GameObject newHead = PhotonNetwork.Instantiate(PrefabManager.Instance.centipedeHead.name, transform.position, Quaternion.identity);
+                    newHead.transform.SetParent(transform.parent.parent);
                     GameController.Instance.enemiesCount++;
                     CentipedeHead newCentipedeHead = newHead.transform.GetChild(1).GetComponent<CentipedeHead>();
                     newCentipedeHead.setCentipedeAttributes(0, points);
