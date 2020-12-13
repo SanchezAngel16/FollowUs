@@ -35,7 +35,6 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
     private void Start()
     {
         initEnemy();
-        
     }
 
     private void FixedUpdate()
@@ -74,12 +73,14 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
 
     private void OnDestroy()
     {
+        //Vector2 destroyPos = new Vector2(destroyPosX, destroyPosY);
         if (destroy)
         {
             Instantiate(PrefabManager.Instance.explosionEffect).transform.position = transform.position;
             if (Random.Range(0, 100) >= 10 && lootMaker)
             {
                 GameObject collectable = Instantiate(collectables[Random.Range(0, collectables.Length)]);
+                //collectable.transform.position = destroyPos;
                 collectable.transform.position = transform.position;
             }
             GameController.Instance.enemiesCount--;
@@ -89,14 +90,23 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
                 VotingSystem.Instance.updateUIDirectionsButtons();
             }
         }
+        /*if (destroy && PhotonNetwork.IsMasterClient)
+        {
+            int lootType = -1;
+            if (Random.Range(0, 100) >= 10 && lootMaker)
+            {
+                lootType = Random.Range(0, collectables.Length);
+            }
+            GameController.Instance.GetComponent<PhotonView>().RPC("onDestroyEnemy", RpcTarget.All, lootType);
+        }*/
     }
 
     protected void removeEnemy()
     {
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsMasterClient)
         {
-            //PhotonNetwork.Destroy(photonView);
             PhotonNetwork.Destroy(this.gameObject);
+            //PhotonNetwork.Destroy(this.gameObject);
         }
     }
 
@@ -139,6 +149,26 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    [PunRPC]
+    public void onDestroyEnemy(float destroyPosX, float destroyPosY, int lootType)
+    {
+        Vector2 destroyPos = new Vector2(destroyPosX, destroyPosY);
+        Instantiate(PrefabManager.Instance.explosionEffect).transform.position = destroyPos;
+        if (lootType != -1)
+        {
+            GameObject collectable = Instantiate(collectables[lootType]);
+            collectable.transform.position = destroyPos;
+        }
+        GameController.Instance.enemiesCount--;
+        if (GameController.Instance.enemiesCount <= 0)
+        {
+            //GameController.Instance.updateUIArrows();
+            VotingSystem.Instance.updateUIDirectionsButtons();
+        }
+    }
+
+    
 
     #endregion
 }

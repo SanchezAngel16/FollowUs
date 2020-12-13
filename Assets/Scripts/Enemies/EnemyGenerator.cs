@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class EnemyGenerator : MonoBehaviour
+public class EnemyGenerator : MonoBehaviourPunCallbacks
 {
-
+    
     public void generate(int threatType)
     {
+        photonView.RPC("setCurrentEnemyParent", RpcTarget.All);
         switch (threatType)
         {
             case 1:
@@ -74,8 +75,14 @@ public class EnemyGenerator : MonoBehaviour
         for(int i = 0; i < enemiesCount; i++)
         {
             //Instantiate(enemy, transform).transform.position = transform.position;
-            GameObject newEnemy = PhotonNetwork.Instantiate(enemy.name, transform.position, Quaternion.identity);
-            newEnemy.transform.SetParent(transform);
+            GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(enemy.name, transform.position, Quaternion.identity);
+            //newEnemy.transform.SetParent(transform);
         }
+    }
+
+    [PunRPC]
+    public void setCurrentEnemyParent()
+    {
+        ParentsManager.Instance.currentEnemyParent = this.transform;
     }
 }

@@ -22,11 +22,15 @@ public class GameController : MonoBehaviourPunCallbacks
     private GameObject playerPrefab = null;
 
     private Room startRoom;
-    
+
     [SerializeField]
     private Button startButton = null;
+
+    [SerializeField]
+    private GameObject[] collectables;
+
     
-    
+
     private static GameController instance = null;
 
     public static GameController Instance
@@ -104,12 +108,10 @@ public class GameController : MonoBehaviourPunCallbacks
         {
             if (cont == badLeaderIndex)
             {
-                Debug.Log("Bad");
                 hash.Add(PlayerType.key, PlayerType.BadLeader);
             }
             else
             {
-                Debug.Log("Normal");
                 hash.Add(PlayerType.key, PlayerType.Normal);
             }
             player.SetCustomProperties(hash);

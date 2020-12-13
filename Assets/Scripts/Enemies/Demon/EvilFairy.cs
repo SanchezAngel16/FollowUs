@@ -8,11 +8,13 @@ public class EvilFairy : Enemy
     private Transform parent;
     public override void initEnemy()
     {
+        GameController.Instance.enemiesCount++;
         lifePoints = 150;
         parent = transform.parent;
         lootMaker = false;
 
         targetPosition = Util.getRandomPosition(transform.parent, 0);
+        transform.SetParent(ParentsManager.Instance.currentEnemyParent);
     }
 
     public override void move()

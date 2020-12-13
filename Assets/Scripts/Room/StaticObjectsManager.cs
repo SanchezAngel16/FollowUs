@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticObjectsManager : MonoBehaviour
+public class StaticObjectsManager : MonoBehaviourPunCallbacks
 {
     public GameObject[] staticElements;
 
     public void generate(int staticObjectType, bool isMainRoom)
     {
+        
+        photonView.RPC("setCurrentStaticObjectsParent", RpcTarget.All);
         switch (staticObjectType)
         {
             case 0:
@@ -21,8 +24,9 @@ public class StaticObjectsManager : MonoBehaviour
 
     private void generateLightningsGenerator()
     {
-        Instantiate(PrefabManager.Instance.lightning, transform).transform.position = transform.position;
-
+        //Instantiate(PrefabManager.Instance.lightning, transform).transform.position = transform.position;
+        GameObject lightning = PhotonNetwork.Instantiate(PrefabManager.Instance.lightning.name, transform.position, Quaternion.identity);
+        //lightning.transform.SetParent(transform);
     }
 
     private void generateStaticObjects(bool mainRoom)
@@ -40,10 +44,30 @@ public class StaticObjectsManager : MonoBehaviour
 
             for (int i = 0; i < numElements; i++)
             {
-                GameObject g = Instantiate(staticElements[Random.Range(1, staticElements.Length)], transform);
-                g.transform.position = Util.getValidRandomPosition(g, transform, tagsToAvoid, 1.2f);
-
+                int randType = Random.Range(1, staticElements.Length);
+                GameObject g = Instantiate(staticElements[randType], transform);
+                Vector2 newPos = Util.getValidRandomPosition(g, transform, tagsToAvoid, 1.2f);
+                g.transform.position = newPos;
+                photonView.RPC("instantiateObject", RpcTarget.Others, newPos.x, newPos.y, randType);
             }
         }
     }
+
+    #region Pun Calls
+       
+    [PunRPC]
+    public void instantiateObject(float xPos, float yPos, int type)
+    {
+        GameObject g = Instantiate(staticElements[type], transform);
+        g.transform.position = new Vector2(xPos, yPos);
+    }
+
+    [PunRPC]
+    public void setCurrentStaticObjectsParent()
+    {
+
+        ParentsManager.Instance.currentStaticObjectsParent = this.transform;
+    }
+
+    #endregion
 }

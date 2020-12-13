@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3516941198012392342}
   - component: {fileID: 3516941198012392345}
+  - component: {fileID: -1996469842725602092}
+  - component: {fileID: 3275129569863484057}
   m_Layer: 0
-  m_Name: Lightning 1
+  m_Name: LightningManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,5 +43,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf5f47e2aa6e0ad45a56b68108de5f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWaitTime: 7
+  startWaitLightningTime: 5
+--- !u!114 &-1996469842725602092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516941198012392344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3275129569863484057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516941198012392344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307db8bf4aad3e84eb418bbfe2597322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

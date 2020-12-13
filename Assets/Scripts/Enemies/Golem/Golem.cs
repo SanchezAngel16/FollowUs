@@ -23,6 +23,7 @@ public class Golem : Enemy
 
     public override void initEnemy()
     {
+        GameController.Instance.enemiesCount++;
         lifePoints = 150;
         waitShootTime = startWaitShootTime;
         
@@ -31,7 +32,7 @@ public class Golem : Enemy
 
         currentTargetPositionIndex = Random.Range(0, targetsPositions.Length);
         transform.position = targetsPositions[currentTargetPositionIndex];
-        rotate();
+        rotate(currentTargetPositionIndex, direction);
     }
 
     public override void move()
@@ -61,8 +62,8 @@ public class Golem : Enemy
 
                 }
 
-
-                rotate();
+                photonView.RPC("rotateGolem", RpcTarget.All, currentTargetPositionIndex, direction);
+                //rotate();
                 waitTime = startWaitTime;
             }
             else
@@ -146,24 +147,24 @@ public class Golem : Enemy
 
     }
 
-    private void rotate()
+    private void rotate(int indexPosition, int orientation)
     {
-        switch (currentTargetPositionIndex)
+        switch (indexPosition)
         {
             case 0:
-                if(direction == 1) transform.rotation = Quaternion.Euler(0, 0, 180);
+                if(orientation == 1) transform.rotation = Quaternion.Euler(0, 0, 180);
                 else transform.rotation = Quaternion.Euler(0, 0, -90);
                 break;
             case 1:
-                if (direction == 1) transform.rotation = Quaternion.Euler(0, 0, -90);
+                if (orientation == 1) transform.rotation = Quaternion.Euler(0, 0, -90);
                 else transform.rotation = Quaternion.Euler(0, 0, 0);
                 break;
             case 2:
-                if (direction == 1) transform.rotation = Quaternion.Euler(0, 0, 0);
+                if (orientation == 1) transform.rotation = Quaternion.Euler(0, 0, 0);
                 else transform.rotation = Quaternion.Euler(0, 0, 90);
                 break;
             case 3:
-                if (direction == 1) transform.rotation = Quaternion.Euler(0, 0, 90);
+                if (orientation == 1) transform.rotation = Quaternion.Euler(0, 0, 90);
                 else transform.rotation = Quaternion.Euler(0, 0, 180);
                 break;
         }
@@ -172,35 +173,13 @@ public class Golem : Enemy
     [PunRPC]
     public void initGolemAttributes(int golemPosition, float x, float y)
     {
-        Debug.Log("Starting golem attributes");
         setGolemAttributes(golemPosition, Util.getCorners(new Vector2(x,y)));
     }
-    /*
-    public void OnPhotonInstantiate(PhotonMessageInfo info)
+
+    [PunRPC]
+    public void rotateGolem(int indexPosition, int orientation)
     {
-        Debug.Log("Holi Golem");
-        /*object[] golemInit = info.photonView.InstantiationData;
-        int golemType = (int)golemInit[0];
-        float posX = (float)golemInit[1];
-        float posY = (float)golemInit[2];
-        setGolemAttributes(golemType, Util.getCorners(new Vector2(posX, posY)));
+        rotate(indexPosition, orientation);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(this.golemPosition);
-            Debug.Log("Holi golem sending");
-        }
-        else if (stream.IsReading)
-        {
-            
-            if (firstTimeChecking)
-            {
-                
-                firstTimeChecking = false;
-            }
-        }
-    }*/
 }

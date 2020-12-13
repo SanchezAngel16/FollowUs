@@ -271,6 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214763078662300441}
   - component: {fileID: 7085602306280036090}
+  - component: {fileID: 8734963944847051440}
   m_Layer: 0
   m_Name: EnemyDemon
   m_TagString: Untagged
@@ -317,6 +318,18 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8734963944847051440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214763078662300438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902cc0e620f667d468c23187030f2436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3966043589183928300
 GameObject:
   m_ObjectHideFlags: 0

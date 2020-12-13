@@ -64,11 +64,10 @@ public class Demon : Enemy
         if(shootingCount >= 5)
         {
             //GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
-            GameObject newEnemy = PhotonNetwork.Instantiate(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
+            GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
             newEnemy.transform.position = transform.position;
             newEnemy.transform.SetParent(transform.parent.parent);
             shootingCount = 0;
-            GameController.Instance.enemiesCount++;
         }
 
     }
