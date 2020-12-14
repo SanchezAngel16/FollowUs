@@ -67,7 +67,7 @@ public class JellyFish : Enemy
         {
             if (removeLifePoints(40) <= 0)
             {
-                this.destroy = true;
+                this.destroyed = true;
                 removeEnemy();
             }
             collision.gameObject.SetActive(false);
@@ -76,7 +76,7 @@ public class JellyFish : Enemy
 
     private void OnDestroy()
     {
-        if (destroy)
+        if (destroyed)
         {
             rotatingObjects.SetActive(false);
 

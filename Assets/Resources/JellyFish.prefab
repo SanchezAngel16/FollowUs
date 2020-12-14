@@ -1257,6 +1257,7 @@ GameObject:
   - component: {fileID: 973767869345976635}
   - component: {fileID: 7293228856933498850}
   - component: {fileID: 7293228856933498849}
+  - component: {fileID: 5970642935208263030}
   m_Layer: 13
   m_Name: JellyFish
   m_TagString: Enemy
@@ -1341,6 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754795cbad98d234ab0a976173736a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyContainer: {fileID: 5414364537845420700}
   speed: 0
   startWaitTime: 0
   lifePoints: 150
@@ -1350,7 +1352,7 @@ MonoBehaviour:
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
-  destroy: 0
+  destroyed: 0
   anim: {fileID: 0}
   startWaitShootTime: 0
   rotatingObjects: {fileID: 7293228858355292246}
@@ -1393,6 +1395,28 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.55
+--- !u!114 &5970642935208263030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293228856933498860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7293228857106748448
 GameObject:
   m_ObjectHideFlags: 0

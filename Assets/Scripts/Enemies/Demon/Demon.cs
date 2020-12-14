@@ -65,8 +65,8 @@ public class Demon : Enemy
         {
             //GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
             GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
-            newEnemy.transform.position = transform.position;
-            newEnemy.transform.SetParent(transform.parent.parent);
+            //newEnemy.transform.position = transform.position;
+            //newEnemy.transform.SetParent(transform.parent.parent);
             shootingCount = 0;
         }
 

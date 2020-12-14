@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cffa211da435a4d9f41a1b25bceb60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyContainer: {fileID: 822741345956011078}
   speed: 3.5
   startWaitTime: 0
   lifePoints: 150
@@ -109,7 +110,7 @@ MonoBehaviour:
   collectables:
   - {fileID: 7681380713071605020, guid: 1de7beb79ae38214e84529c69d03ece2, type: 3}
   - {fileID: 3067429648159192980, guid: 77f136d7f5cac10459aab785c1dcc440, type: 3}
-  destroy: 0
+  destroyed: 0
   anim: {fileID: 0}
   startWaitShootTime: 3
 --- !u!58 &283312155588833058

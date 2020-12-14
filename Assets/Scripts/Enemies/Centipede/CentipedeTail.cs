@@ -42,10 +42,10 @@ public class CentipedeTail : CentipedeBody
                             temp = temp.lastBody;
                         }
                     }
-                    last.transform.GetComponent<CentipedeTail>().destroy = true;
+                    last.transform.GetComponent<CentipedeTail>().destroyed = true;
                     Destroy(last.gameObject);
                 }
-                this.destroy = true;
+                this.destroyed = true;
                 removeEnemy();
             }
         }
