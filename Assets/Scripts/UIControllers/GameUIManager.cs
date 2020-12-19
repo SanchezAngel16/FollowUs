@@ -40,7 +40,7 @@ public class GameUIManager : MonoBehaviour
     private void Start()
     {
         resetPanels();
-        setState(GameUIStates.WAITING);
+        setState(GameUIStates.GAME_HAS_STARTED);
     }
 
     #region Private methods

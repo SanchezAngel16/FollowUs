@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,13 +12,8 @@ public class EvilFairy : Enemy
         lifePoints = 150;
         parent = transform.parent;
         lootMaker = false;
-
-        transform.SetParent(ParentsManager.Instance.currentEnemyParent);
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            targetPosition = Util.getRandomPosition(transform.parent, 0);
-        }
+        targetPosition = Util.getRandomPosition(transform.parent, 0);
+        
     }
 
     public override void move()

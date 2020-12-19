@@ -4,10 +4,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
-using Photon.Realtime;
 
-public class GameController : MonoBehaviourPunCallbacks
+public class GameController : MonoBehaviour
 {
     public Map mapController;
     public Vector2Int currentActiveRoom = new Vector2Int(0, 0);
@@ -29,7 +27,8 @@ public class GameController : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject[] collectables;
 
-    
+    [SerializeField]
+    private PlayerController playerController = null; 
 
     private static GameController instance = null;
 
@@ -52,15 +51,16 @@ public class GameController : MonoBehaviourPunCallbacks
 
 
         //INIT GAME
-
-        if (PhotonNetwork.IsConnected)
+        //GameUIManager.Instance.setState(GameUIStates.GAME_HAS_STARTED);
+        setGame();
+        Room start = mapController.map[mapController.startRoom.x, mapController.startRoom.y];
+        playerController.transform.position = start.transform.position;
+        /*if (PhotonNetwork.IsConnected)
         {
-            GameUIManager.Instance.setState(GameUIStates.WAITING);
             if (PhotonNetwork.IsMasterClient)
             {
                 startButton.gameObject.SetActive(true);
                 setGame();
-                Room start = mapController.map[mapController.startRoom.x, mapController.startRoom.y];
                 PhotonNetwork.Instantiate(playerPrefab.name, start.transform.position, Quaternion.identity);
             }
             else
@@ -69,10 +69,10 @@ public class GameController : MonoBehaviourPunCallbacks
                 PlayerComponents.Instance.mainCamera.transform.position = new Vector2(-10, 10);
                 Invoke("instantiatePlayer", 1f);
             }
-        }
+        }*/
     }
 
-    private void instantiatePlayer()
+    /*private void instantiatePlayer()
     {
         Room start = mapController.map[mapController.startRoom.x, mapController.startRoom.y];
         start.isRoomActive = true;
@@ -85,7 +85,7 @@ public class GameController : MonoBehaviourPunCallbacks
         randStartPos.y = (int)Random.Range(randStartPos.y - 1, randStartPos.y - 1);
 
         PhotonNetwork.Instantiate(playerPrefab.name, randStartPos, Quaternion.identity);
-    }
+    }*/
 
     private void setGame()
     {
@@ -100,7 +100,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void initGame()
     {
-        int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        /*int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
         int badLeaderIndex = Random.Range(0, playersCount);
         int cont = 0;
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
@@ -118,7 +118,7 @@ public class GameController : MonoBehaviourPunCallbacks
             hash.Clear();
             cont++;
         }
-        startRoom.GetComponent<PhotonView>().RPC("startMainRoom", RpcTarget.All);
+        startRoom.GetComponent<PhotonView>().RPC("startMainRoom", RpcTarget.All);*/
         startButton.gameObject.SetActive(false);
     }
 
@@ -162,6 +162,7 @@ public class GameController : MonoBehaviourPunCallbacks
         currentActiveRoom.y += y;
     }
 
+    /*
     #region Pun Callbacks
 
     public override void OnJoinedRoom()
@@ -171,5 +172,5 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
+    */
 }

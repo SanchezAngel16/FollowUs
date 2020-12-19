@@ -6,6 +6,6 @@ public class StaticObjectContainer : MonoBehaviour
 {
     void Start()
     {
-        transform.SetParent(ParentsManager.Instance.currentStaticObjectsParent);
+        //transform.SetParent(ParentsManager.Instance.currentStaticObjectsParent);
     }
 }

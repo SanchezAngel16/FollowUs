@@ -2,11 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 using System.IO;
 
-public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
+public class Room : MonoBehaviour
 {
     public event EventHandler<OnRoomStartedArgs> OnRoomStarted;
     public class OnRoomStartedArgs : EventArgs
@@ -64,12 +62,12 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
             mapController = PlayerComponents.Instance.mapController;
         }
         maxTimer = Util.maxRoomTime;
+        timerManager.OnTimerRanOut += onTimerRanOut;
     }
 
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = backgroundSprites[UnityEngine.Random.Range(1, backgroundSprites.Length)];
-        timerManager.OnTimerRanOut += onTimerRanOut;
     }
 
     private void onTimerRanOut(object sender, EventArgs e)
@@ -85,15 +83,16 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
             {
                 crackManager.startEffect(maxTimer);
                 timerManager.startRunning(maxTimer);
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    generateEnemies();
-                    generateStaticElements(0);
-                }
+                generateEnemies();
+                generateStaticElements(0);
                 //generateStaticElements(UnityEngine.Random.Range(0, 2));
             }
             else
             {
+                //OnRoomStarted?.Invoke(this, new OnRoomStartedArgs { initTimer = this.maxTimer });
+                timerManager.startRunning(maxTimer);
+                crackManager.startEffect(maxTimer);
+                //GameUIManager.Instance.setState(GameUIStates.GAME_HAS_STARTED);
                 generateStaticElements(1);
             }
         }
@@ -172,6 +171,7 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
         return posibleDirections[direction] == 0;
     }
 
+    /*
     [PunRPC]
     public void startMainRoom()
     {
@@ -217,5 +217,5 @@ public class Room : MonoBehaviour, IPunInstantiateMagicCallback, IPunObservable
             isRoomActive = (bool)stream.ReceiveNext();
             if (isRoomActive) gameObject.SetActive(true);
         }
-    }
+    }*/
 }

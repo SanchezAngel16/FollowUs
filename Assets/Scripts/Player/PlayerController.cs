@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Photon.Pun;
-using Photon.Realtime;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     internal PlayerInput playerInput = null;
@@ -97,6 +95,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         slider.value = this.lifePoints;
     }
 
+    /*
     #region Pun callbacks
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -126,4 +125,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
+    */
 }

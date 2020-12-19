@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,8 +61,7 @@ public class Golem : Enemy
 
                 }
 
-                photonView.RPC("rotateGolem", RpcTarget.All, currentTargetPositionIndex, direction);
-                //rotate();
+                rotate(currentTargetPositionIndex, direction);
                 waitTime = startWaitTime;
             }
             else
@@ -97,7 +95,7 @@ public class Golem : Enemy
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(-transform.up * bulletSpeed, ForceMode2D.Impulse);
 
-        photonView.RPC("displayBullet", RpcTarget.Others, 1, 0f, 0f, bulletSpeed, -1);
+        //photonView.RPC("displayBullet", RpcTarget.Others, 1, 0f, 0f, bulletSpeed, -1);
         //photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
 
@@ -170,6 +168,7 @@ public class Golem : Enemy
         }
     }
 
+    /*
     [PunRPC]
     public void initGolemAttributes(int golemPosition, float x, float y)
     {
@@ -180,6 +179,6 @@ public class Golem : Enemy
     public void rotateGolem(int indexPosition, int orientation)
     {
         rotate(indexPosition, orientation);
-    }
+    }*/
 
 }

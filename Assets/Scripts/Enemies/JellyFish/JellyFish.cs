@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +41,6 @@ public class JellyFish : Enemy
             angle += incrementalAngles;
         }
 
-        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
 
     public override void move()
@@ -67,7 +65,7 @@ public class JellyFish : Enemy
         {
             if (removeLifePoints(40) <= 0)
             {
-                this.destroyed = true;
+                this.canDestroy = true;
                 removeEnemy();
             }
             collision.gameObject.SetActive(false);
@@ -76,7 +74,7 @@ public class JellyFish : Enemy
 
     private void OnDestroy()
     {
-        if (destroyed)
+        if (canDestroy)
         {
             rotatingObjects.SetActive(false);
 

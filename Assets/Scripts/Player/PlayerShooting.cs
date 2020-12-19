@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Photon.Pun;
 
-public class PlayerShooting : MonoBehaviourPunCallbacks
+public class PlayerShooting : MonoBehaviour
 {
     [SerializeField]
     PlayerController playerController = null;
@@ -42,7 +41,6 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         if (GameController.Instance.runningOnPC)
         {
             if (Input.GetButtonDown("Fire1"))
@@ -132,10 +130,10 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
             bullet.SetActive(true);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(firePoint.up * (bulletForce * CurseManager.bulletSpeed), ForceMode2D.Impulse);
-            float posX = bullet.transform.position.x;
+            /*float posX = bullet.transform.position.x;
             float posY = bullet.transform.position.y;
             Vector3 rotation = bullet.transform.rotation.eulerAngles;
-            playerController.photonView.RPC("displayBullet", RpcTarget.Others, posX, posY, rotation.z);
+            playerController.photonView.RPC("displayBullet", RpcTarget.Others, posX, posY, rotation.z);*/
             bulletsCount--;
             updateBulletsCountText();
         }
@@ -174,6 +172,7 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
         updateBulletsCountText();
     }
 
+    /*
     #region RPC
 
     [PunRPC]
@@ -187,5 +186,5 @@ public class PlayerShooting : MonoBehaviourPunCallbacks
         rb.AddForce(newBullet.transform.up * (bulletForce * CurseManager.bulletSpeed), ForceMode2D.Impulse);
     }
 
-    #endregion
+    #endregion*/
 }

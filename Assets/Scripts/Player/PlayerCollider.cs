@@ -115,8 +115,9 @@ public class PlayerCollider : MonoBehaviour
     {
         updateRoomsPreview(r);
         playerController.currentLocation = r.mapLocation;
-
-        r.OnRoomStarted += OnRoomStarted;
+        waiting = false;
+        timer = r.timerManager.timer;
+        //r.OnRoomStarted += OnRoomStarted;
 
         if (r.isDestroyed) playerController.updateLifePoints(-playerController.lifePoints);
         else

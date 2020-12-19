@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 3468084633393440111}
   - component: {fileID: 8140860270254262822}
   - component: {fileID: 7520957010569860155}
-  - component: {fileID: 1438419131867291999}
   m_Layer: 18
   m_Name: down
   m_TagString: Door
@@ -167,29 +166,6 @@ PolygonCollider2D:
       - {x: 1.03, y: -0.35999998}
       - {x: 1.25, y: -0.34}
       - {x: 1.25, y: 0.48999998}
---- !u!114 &1438419131867291999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370134508226414164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 8140860270254262822}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &2783754642153080642
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +314,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1501215700727318273}
   - component: {fileID: 4556002822078508561}
-  - component: {fileID: 9205725177501440982}
   m_Layer: 0
   m_Name: StaticElements
   m_TagString: Untagged
@@ -378,28 +353,6 @@ MonoBehaviour:
   - {fileID: 3255902228710726559, guid: 6eea3877a003e8040b2f939106f335aa, type: 3}
   - {fileID: 5047307336057988921, guid: 225463463731ba3409fb2665f4bbe374, type: 3}
   - {fileID: 1082041976438778089, guid: 8f9e9f3cb17d26f40b8da420625e273b, type: 3}
---- !u!114 &9205725177501440982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3430456824714908325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &3731175477188773392
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +365,6 @@ GameObject:
   - component: {fileID: 3022185611783993893}
   - component: {fileID: 5899290509008520912}
   - component: {fileID: 2284659071472226168}
-  - component: {fileID: 2937348557432515610}
   m_Layer: 18
   m_Name: left
   m_TagString: Door
@@ -536,29 +488,6 @@ PolygonCollider2D:
       - {x: 0.099999994, y: -0.71040314}
       - {x: 0.14, y: 0.42}
       - {x: 0.14, y: 0.56}
---- !u!114 &2937348557432515610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3731175477188773392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 5899290509008520912}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &4042137185130180107
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +636,6 @@ GameObject:
   - component: {fileID: 5343728715699017812}
   - component: {fileID: 2702338360506502492}
   - component: {fileID: 7753855846989401436}
-  - component: {fileID: 6082093311484447701}
   m_Layer: 18
   m_Name: up
   m_TagString: Door
@@ -827,29 +755,6 @@ PolygonCollider2D:
       - {x: 1.22, y: -0.35}
       - {x: 1.26, y: -0.34}
       - {x: 1.26, y: 0.48999998}
---- !u!114 &6082093311484447701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5861497127841343442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 2702338360506502492}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &6711155277969864070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,8 +913,6 @@ GameObject:
   - component: {fileID: 4898885741978266961}
   - component: {fileID: -5523712671098566532}
   - component: {fileID: 3118965753260998977}
-  - component: {fileID: 3130680841786096690}
-  - component: {fileID: -1858612007817462070}
   m_Layer: 0
   m_Name: Room
   m_TagString: Room
@@ -1153,45 +1056,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.8, y: 10.8}
   m_EdgeRadius: 0
---- !u!114 &3130680841786096690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099209808659752680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: -1858612007817462070}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &-1858612007817462070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099209808659752680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &7518941497591659762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,7 +1240,6 @@ GameObject:
   - component: {fileID: 7863599791873772793}
   - component: {fileID: 747731869590583098}
   - component: {fileID: 1736344968375405945}
-  - component: {fileID: 7848715386694131857}
   m_Layer: 18
   m_Name: right
   m_TagString: Door
@@ -1500,29 +1363,6 @@ PolygonCollider2D:
       - {x: 0.024999999, y: -0.65999997}
       - {x: 0.07465646, y: -1.1658815}
       - {x: 0.645, y: -1.14}
---- !u!114 &7848715386694131857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7924694426184753540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 747731869590583098}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &8773780171567456044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,7 +1373,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7369282471791831732}
   - component: {fileID: 5276483281030312238}
-  - component: {fileID: 3347438329255443936}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -1567,28 +1406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7beff6437630a49b0274f2bc536c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3347438329255443936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8773780171567456044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &8931312908793139647
 GameObject:
   m_ObjectHideFlags: 0

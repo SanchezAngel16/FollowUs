@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
 
-public class VotingSystem : MonoBehaviourPunCallbacks
+public class VotingSystem : MonoBehaviour
 {
     private int votesCount = 0;
     private int currentPlayers = 0;
@@ -43,13 +41,14 @@ public class VotingSystem : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (PhotonNetwork.IsConnected)
+        initDirectionButtons();
+        /*if (PhotonNetwork.IsConnected)
         {
-            if (PhotonNetwork.IsMasterClient) initDirectionButtons();
+            if (PhotonNetwork.IsMasterClient) ;
             else Invoke("initDirectionButtons", 1.5f);
             currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
             testCurrentPlayers.text = currentPlayers.ToString();
-        }
+        }*/
     }
 
     #endregion
@@ -82,8 +81,21 @@ public class VotingSystem : MonoBehaviourPunCallbacks
     private void onVoteButtonClick(int direction)
     {
         setActiveUIDirectionsButtons(false);
-        photonView.RPC("vote", RpcTarget.All, direction);
-        checkVoting();
+        switch (direction)
+        {
+            case Util.RIGHT_DIR:
+                openDoor(1, 0, direction);
+                break;
+            case Util.LEFT_DIR:
+                openDoor(-1, 0, direction);
+                break;
+            case Util.UP_DIR:
+                openDoor(0, -1, direction);
+                break;
+            case Util.DOWN_DIR:
+                openDoor(0, 1, direction);
+                break;
+        }
     }
 
     private void initDirectionButtons()
@@ -103,9 +115,15 @@ public class VotingSystem : MonoBehaviourPunCallbacks
         updateUIDirectionsButtons();
     }
 
+    public void openDoor(int x, int y, int direction)
+    {
+        GameController.Instance.openDoor(x, y, direction);
+        votesCount = right = left = up = down = 0;
+    }
 
     private void checkVoting()
     {
+        /*
         if(votesCount >= currentPlayers)
         {
             if (right > left && right > up && right > down)
@@ -125,11 +143,12 @@ public class VotingSystem : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("openDoor", RpcTarget.All, 0, 1, Util.DOWN_DIR);
             }
-        }
+        }*/
     }
 
     #endregion
 
+    /*
     #region RPC Calls
 
     [PunRPC]
@@ -179,4 +198,5 @@ public class VotingSystem : MonoBehaviourPunCallbacks
     }
 
     #endregion
+    */
 }

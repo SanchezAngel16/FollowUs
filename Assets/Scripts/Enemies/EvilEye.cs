@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,8 +41,6 @@ public class EvilEye : Enemy
             rb.AddForce(bullets[i].transform.up * bulletSpeed, ForceMode2D.Impulse);
             angle += incrementalAngles;
         }
-
-        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
 
     public override void move()
@@ -67,9 +64,4 @@ public class EvilEye : Enemy
         }
     }
 
-    #region RPC Calls
-
-
-
-    #endregion
 }

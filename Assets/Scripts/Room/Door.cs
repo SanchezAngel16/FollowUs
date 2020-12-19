@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class Door : MonoBehaviour, IPunObservable
+public class Door : MonoBehaviour
 {
     public Sprite openedSprite;
     public bool opened = false;
@@ -36,15 +35,4 @@ public class Door : MonoBehaviour, IPunObservable
         spriteRenderer.sprite = openedSprite;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(opened);
-        }else if (stream.IsReading)
-        {
-            opened = (bool)stream.ReceiveNext();
-            if (opened) spriteRenderer.sprite = openedSprite;
-        }
-    }
 }

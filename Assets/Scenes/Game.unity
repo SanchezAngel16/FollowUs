@@ -205,6 +205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 7448059}
   firePoint: {fileID: 6414954}
+  bulletPool: {fileID: 0}
+  outsideBulletPool: {fileID: 0}
   bulletForce: 10
   bulletsCountText: {fileID: 797716086}
   gun: {fileID: 201340958}
@@ -221,19 +223,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755e76887ed08754e885b3efcae785ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLocation: {x: 0, y: 0}
+  playerInput: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerCollider: {fileID: 0}
+  playerShooting: {fileID: 0}
   animator: {fileID: 7448062}
-  speed: 4.5
   rb: {fileID: 7448061}
-  mainCamera: {fileID: 484778399}
   gun: {fileID: 201340958}
+  currentLocation: {x: 0, y: 0}
+  playerType: -1
   lifePoints: 0
   slider: {fileID: 313370169}
-  joystick: {fileID: 1684297925}
-  living: 0
-  targeting: 0
   restart: {fileID: 719597492}
   spriteRenderer: {fileID: 7448060}
+  gunSpriteRenderer: {fileID: 0}
   ammoImage: {fileID: 2060950903}
 --- !u!212 &7448060
 SpriteRenderer:
@@ -2224,19 +2227,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755e76887ed08754e885b3efcae785ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLocation: {x: 0, y: 0}
+  playerInput: {fileID: 0}
+  playerMovement: {fileID: 0}
+  playerCollider: {fileID: 0}
+  playerShooting: {fileID: 0}
   animator: {fileID: 555166627}
-  speed: 4.5
   rb: {fileID: 555166629}
-  mainCamera: {fileID: 1301947270}
   gun: {fileID: 2110745667}
+  currentLocation: {x: 0, y: 0}
+  playerType: -1
   lifePoints: 0
   slider: {fileID: 313370169}
-  joystick: {fileID: 1684297925}
-  living: 0
-  targeting: 0
   restart: {fileID: 719597492}
   spriteRenderer: {fileID: 555166632}
+  gunSpriteRenderer: {fileID: 0}
   ammoImage: {fileID: 2060950903}
 --- !u!114 &555166631
 MonoBehaviour:
@@ -2252,6 +2256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 555166630}
   firePoint: {fileID: 762628173}
+  bulletPool: {fileID: 0}
+  outsideBulletPool: {fileID: 0}
   bulletForce: 10
   bulletsCountText: {fileID: 797716086}
   gun: {fileID: 2110745667}
@@ -3343,6 +3349,7 @@ MonoBehaviour:
   badRoom: {x: 0, y: 0}
   startRoom: {x: 0, y: 0}
   roomPrefab: {fileID: 7099209808659752680, guid: 0ff9c4643a2d09847bf44e5954a30a0e, type: 3}
+  tempRoom: {fileID: 0}
 --- !u!1 &785520932
 GameObject:
   m_ObjectHideFlags: 0
@@ -5059,6 +5066,8 @@ MonoBehaviour:
   roomsAround: {fileID: 101095208}
   slider: {fileID: 313370169}
   bulletsCountText: {fileID: 797716086}
+  map: {fileID: 0}
+  mapController: {fileID: 0}
 --- !u!1 &1198598023
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,17 +5250,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapController: {fileID: 774291039}
-  right: {fileID: 344714046}
-  left: {fileID: 1734886157}
-  up: {fileID: 1016951077}
-  down: {fileID: 603011571}
+  currentActiveRoom: {x: 0, y: 0}
   gameOverText: {fileID: 222568502}
   enemiesCount: 0
   runningOnPC: 0
   playerPrefab: {fileID: 0}
-  waitingRoom: {fileID: 0}
   startButton: {fileID: 0}
-  playerPhotonView: {fileID: 0}
+  collectables: []
 --- !u!4 &1251824198
 Transform:
   m_ObjectHideFlags: 0
@@ -7751,7 +7756,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 7448059}
-  shooting: {fileID: 7448058}
   roomsPreview:
   - {fileID: 940134310}
   - {fileID: 511777515}
@@ -8044,7 +8048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1862931514
 Transform:
   m_ObjectHideFlags: 0
@@ -8263,7 +8267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 555166630}
-  shooting: {fileID: 555166631}
   roomsPreview:
   - {fileID: 940134310}
   - {fileID: 511777515}

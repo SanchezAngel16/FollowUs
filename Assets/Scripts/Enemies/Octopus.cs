@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class Octopus : Enemy
 {
@@ -123,7 +122,6 @@ public class Octopus : Enemy
             
             angle += incrementalAngles;
         }
-        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
     }
     /*
     [PunRPC]

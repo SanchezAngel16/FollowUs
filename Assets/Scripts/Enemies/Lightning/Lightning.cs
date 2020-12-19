@@ -1,9 +1,9 @@
-﻿using Photon.Pun;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lightning : MonoBehaviourPunCallbacks
+public class Lightning : MonoBehaviour
 {
     private const int lightningGeneratorCount = 4;
     private LightningGenerator[] lightnings = new LightningGenerator[lightningGeneratorCount];
@@ -24,10 +24,8 @@ public class Lightning : MonoBehaviourPunCallbacks
     {
         waitTime = startWaitTime;
         waitLightningTime = startWaitLightningTime;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            generateLightnings();
-        }
+        generateLightnings();
+        setShootingDirections();
     }
 
     private void setLightningPoints()
@@ -85,7 +83,6 @@ public class Lightning : MonoBehaviourPunCallbacks
 
     private void setShootingDirections()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         object[] indexes = new object[lightningGeneratorCount];
         object[] randomPositions = new object[lightningGeneratorCount];
         int randNextPos = -1;
@@ -95,10 +92,9 @@ public class Lightning : MonoBehaviourPunCallbacks
             {
                 randNextPos = Random.Range(0, lightnings.Length);
             } while (randNextPos == i /*|| lightnings[randNextPos].nextIndex == i*/);
-            indexes[i] = i;
-            randomPositions[i] = randNextPos;
+            lightnings[i].setNext(lightnings[randNextPos].firePoint.transform);
+            lightnings[i].nextIndex = randNextPos;
         }
-        photonView.RPC("setShootDirections", RpcTarget.All, indexes, randomPositions);
     }
 
     private void playAnimations(bool play)
@@ -128,18 +124,17 @@ public class Lightning : MonoBehaviourPunCallbacks
             randomPos.Add(newRandPos);
         }
         randomPos.Sort();
-
-        object[] positions = new object[lightningGeneratorCount];
         
         for (int i = 0; i < lightningGeneratorCount; i++)
         {
-            positions[i] = randomPos[i];
+            GameObject lightningGenerator = Instantiate(PrefabManager.Instance.lightningGenerator, transform);
+            lightningGenerator.transform.position = lightningPoints[randomPos[i]];
+            lightnings[i] = lightningGenerator.GetComponent<LightningGenerator>();
         }
-
-        photonView.RPC("instantiateLightnings", RpcTarget.All, positions);
         setShootingDirections();
     }
 
+    /*
     #region RPC Calls
 
     [PunRPC]
@@ -164,5 +159,5 @@ public class Lightning : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
+    */
 }

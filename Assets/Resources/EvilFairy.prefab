@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 8855795423067207057}
   - component: {fileID: 8855795423067207054}
   - component: {fileID: 8058365772926719461}
-  - component: {fileID: 9028178311963688595}
-  - component: {fileID: 8493235438049868239}
   m_Layer: 13
   m_Name: EvilFairy
   m_TagString: Enemy
@@ -137,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a347486828ca6d44cb542bcf34d7f807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyContainer: {fileID: 0}
   speed: 7.5
   startWaitTime: 0
   lifePoints: 150
@@ -144,7 +143,7 @@ MonoBehaviour:
   outsideBulletPool: {fileID: 0}
   rb: {fileID: 8855795423067207057}
   collectables: []
-  destroy: 0
+  destroyed: 0
   anim: {fileID: 0}
 --- !u!95 &8058365772926719461
 Animator:
@@ -165,42 +164,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &9028178311963688595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8855795423067207055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 8493235438049868239}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &8493235438049868239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8855795423067207055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1

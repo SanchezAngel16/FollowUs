@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-public class Map : MonoBehaviour, IPunObservable
+public class Map : MonoBehaviour
 {
     public int cols = 6;
     public int rows = 6;
@@ -22,8 +20,8 @@ public class Map : MonoBehaviour, IPunObservable
 
     private void Awake()
     {
-        int mapSize = int.Parse(PhotonNetwork.CurrentRoom.CustomProperties[RoomProperty.MapSize].ToString());
-        Util.mapSize = mapSize;
+        /*int mapSize = int.Parse(PhotonNetwork.CurrentRoom.CustomProperties[RoomProperty.MapSize].ToString());
+        Util.mapSize = mapSize;*/
         cols = rows = Util.mapSize;
         map = new Room[cols, rows];
     }
@@ -52,6 +50,7 @@ public class Map : MonoBehaviour, IPunObservable
 
     private void createMap(float wRoom, float hRoom)
     {
+        Color rColor;
         setRoomsType();
         for (int row = 0; row < rows; row++)
         {
@@ -59,37 +58,49 @@ public class Map : MonoBehaviour, IPunObservable
             {
                 Vector2Int newRoomLocation = new Vector2Int(col, row);
 
+                GameObject newRoom = Instantiate(roomPrefab, transform);
+                Room roomScript = newRoom.GetComponent<Room>();
+
                 float posX = col * wRoom;
                 float posY = row * -hRoom;
 
-                if (Vector2Int.Equals(newRoomLocation, goodRoom))
+                newRoom.transform.position = new Vector2(posX, posY);
+
+
+                if (Vector2Int.Equals(newRoomLocation, startRoom))
                 {
-                    tempRoom.threatType = 0;
-                    tempRoom.setRoomType(0, Util.GoodRoom);
-                }
-                else if (Vector2Int.Equals(newRoomLocation, badRoom))
-                {
-                    tempRoom.setRoomType(tempRoom.threatType, Util.BadRoom);
+                    roomScript.setRoomType(0, Util.MainRoom);
+                    newRoom.SetActive(true);
                 }
                 else
                 {
-                    if (Vector2Int.Equals(newRoomLocation, startRoom))
-                    {
-                        tempRoom.setRoomType(0, Util.MainRoom);
-                    }
-                    else
-                    {
-                        tempRoom.threatType = Random.Range(1, 10);
-                        tempRoom.setRoomType(tempRoom.threatType, Util.NormalRoom);
-                    }
+                    roomScript.threatType = Random.Range(1, 10);
                 }
 
-                tempRoom.mapLocation = newRoomLocation;
-                tempRoom.isRoomActive = false;
-                object[] initData = Util.serializeRoomObject(tempRoom);
+                if (Vector2Int.Equals(newRoomLocation, goodRoom))
+                {
+                    rColor = Color.blue;
+                    roomScript.threatType = 0;
+                    roomScript.setRoomType(0, Util.GoodRoom);
+                }
+                else if (Vector2Int.Equals(newRoomLocation, badRoom))
+                {
+                    roomScript.setRoomType(roomScript.threatType, Util.BadRoom);
+                    rColor = Color.red;
+                }
+                else
+                {
+                    roomScript.setRoomType(roomScript.threatType, Util.NormalRoom);
+                    rColor = Color.white;
+                }
 
-                Vector2 newPos = new Vector2(posX, posY);
-                PhotonNetwork.Instantiate(roomPrefab.name, newPos, Quaternion.identity, 0, initData);
+                roomScript.mapLocation = newRoomLocation;
+                newRoom.GetComponent<SpriteRenderer>().color = rColor;
+
+                newRoom.SetActive(false);
+                roomScript.isRoomActive = false;
+                roomScript.setDoorSprites(cols, rows);
+                map[col, row] = roomScript;
             }
         }
     }
@@ -230,32 +241,4 @@ public class Map : MonoBehaviour, IPunObservable
         updatePosibleDirections();
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(startRoom.x);
-            stream.SendNext(startRoom.y);
-            stream.SendNext(goodRoom.x);
-            stream.SendNext(goodRoom.y);
-            stream.SendNext(badRoom.x);
-            stream.SendNext(badRoom.y);
-            /*stream.SendNext(startRoom.x);
-            stream.SendNext(startRoom.x);*/
-        }
-        else if (stream.IsReading)
-        {
-            startRoom.x = (int)stream.ReceiveNext();
-            startRoom.y = (int)stream.ReceiveNext();
-            goodRoom.x = (int)stream.ReceiveNext();
-            goodRoom.y = (int)stream.ReceiveNext();
-            badRoom.x = (int)stream.ReceiveNext();
-            badRoom.y = (int)stream.ReceiveNext();
-            if (firstTimeChecking)
-            {
-                updatePosibleDirections();
-                firstTimeChecking = false;
-            }
-        }
-    }
 }

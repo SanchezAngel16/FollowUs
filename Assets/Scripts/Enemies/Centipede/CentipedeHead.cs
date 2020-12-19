@@ -42,12 +42,12 @@ public class CentipedeHead : CentipedeBody
                         lastBody.lastBody.nextBody = this;
                         lastBody = lastBody.lastBody;
                     }
-                    last.transform.GetComponent<CentipedeTail>().destroyed = true;
+                    last.transform.GetComponent<CentipedeTail>().canDestroy = true;
                     Destroy(last.gameObject);
                 }
                 else
                 {
-                    this.destroyed = true;
+                    this.canDestroy = true;
                     removeEnemy();
                 }
             }

@@ -1,16 +1,14 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticObjectsManager : MonoBehaviourPunCallbacks
+public class StaticObjectsManager : MonoBehaviour
 {
     public GameObject[] staticElements;
 
     public void generate(int staticObjectType, bool isMainRoom)
     {
-        
-        photonView.RPC("setCurrentStaticObjectsParent", RpcTarget.All);
+
         switch (staticObjectType)
         {
             case 0:
@@ -24,8 +22,8 @@ public class StaticObjectsManager : MonoBehaviourPunCallbacks
 
     private void generateLightningsGenerator()
     {
-        //Instantiate(PrefabManager.Instance.lightning, transform).transform.position = transform.position;
-        GameObject lightning = PhotonNetwork.Instantiate(PrefabManager.Instance.lightning.name, transform.position, Quaternion.identity);
+        Instantiate(PrefabManager.Instance.lightning, transform).transform.position = transform.position;
+        //GameObject lightning = PhotonNetwork.Instantiate(PrefabManager.Instance.lightning.name, transform.position, Quaternion.identity);
         //lightning.transform.SetParent(transform);
     }
 
@@ -48,11 +46,11 @@ public class StaticObjectsManager : MonoBehaviourPunCallbacks
                 GameObject g = Instantiate(staticElements[randType], transform);
                 Vector2 newPos = Util.getValidRandomPosition(g, transform, tagsToAvoid, 1.2f);
                 g.transform.position = newPos;
-                photonView.RPC("instantiateObject", RpcTarget.Others, newPos.x, newPos.y, randType);
             }
         }
     }
-
+    
+    /*
     #region Pun Calls
        
     [PunRPC]
@@ -70,4 +68,5 @@ public class StaticObjectsManager : MonoBehaviourPunCallbacks
     }
 
     #endregion
+    */
 }

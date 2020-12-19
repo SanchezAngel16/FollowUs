@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,7 +54,6 @@ public class Demon : Enemy
             angle += incrementalAngles;
         }
 
-        photonView.RPC("displayBullet", RpcTarget.Others, bulletsCount, startingAngle, incrementalAngles, bulletSpeed, 1);
 
         shooting = true;
 
@@ -63,10 +61,10 @@ public class Demon : Enemy
 
         if(shootingCount >= 5)
         {
-            //GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
-            GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
-            //newEnemy.transform.position = transform.position;
-            //newEnemy.transform.SetParent(transform.parent.parent);
+            GameObject newEnemy = Instantiate(PrefabManager.Instance.evilFairy, transform.parent.parent);
+            //GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(PrefabManager.Instance.evilFairy.name, transform.position, Quaternion.identity);
+            newEnemy.transform.position = transform.position;
+            newEnemy.transform.SetParent(transform.parent.parent);
             shootingCount = 0;
         }
 

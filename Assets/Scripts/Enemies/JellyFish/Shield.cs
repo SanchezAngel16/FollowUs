@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,27 +27,24 @@ public class Shield : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (waitTime < 0)
         {
-            if (waitTime < 0)
+            if (startLaserTime >= 0)
             {
-                if (startLaserTime >= 0)
-                {
-                    testLaser.gameObject.SetActive(true);
-                    shootLaser();
-                    startLaserTime -= Time.deltaTime;
-                }
-                else
-                {
-                    testLaser.gameObject.SetActive(false);
-                    startLaserTime = startWaitTime;
-                    waitTime = startWaitTime;
-                }
+                testLaser.gameObject.SetActive(true);
+                shootLaser();
+                startLaserTime -= Time.deltaTime;
             }
             else
             {
-                waitTime -= Time.deltaTime;
+                testLaser.gameObject.SetActive(false);
+                startLaserTime = startWaitTime;
+                waitTime = startWaitTime;
             }
+        }
+        else
+        {
+            waitTime -= Time.deltaTime;
         }
     }
 

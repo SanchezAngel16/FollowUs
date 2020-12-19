@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class PlayerInput : MonoBehaviourPunCallbacks
+public class PlayerInput : MonoBehaviour
 {
     [SerializeField]
     PlayerController playerController = null;
@@ -44,7 +43,6 @@ public class PlayerInput : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         if (playerController.living)
         {
             moveInput = Vector2.zero;

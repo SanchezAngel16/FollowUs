@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,8 +19,8 @@ public class CentipedeTail : CentipedeBody
             {
                 if (lastBody != null)
                 {
-                    //GameObject newHead = Instantiate(PrefabManager.Instance.centipedeHead, transform.parent.parent);
-                    GameObject newHead = PhotonNetwork.Instantiate(PrefabManager.Instance.centipedeHead.name, transform.position, Quaternion.identity);
+                    GameObject newHead = Instantiate(PrefabManager.Instance.centipedeHead, transform.parent.parent);
+                    //GameObject newHead = PhotonNetwork.Instantiate(PrefabManager.Instance.centipedeHead.name, transform.position, Quaternion.identity);
                     newHead.transform.SetParent(transform.parent.parent);
                     GameController.Instance.enemiesCount++;
                     CentipedeHead newCentipedeHead = newHead.transform.GetChild(1).GetComponent<CentipedeHead>();
@@ -42,10 +41,10 @@ public class CentipedeTail : CentipedeBody
                             temp = temp.lastBody;
                         }
                     }
-                    last.transform.GetComponent<CentipedeTail>().destroyed = true;
+                    last.transform.GetComponent<CentipedeTail>().canDestroy = true;
                     Destroy(last.gameObject);
                 }
-                this.destroyed = true;
+                this.canDestroy = true;
                 removeEnemy();
             }
         }

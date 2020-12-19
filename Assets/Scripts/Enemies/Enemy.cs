@@ -1,12 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Photon.Pun;
 
-public abstract class Enemy : MonoBehaviourPunCallbacks
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
     private EnemyContainer enemyContainer;
@@ -32,7 +30,7 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
 
     //protected Room currentRoom;
 
-    public bool destroyed = false;
+    public bool canDestroy = false;
 
     public Animator anim;
     private void Start()
@@ -42,10 +40,7 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-        {
-            move();
-        }
+        move();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,16 +61,20 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
             if (collision.gameObject.GetComponent<Bullet>().hit) return;
             collision.gameObject.GetComponent<Bullet>().hit = true;
             collision.gameObject.SetActive(false);
-            if (removeLifePoints(40) <= 0)
+            if (removeLifePoints(50) <= 0)
             {
-                int lootType = -1;
+                /*int lootType = -1;
                 if (Random.Range(0, 100) >= 10 && lootMaker)
                 {
                     lootType = Random.Range(0, collectables.Length);
-                }
-                photonView.RPC("onDestroyEnemy", RpcTarget.All, transform.position.x, transform.position.y, lootType);
-                photonView.RPC("destroyGameObject", RpcTarget.MasterClient);
-                //removeEnemy();
+                }*/
+                /*if(photonView != null)
+                {
+                    //photonView.RPC("onDestroyEnemy", RpcTarget.All, transform.position.x, transform.position.y, lootType);
+                    photonView.RPC("destroyGameObject", RpcTarget.MasterClient);
+                }*/
+                canDestroy = true;
+                removeEnemy();
             }
         }
     }
@@ -83,9 +82,9 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         //Vector2 destroyPos = new Vector2(destroyPosX, destroyPosY);
-        if (destroyed)
+        if (canDestroy)
         {
-            Debug.Log("Destroyed");
+            canDestroy = false;
             Instantiate(PrefabManager.Instance.explosionEffect).transform.position = transform.position;
             if (Random.Range(0, 100) >= 10 && lootMaker)
             {
@@ -113,7 +112,8 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
 
     protected void removeEnemy()
     {
-        
+        //Destroy(enemyContainer);
+        Destroy(gameObject);
     }
 
     protected int removeLifePoints(int points)
@@ -125,6 +125,7 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
     public abstract void initEnemy();
     public abstract void move();
 
+    /*
     #region RPC Calls
 
 
@@ -159,6 +160,7 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
     [PunRPC]
     public void onDestroyEnemy(float destroyPosX, float destroyPosY, int lootType)
     {
+        Debug.Log("-----\nDestroyed");
         Vector2 destroyPos = new Vector2(destroyPosX, destroyPosY);
         Instantiate(PrefabManager.Instance.explosionEffect).transform.position = destroyPos;
         if (lootType != -1)
@@ -180,14 +182,12 @@ public abstract class Enemy : MonoBehaviourPunCallbacks
         //Destroy(gameObject);
         if (!destroyed)
         {
-            destroyed = true;
             if (enemyContainer != null)
             {
                 PhotonNetwork.Destroy(enemyContainer.photonView);
             }
             //PhotonNetwork.Destroy(this.gameObject);
         }
-    }
+    }*/
 
-    #endregion
 }
